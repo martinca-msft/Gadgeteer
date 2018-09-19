@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- Detect the Visual Studio the .NET Micro Framework is installed on. -->
+  <!-- Whether we should integrate with Visual Studio 2010 depends on whether the NETMF 4.3 installer was used or NETMF 4.2 installer was used, -->
+  <!-- regardless of the NETMF versions installed. Unfortunately, NETMF did reuse the component Guids so the only way to find out is to check   -->
+  <!-- some files. These should be dropped when Visual Studio 2010 support is. -->
+  
+  <Property Id="VS11_MF_INSTALLED" Secure="yes">
+    <RegistrySearch Id="Search_VS11_MF_INSTALLED" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\11.0\VSTemplate\Project" Name="UserFolder" Type="directory">
+      <DirectorySearch Id="Search_VS11_MF_INSTALLED_DIR" Path="CSharp\Micro Framework" />
+    </RegistrySearch>
+  </Property>
+
+  <Property Id="VSE11_MF_INSTALLED" Secure="yes">
+    <RegistrySearch Id="Search_VSE11_MF_INSTALLED" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" Name="11.0" Type="directory">
+      <DirectorySearch Id="Search_VSE11_MF_INSTALLED_DIR" Path="Common7\IDE\WDExpress\ProjectTemplates\CSharp\Micro Framework" />
+    </RegistrySearch>
+  </Property>
+
+  <Property Id="VS10_MF_INSTALLED" Secure="yes">
+    <RegistrySearch Id="Search_VS10_MF_INSTALLED" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\10.0\VSTemplate\Project" Name="UserFolder" Type="directory">
+      <DirectorySearch Id="Search_VS10_MF_INSTALLED_DIR" Path="CSharp\Micro Framework" />
+    </RegistrySearch>
+  </Property>
+
+  <Property Id="VSE10_CS_MF_INSTALLED" Secure="yes">
+    <RegistrySearch Id="Search_VSE10_CS_MF_INSTALLED" Root="HKLM" Key="SOFTWARE\Microsoft\VCSExpress\10.0\VSTemplate\Project" Name="UserFolder" Type="directory">
+      <DirectorySearch Id="Search_VSE10_CS_MF_INSTALLED_DIR" Path="CSharp\Micro Framework" />
+    </RegistrySearch>
+  </Property>
+
+  <Property Id="VSE10_VB_MF_INSTALLED" Secure="yes">
+    <RegistrySearch Id="Search_VSE10_VB_MF_INSTALLED" Root="HKLM" Key="SOFTWARE\Microsoft\VBExpress\10.0\VSTemplate\Project" Name="UserFolder" Type="directory">
+      <DirectorySearch Id="Search_VSE10_VBMF_INSTALLED_DIR" Path="VisualBasic\Micro Framework" />
+    </RegistrySearch>
+  </Property>
+
+  <!-- Detect the versions of .NET Micro Framework installed. -->
+  
+  <Property Id="MF41_INSTALLED" Secure="yes">
+    <RegistrySearch Id="Search_MF41_INSTALLED" Root="HKLM" Key="SOFTWARE\Microsoft\.NETMicroFramework\v4.1" Name="InstallRoot" Type="raw" Win64="no" />
+  </Property>
+
+  <Property Id="MF42_INSTALLED" Secure="yes">
+    <RegistrySearch Id="Search_MF42_INSTALLED" Root="HKLM" Key="SOFTWARE\Microsoft\.NETMicroFramework\v4.2" Name="InstallRoot" Type="raw" Win64="no" />
+  </Property>
+
+  <Property Id="MF43_INSTALLED" Secure="yes">
+    <RegistrySearch Id="Search_MF43_INSTALLED" Root="HKLM" Key="SOFTWARE\Microsoft\.NETMicroFramework\v4.3" Name="InstallRoot" Type="raw" Win64="no" />
+  </Property>
+
+  <!-- Use the highest .NET Micro Framework version -->
+  
+  <SetProperty Id="MF_INSTALLED" Action="Set_MF41_INSTALLED" After="AppSearch" Value="[MF41_INSTALLED]">MF41_INSTALLED</SetProperty>
+  <SetProperty Id="MF_INSTALLED" Action="Set_MF42_INSTALLED" After="AppSearch" Value="[MF42_INSTALLED]">MF42_INSTALLED</SetProperty>
+  <SetProperty Id="MF_INSTALLED" Action="Set_MF43_INSTALLED" After="AppSearch" Value="[MF43_INSTALLED]">MF43_INSTALLED</SetProperty>
+  
+  <!-- Feature actions -->
+  <!-- Condition syntax at http://msdn.microsoft.com/en-us/library/aa368012.aspx.   -->
+  <!-- http://www.joyofsetup.com/2008/04/09/feature-states-in-component-conditions/ -->
+  <SetProperty Id="MF43_INSTALLING" Sequence="ui" Before="ExecuteAction" Value="True"><![CDATA[&MF43_Support>2]]></SetProperty>
+  <SetProperty Id="MF42_INSTALLING" Sequence="ui" Before="ExecuteAction" Value="True"><![CDATA[&MF42_Support>2]]></SetProperty>
+  <SetProperty Id="MF41_INSTALLING" Sequence="ui" Before="ExecuteAction" Value="True"><![CDATA[&MF41_Support>2]]></SetProperty>
+
+</Include>

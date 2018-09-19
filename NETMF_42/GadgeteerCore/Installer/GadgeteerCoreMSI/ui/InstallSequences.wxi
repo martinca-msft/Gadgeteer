@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <InstallUISequence>
+    <Show Dialog="FatalErrorDlg"
+          OnExit="error"/>
+    <Show Dialog="UserExitDlg"
+          OnExit="cancel"></Show>
+    <Show Dialog="WelcomeDlg"
+          After="MigrateFeatureStates">NOT Installed</Show>
+    <Show Dialog="ProgressDlg"
+          Before="ExecuteAction"></Show>
+    <Show Dialog="ExitDlg"
+          OnExit="success"></Show>
+  </InstallUISequence>
+
+  <AdminUISequence>
+    <Show Dialog="FatalErrorDlg"
+          OnExit="error" />
+    <Show Dialog="UserExitDlg"
+          OnExit="cancel" />
+    <Show Dialog="ExitDlg"
+          OnExit="success" />
+  </AdminUISequence>
+
+  <UI>
+    <Publish Dialog="WelcomeDlg"
+             Control="Next"
+             Event="NewDialog"
+             Value="LicenseAgreementDlg">1</Publish>
+
+    <Publish Dialog="LicenseAgreementDlg"
+         Control="Back"
+         Event="NewDialog"
+         Value="WelcomeDlg">1</Publish>
+
+    <Publish Dialog="LicenseAgreementDlg"
+         Control="Accept"
+         Event="NewDialog"
+         Value="InstallLocationDlg">1</Publish>
+
+    <Publish Dialog="InstallLocationDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+  </UI>
+</Include>

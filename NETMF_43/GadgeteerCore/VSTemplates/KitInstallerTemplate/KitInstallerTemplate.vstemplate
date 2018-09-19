@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>.NET Gadgeteer Kit</Name>
+    <Description>Template for a Microsoft .NET Gadgeteer kit.  Use this template if you want to create a .NET Gadgeteer kit comprising multiple module(s) and/or mainboard(s). This template packages up many modules/mainboards into a single installer.</Description>
+    <Icon>G.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <SortOrder>5999</SortOrder>
+    <TemplateID>9C3C6DC0-BDC6-42B2-9B93-6238803C271D</TemplateID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>Kit</DefaultName>
+    <ProvideDefaultName>false</ProvideDefaultName>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="KitInstaller.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="G.ico">G graphic.ico</ProjectItem>
+      <ProjectItem ReplaceParameters="false" OpenInEditor="true">ReadMe.txt</ProjectItem>
+      <ProjectItem ReplaceParameters="true">en-us.wxl</ProjectItem>
+      <ProjectItem ReplaceParameters="true">common.wxi</ProjectItem>
+      <ProjectItem ReplaceParameters="true">msi.wxs</ProjectItem>
+      <ProjectItem ReplaceParameters="true">version.wxi</ProjectItem>
+      <ProjectItem ReplaceParameters="true">AssemblyInfoGlobal.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="false">html.ico</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
+

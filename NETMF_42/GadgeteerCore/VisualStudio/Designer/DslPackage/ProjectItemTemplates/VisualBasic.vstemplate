@@ -1,0 +1,17 @@
+﻿<!--DSL Tools Language Template-->
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<TemplateData>
+		<Name Package="{e627fec7-215a-4eed-a85e-440df3eb5f5f}" ID="103"/>
+		<Description Package="{e627fec7-215a-4eed-a85e-440df3eb5f5f}" ID="102"/>
+		<Icon Package="{e627fec7-215a-4eed-a85e-440df3eb5f5f}" ID="201" />
+		<ProjectType>VisualBasic</ProjectType>	
+		<TemplateGroupID>MicroFramework</TemplateGroupID>
+		<SortOrder>360</SortOrder>
+		<DefaultName>Program.gadgeteer</DefaultName>
+	</TemplateData>
+	<TemplateContent>
+		<ProjectItem TargetFileName="$fileinputname$.gadgeteer">Program.gadgeteer</ProjectItem>
+		<ProjectItem TargetFileName="$fileinputname$.gadgeteer.diagram">Program.diagram</ProjectItem>
+	</TemplateContent>
+</VSTemplate>
+

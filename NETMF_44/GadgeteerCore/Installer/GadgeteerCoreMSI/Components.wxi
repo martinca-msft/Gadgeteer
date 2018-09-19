@@ -1,0 +1,1229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:difxapp="http://schemas.microsoft.com/wix/DifxAppExtension">
+  <Directory Id="TARGETDIR" Name="SourceDir">
+
+    <!-- Designer is in a separate merge module. -->
+    <Merge SourceFile="..\..\..\..\NETMF_44\Builds\Release Drops\2.44.1200\Signed\InstallerModule.msm" Id="DesignerMM" DiskId="1" Language="1033"/>
+    <!--<Merge SourceFile="..\..\VisualStudio\Designer\InstallerModule\bin\Release\en-us\InstallerModule.msm" Id="DesignerMM" DiskId="1" Language="1033"/>-->
+
+    <?define AssemblyAppWiz="$(var.AppTemplateWizard.ProjectDir)..\..\..\..\NETMF_44\Builds\Release Drops\2.44.1200\Signed\appwiz\Microsoft.Gadgeteer.AppTemplateWizard.dll" ?>
+    <!--<?define AssemblyAppWiz="$(var.AppTemplateWizard.TargetDir)Microsoft.Gadgeteer.AppTemplateWizard.dll"?>-->
+    
+    <!-- Program Files -->
+    <Directory Id="ProgramFilesFolder">
+      <Directory Id="INSTALLDIR" Name="!(loc.GadgeteerName)">
+        <Directory Id="PRODUCTDIR" Name="!(loc.ProductSubDir)">
+
+          <!-- Assemblies -->
+          <Directory Name="Assemblies" Id="AssembliesDir" >
+
+            <Component Id="AppTemplateWizardFiles" Guid="{1F3E20FB-0514-4DFF-8E46-EDA8F42C0E3C}">
+              <!-- This is a cached signed version -->
+              <File Id="AppTemplateWizard_GAC" KeyPath="yes" Assembly=".net" Name="Microsoft.Gadgeteer.AppTemplateWizard.dll" Source="$(var.AssemblyAppWiz)" />
+            </Component>
+
+            <!-- == Gadgeteer Core 4.4 == -->
+            <Directory Id="GadgeteerCore44Dir" Name=".NET Micro Framework 4.4" FileSource="$(var.Gadgeteer44.TargetDir)">
+
+              <Component Id="GadgeteerCore44Files" Guid="{D83E910E-2F53-4381-9185-C554229D6FA2}">
+                <File Id="Gadgeteer44_DLL" Name="Gadgeteer.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer44_XML" Name="Gadgeteer.xml" />
+                <File Id="Gadgeteer44_PDB" Name="Gadgeteer.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore44BEDir" Name ="be">
+                <Component Id="GadgeteerCore44BEFiles" Guid="{A5CA8DAA-C2C4-4CBA-BCC9-015661E1BE4E}">
+                  <File Id="Gadgeteer44_DLL_BE" Name="Gadgeteer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_PDBX_BE" Name="Gadgeteer.pdbx" />
+                  <File Id="Gadgeteer44_PE_BE" Name="Gadgeteer.pe" />
+                  <File Id="Gadgeteer44_PDB_BE" Name="Gadgeteer.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore44LEDir" Name ="le">
+                <Component Id="GadgeteerCore44LEFiles" Guid="{B0DA3E24-EF0E-407A-9A7B-DC417D05C5E7}">
+                  <File Id="Gadgeteer44_DLL_LE" Name="Gadgeteer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_PDBX_LE" Name="Gadgeteer.pdbx" />
+                  <File Id="Gadgeteer44_PE_LE" Name="Gadgeteer.pe" />
+                  <File Id="Gadgeteer44_PDB_LE" Name="Gadgeteer.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core WebClient Library 4.4 -->
+            <Directory Id="GadgeteerCore44WebClientDir" Name=".NET Micro Framework 4.4" FileSource="$(var.WebClient44.TargetDir)">
+
+              <Component Id="GadgeteerCore44WebClientFiles" Guid="{FC5BED73-2E41-4E18-83B0-D2F8DF13D3D7}">
+                <File Id="Gadgeteer44_WebClient_DLL" Name="Gadgeteer.WebClient.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer44_WebClient_XML" Name="Gadgeteer.WebClient.xml" />
+                <File Id="Gadgeteer44_WebClient_PDB" Name="Gadgeteer.WebClient.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore44WebClientBEDir" Name ="be">
+                <Component Id="GadgeteerCore44WebClientBEFiles" Guid="{C8EB8902-F585-476B-A172-0BB399E3DF0F}">
+                  <File Id="Gadgeteer44_WebClient_DLL_BE" Name="Gadgeteer.WebClient.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_WebClient_PDBX_BE" Name="Gadgeteer.WebClient.pdbx" />
+                  <File Id="Gadgeteer44_WebClient_PE_BE" Name="Gadgeteer.WebClient.pe" />
+                  <File Id="Gadgeteer44_WebClient_PDB_BE" Name="Gadgeteer.WebClient.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore44WebClientLEDir" Name ="le">
+                <Component Id="GadgeteerCore44WebClientLEFiles" Guid="{C92AD4D6-0FF7-40CC-857C-5E70D925B4FD}">
+                  <File Id="Gadgeteer44_WebClient_DLL_LE" Name="Gadgeteer.WebClient.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_WebClient_PDBX_LE" Name="Gadgeteer.WebClient.pdbx" />
+                  <File Id="Gadgeteer44_WebClient_PE_LE" Name="Gadgeteer.WebClient.pe" />
+                  <File Id="Gadgeteer44_WebClient_PDB_LE" Name="Gadgeteer.WebClient.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core WebServer Library 4.4 -->
+            <Directory Id="GadgeteerCore44WebServerDir" Name=".NET Micro Framework 4.4" FileSource="$(var.WebServer44.TargetDir)">
+
+              <Component Id="GadgeteerCore44WebServerFiles" Guid="{4A5283AE-26FE-491D-8039-0E2340AA05D0}">
+                <File Id="Gadgeteer44_WebServer_DLL" Name="Gadgeteer.WebServer.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer44_WebServer_XML" Name="Gadgeteer.WebServer.xml" />
+                <File Id="Gadgeteer44_WebServer_PDB" Name="Gadgeteer.WebServer.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore44WebServerBEDir" Name ="be">
+                <Component Id="GadgeteerCore44WebServerBEFiles" Guid="{1C98FDE7-713C-4158-B0B8-B82542664E14}">
+                  <File Id="Gadgeteer44_WebServer_DLL_BE" Name="Gadgeteer.WebServer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_WebServer_PDBX_BE" Name="Gadgeteer.WebServer.pdbx" />
+                  <File Id="Gadgeteer44_WebServer_PE_BE" Name="Gadgeteer.WebServer.pe" />
+                  <File Id="Gadgeteer44_WebServer_PDB_BE" Name="Gadgeteer.WebServer.pdb" />
+                </Component>
+              </Directory>
+
+              <!--Files that go into Assemblies\.NET Micro Framework 4.4\le\ subdirectory-->
+              <Directory Id ="GadgeteerCore44WebServerLEDir" Name ="le">
+                <Component Id="GadgeteerCore44WebServerLEFiles" Guid="{4D7C6A8E-F664-4810-A54F-B26FE6C11B73}">
+                  <File Id="Gadgeteer44_WebServer_DLL_LE" Name="Gadgeteer.WebServer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_WebServer_PDBX_LE" Name="Gadgeteer.WebServer.pdbx" />
+                  <File Id="Gadgeteer44_WebServer_PE_LE" Name="Gadgeteer.WebServer.pe" />
+                  <File Id="Gadgeteer44_WebServer_PDB_LE" Name="Gadgeteer.WebServer.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core DaisyLink Library 4.4 -->
+            <Directory Id="GadgeteerCore44DaisyLinkDir" Name=".NET Micro Framework 4.4" FileSource="$(var.DaisyLink44.TargetDir)">
+
+              <Component Id="GadgeteerCore44DaisyLinkFiles" Guid="{B7A73FB4-126C-4DEE-A810-50554F5F7D82}">
+                <File Id="Gadgeteer44_DaisyLink_DLL" Name="Gadgeteer.DaisyLink.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer44_DaisyLink_XML" Name="Gadgeteer.DaisyLink.xml" />
+                <File Id="Gadgeteer44_DaisyLink_PDB" Name="Gadgeteer.DaisyLink.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore44DaisyLinkBEDir" Name ="be">
+                <Component Id="GadgeteerCore44DaisyLinkBEFiles" Guid="{948B8E6D-59B5-4E91-8A26-4EA19F70AFA1}">
+                  <File Id="Gadgeteer44_DaisyLink_DLL_BE" Name="Gadgeteer.DaisyLink.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_DaisyLink_PDBX_BE" Name="Gadgeteer.DaisyLink.pdbx" />
+                  <File Id="Gadgeteer44_DaisyLink_PE_BE" Name="Gadgeteer.DaisyLink.pe" />
+                  <File Id="Gadgeteer44_DaisyLink_PDB_BE" Name="Gadgeteer.DaisyLink.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore44DaisyLinkLEDir" Name ="le">
+                <Component Id="GadgeteerCore44DaisyLinkLEFiles" Guid="{AA6F68EC-2E4C-49FE-A765-5915BC1C8566}">
+                  <File Id="Gadgeteer44_DaisyLink_DLL_LE" Name="Gadgeteer.DaisyLink.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_DaisyLink_PDBX_LE" Name="Gadgeteer.DaisyLink.pdbx" />
+                  <File Id="Gadgeteer44_DaisyLink_PE_LE" Name="Gadgeteer.DaisyLink.pe" />
+                  <File Id="Gadgeteer44_DaisyLink_PDB_LE" Name="Gadgeteer.DaisyLink.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core Serial Library 4.4 -->
+            <Directory Id="GadgeteerCore44SerialDir" Name=".NET Micro Framework 4.4" FileSource="$(var.Serial44.TargetDir)">
+
+              <Component Id="GadgeteerCore44SerialFiles" Guid="{A3A098E9-2453-4245-95ED-2DC921C35F58}">
+                <File Id="Gadgeteer44_Serial_DLL" Name="Gadgeteer.Serial.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer44_Serial_XML" Name="Gadgeteer.Serial.xml" />
+                <File Id="Gadgeteer44_Serial_PDB" Name="Gadgeteer.Serial.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore44SerialBEDir" Name ="be">
+                <Component Id="GadgeteerCore44SerialBEFiles" Guid="{98353577-8E44-46DF-A113-03B1DDB969ED}">
+                  <File Id="Gadgeteer44_Serial_DLL_BE" Name="Gadgeteer.Serial.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_Serial_PDBX_BE" Name="Gadgeteer.Serial.pdbx" />
+                  <File Id="Gadgeteer44_Serial_PE_BE" Name="Gadgeteer.Serial.pe" />
+                  <File Id="Gadgeteer44_Serial_PDB_BE" Name="Gadgeteer.Serial.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore44SerialLEDir" Name ="le">
+                <Component Id="GadgeteerCore44SerialLEFiles" Guid="{4ACEF39D-C9D9-4D87-97F3-F03E7D4845AA}">
+                  <File Id="Gadgeteer44_Serial_DLL_LE" Name="Gadgeteer.Serial.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_Serial_PDBX_LE" Name="Gadgeteer.Serial.pdbx" />
+                  <File Id="Gadgeteer44_Serial_PE_LE" Name="Gadgeteer.Serial.pe" />
+                  <File Id="Gadgeteer44_Serial_PDB_LE" Name="Gadgeteer.Serial.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core SPI Library 4.4 -->
+            <Directory Id="GadgeteerCore44SPIDir" Name=".NET Micro Framework 4.4" FileSource="$(var.SPI44.TargetDir)">
+
+              <Component Id="GadgeteerCore44SPIFiles" Guid="{0E47FCE4-AE17-4E18-8636-836FAD6F9C07}">
+                <File Id="Gadgeteer44_SPI_DLL" Name="Gadgeteer.SPI.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer44_SPI_XML" Name="Gadgeteer.SPI.xml" />
+                <File Id="Gadgeteer44_SPI_PDB" Name="Gadgeteer.SPI.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore44SPIBEDir" Name ="be">
+                <Component Id="GadgeteerCore44SPIBEFiles" Guid="{64AE825E-2C43-4F7E-9E60-214494E24855}">
+                  <File Id="Gadgeteer44_SPI_DLL_BE" Name="Gadgeteer.SPI.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_SPI_PDBX_BE" Name="Gadgeteer.SPI.pdbx" />
+                  <File Id="Gadgeteer44_SPI_PE_BE" Name="Gadgeteer.SPI.pe" />
+                  <File Id="Gadgeteer44_SPI_PDB_BE" Name="Gadgeteer.SPI.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.4\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore44SPILEDir" Name ="le">
+                <Component Id="GadgeteerCore44SPILEFiles" Guid="{E92BCE49-BD70-4880-85AA-3455F845266C}">
+                  <File Id="Gadgeteer44_SPI_DLL_LE" Name="Gadgeteer.SPI.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer44_SPI_PDBX_LE" Name="Gadgeteer.SPI.pdbx" />
+                  <File Id="Gadgeteer44_SPI_PE_LE" Name="Gadgeteer.SPI.pe" />
+                  <File Id="Gadgeteer44_SPI_PDB_LE" Name="Gadgeteer.SPI.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+
+            <!-- == Gadgeteer Core 4.3 == -->
+            <Directory Id="GadgeteerCore43Dir" Name=".NET Micro Framework 4.3" FileSource="$(var.Gadgeteer43.TargetDir)">
+
+              <Component Id="GadgeteerCore43Files" Guid="{55A7E0B6-81AE-4261-8A22-47C25FB8C3C4}">
+                <File Id="Gadgeteer43_DLL" Name="Gadgeteer.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer43_XML" Name="Gadgeteer.xml" />
+                <File Id="Gadgeteer43_PDB" Name="Gadgeteer.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore43BEDir" Name ="be">
+                <Component Id="GadgeteerCore43BEFiles" Guid="{02CFE4FD-2E14-44F5-94B0-F4178FB75A8B}">
+                  <File Id="Gadgeteer43_DLL_BE" Name="Gadgeteer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_PDBX_BE" Name="Gadgeteer.pdbx" />
+                  <File Id="Gadgeteer43_PE_BE" Name="Gadgeteer.pe" />
+                  <File Id="Gadgeteer43_PDB_BE" Name="Gadgeteer.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore43LEDir" Name ="le">
+                <Component Id="GadgeteerCore43LEFiles" Guid="{84499CB9-B510-4F30-A91E-3B8316D28BC5}">
+                  <File Id="Gadgeteer43_DLL_LE" Name="Gadgeteer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_PDBX_LE" Name="Gadgeteer.pdbx" />
+                  <File Id="Gadgeteer43_PE_LE" Name="Gadgeteer.pe" />
+                  <File Id="Gadgeteer43_PDB_LE" Name="Gadgeteer.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core WebClient Library 4.3 -->
+            <Directory Id="GadgeteerCore43WebClientDir" Name=".NET Micro Framework 4.3" FileSource="$(var.WebClient43.TargetDir)">
+
+              <Component Id="GadgeteerCore43WebClientFiles" Guid="{730D4C4F-2E36-4546-A2B2-75981C748B59}">
+                <File Id="Gadgeteer43_WebClient_DLL" Name="Gadgeteer.WebClient.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer43_WebClient_XML" Name="Gadgeteer.WebClient.xml" />
+                <File Id="Gadgeteer43_WebClient_PDB" Name="Gadgeteer.WebClient.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore43WebClientBEDir" Name ="be">
+                <Component Id="GadgeteerCore43WebClientBEFiles" Guid="{3643CCF3-74F4-4F3C-A18D-C80594CEF1BB}">
+                  <File Id="Gadgeteer43_WebClient_DLL_BE" Name="Gadgeteer.WebClient.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_WebClient_PDBX_BE" Name="Gadgeteer.WebClient.pdbx" />
+                  <File Id="Gadgeteer43_WebClient_PE_BE" Name="Gadgeteer.WebClient.pe" />
+                  <File Id="Gadgeteer43_WebClient_PDB_BE" Name="Gadgeteer.WebClient.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore43WebClientLEDir" Name ="le">
+                <Component Id="GadgeteerCore43WebClientLEFiles" Guid="{18850B49-A5D6-4560-9882-0224D393BDC4}">
+                  <File Id="Gadgeteer43_WebClient_DLL_LE" Name="Gadgeteer.WebClient.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_WebClient_PDBX_LE" Name="Gadgeteer.WebClient.pdbx" />
+                  <File Id="Gadgeteer43_WebClient_PE_LE" Name="Gadgeteer.WebClient.pe" />
+                  <File Id="Gadgeteer43_WebClient_PDB_LE" Name="Gadgeteer.WebClient.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core WebServer Library 4.3 -->
+            <Directory Id="GadgeteerCore43WebServerDir" Name=".NET Micro Framework 4.3" FileSource="$(var.WebServer43.TargetDir)">
+
+              <Component Id="GadgeteerCore43WebServerFiles" Guid="{992F59AC-8E98-49DD-A94C-18AF3209D22C}">
+                <File Id="Gadgeteer43_WebServer_DLL" Name="Gadgeteer.WebServer.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer43_WebServer_XML" Name="Gadgeteer.WebServer.xml" />
+                <File Id="Gadgeteer43_WebServer_PDB" Name="Gadgeteer.WebServer.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore43WebServerBEDir" Name ="be">
+                <Component Id="GadgeteerCore43WebServerBEFiles" Guid="{F02D1B49-1354-40C7-8F77-6522680FD931}">
+                  <File Id="Gadgeteer43_WebServer_DLL_BE" Name="Gadgeteer.WebServer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_WebServer_PDBX_BE" Name="Gadgeteer.WebServer.pdbx" />
+                  <File Id="Gadgeteer43_WebServer_PE_BE" Name="Gadgeteer.WebServer.pe" />
+                  <File Id="Gadgeteer43_WebServer_PDB_BE" Name="Gadgeteer.WebServer.pdb" />
+                </Component>
+              </Directory>
+
+              <!--Files that go into Assemblies\.NET Micro Framework 4.3\le\ subdirectory-->
+              <Directory Id ="GadgeteerCore43WebServerLEDir" Name ="le">
+                <Component Id="GadgeteerCore43WebServerLEFiles" Guid="{85957657-E70A-4876-929E-8715ACDA2A06}">
+                  <File Id="Gadgeteer43_WebServer_DLL_LE" Name="Gadgeteer.WebServer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_WebServer_PDBX_LE" Name="Gadgeteer.WebServer.pdbx" />
+                  <File Id="Gadgeteer43_WebServer_PE_LE" Name="Gadgeteer.WebServer.pe" />
+                  <File Id="Gadgeteer43_WebServer_PDB_LE" Name="Gadgeteer.WebServer.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core DaisyLink Library 4.3 -->
+            <Directory Id="GadgeteerCore43DaisyLinkDir" Name=".NET Micro Framework 4.3" FileSource="$(var.DaisyLink43.TargetDir)">
+
+              <Component Id="GadgeteerCore43DaisyLinkFiles" Guid="{CF0D72B8-01FB-474C-A001-1EAAA34A55A2}">
+                <File Id="Gadgeteer43_DaisyLink_DLL" Name="Gadgeteer.DaisyLink.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer43_DaisyLink_XML" Name="Gadgeteer.DaisyLink.xml" />
+                <File Id="Gadgeteer43_DaisyLink_PDB" Name="Gadgeteer.DaisyLink.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore43DaisyLinkBEDir" Name ="be">
+                <Component Id="GadgeteerCore43DaisyLinkBEFiles" Guid="{6C44C253-8C72-4C86-A131-B87265BA1528}">
+                  <File Id="Gadgeteer43_DaisyLink_DLL_BE" Name="Gadgeteer.DaisyLink.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_DaisyLink_PDBX_BE" Name="Gadgeteer.DaisyLink.pdbx" />
+                  <File Id="Gadgeteer43_DaisyLink_PE_BE" Name="Gadgeteer.DaisyLink.pe" />
+                  <File Id="Gadgeteer43_DaisyLink_PDB_BE" Name="Gadgeteer.DaisyLink.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore43DaisyLinkLEDir" Name ="le">
+                <Component Id="GadgeteerCore43DaisyLinkLEFiles" Guid="{48DFDE82-2459-4553-9C7F-60667CD15D29}">
+                  <File Id="Gadgeteer43_DaisyLink_DLL_LE" Name="Gadgeteer.DaisyLink.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_DaisyLink_PDBX_LE" Name="Gadgeteer.DaisyLink.pdbx" />
+                  <File Id="Gadgeteer43_DaisyLink_PE_LE" Name="Gadgeteer.DaisyLink.pe" />
+                  <File Id="Gadgeteer43_DaisyLink_PDB_LE" Name="Gadgeteer.DaisyLink.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core Serial Library 4.3 -->
+            <Directory Id="GadgeteerCore43SerialDir" Name=".NET Micro Framework 4.3" FileSource="$(var.Serial43.TargetDir)">
+
+              <Component Id="GadgeteerCore43SerialFiles" Guid="{BAD5F016-9109-4354-82C5-635BC46B6445}">
+                <File Id="Gadgeteer43_Serial_DLL" Name="Gadgeteer.Serial.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer43_Serial_XML" Name="Gadgeteer.Serial.xml" />
+                <File Id="Gadgeteer43_Serial_PDB" Name="Gadgeteer.Serial.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore43SerialBEDir" Name ="be">
+                <Component Id="GadgeteerCore43SerialBEFiles" Guid="{99AA3012-5A25-4DEC-9C35-6FB434B58C7F}">
+                  <File Id="Gadgeteer43_Serial_DLL_BE" Name="Gadgeteer.Serial.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_Serial_PDBX_BE" Name="Gadgeteer.Serial.pdbx" />
+                  <File Id="Gadgeteer43_Serial_PE_BE" Name="Gadgeteer.Serial.pe" />
+                  <File Id="Gadgeteer43_Serial_PDB_BE" Name="Gadgeteer.Serial.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore43SerialLEDir" Name ="le">
+                <Component Id="GadgeteerCore43SerialLEFiles" Guid="{DC656F77-178A-4033-8620-ED2FE08004FE}">
+                  <File Id="Gadgeteer43_Serial_DLL_LE" Name="Gadgeteer.Serial.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_Serial_PDBX_LE" Name="Gadgeteer.Serial.pdbx" />
+                  <File Id="Gadgeteer43_Serial_PE_LE" Name="Gadgeteer.Serial.pe" />
+                  <File Id="Gadgeteer43_Serial_PDB_LE" Name="Gadgeteer.Serial.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core SPI Library 4.3 -->
+            <Directory Id="GadgeteerCore43SPIDir" Name=".NET Micro Framework 4.3" FileSource="$(var.SPI43.TargetDir)">
+
+              <Component Id="GadgeteerCore43SPIFiles" Guid="{6CF1C5B4-D435-4AB7-9D32-0EF8C28F6C93}">
+                <File Id="Gadgeteer43_SPI_DLL" Name="Gadgeteer.SPI.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer43_SPI_XML" Name="Gadgeteer.SPI.xml" />
+                <File Id="Gadgeteer43_SPI_PDB" Name="Gadgeteer.SPI.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore43SPIBEDir" Name ="be">
+                <Component Id="GadgeteerCore43SPIBEFiles" Guid="{69C6C246-1452-45A7-B8D4-2641A5321FA2}">
+                  <File Id="Gadgeteer43_SPI_DLL_BE" Name="Gadgeteer.SPI.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_SPI_PDBX_BE" Name="Gadgeteer.SPI.pdbx" />
+                  <File Id="Gadgeteer43_SPI_PE_BE" Name="Gadgeteer.SPI.pe" />
+                  <File Id="Gadgeteer43_SPI_PDB_BE" Name="Gadgeteer.SPI.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.3\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore43SPILEDir" Name ="le">
+                <Component Id="GadgeteerCore43SPILEFiles" Guid="{731E37CB-8DD8-467E-888D-9D074B3B7AA8}">
+                  <File Id="Gadgeteer43_SPI_DLL_LE" Name="Gadgeteer.SPI.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer43_SPI_PDBX_LE" Name="Gadgeteer.SPI.pdbx" />
+                  <File Id="Gadgeteer43_SPI_PE_LE" Name="Gadgeteer.SPI.pe" />
+                  <File Id="Gadgeteer43_SPI_PDB_LE" Name="Gadgeteer.SPI.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+
+            <!-- == Gadgeteer Core 4.2 == -->
+            <Directory Id="GadgeteerCore42Dir" Name=".NET Micro Framework 4.2" FileSource="$(var.Gadgeteer42.TargetDir)">
+
+              <Component Id="GadgeteerCore42Files" Guid="{8B1BE034-778C-4AC2-830E-892EF7349C78}">
+                <File Id="Gadgeteer42_DLL" Name="Gadgeteer.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer42_XML" Name="Gadgeteer.xml" />
+                <File Id="Gadgeteer42_PDB" Name="Gadgeteer.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore42BEDir" Name ="be">
+                <Component Id="GadgeteerCore42BEFiles" Guid="{57FF9998-8170-4DB3-8EF9-5A7796C0C1E6}">
+                  <File Id="Gadgeteer42_DLL_BE" Name="Gadgeteer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_PDBX_BE" Name="Gadgeteer.pdbx" />
+                  <File Id="Gadgeteer42_PE_BE" Name="Gadgeteer.pe" />
+                  <File Id="Gadgeteer42_PDB_BE" Name="Gadgeteer.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore42LEDir" Name ="le">
+                <Component Id="GadgeteerCore42LEFiles" Guid="{160B9954-8EE4-41F8-B9E5-5D0DA57E95C0}">
+                  <File Id="Gadgeteer42_DLL_LE" Name="Gadgeteer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_PDBX_LE" Name="Gadgeteer.pdbx" />
+                  <File Id="Gadgeteer42_PE_LE" Name="Gadgeteer.pe" />
+                  <File Id="Gadgeteer42_PDB_LE" Name="Gadgeteer.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core WebClient Library 4.2 -->
+            <Directory Id="GadgeteerCore42WebClientDir" Name=".NET Micro Framework 4.2" FileSource="$(var.WebClient42.TargetDir)">
+
+              <Component Id="GadgeteerCore42WebClientFiles" Guid="{0A6E19F6-EA83-4979-BF66-9E2C91A7C1B3}">
+                <File Id="Gadgeteer42_WebClient_DLL" Name="Gadgeteer.WebClient.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer42_WebClient_XML" Name="Gadgeteer.WebClient.xml" />
+                <File Id="Gadgeteer42_WebClient_PDB" Name="Gadgeteer.WebClient.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore42WebClientBEDir" Name ="be">
+                <Component Id="GadgeteerCore42WebClientBEFiles" Guid="{313FD018-98A9-46EA-8421-05BAD40BEC92}">
+                  <File Id="Gadgeteer42_WebClient_DLL_BE" Name="Gadgeteer.WebClient.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_WebClient_PDBX_BE" Name="Gadgeteer.WebClient.pdbx" />
+                  <File Id="Gadgeteer42_WebClient_PE_BE" Name="Gadgeteer.WebClient.pe" />
+                  <File Id="Gadgeteer42_WebClient_PDB_BE" Name="Gadgeteer.WebClient.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore42WebClientLEDir" Name ="le">
+                <Component Id="GadgeteerCore42WebClientLEFiles" Guid="{E434E9B6-24BC-4DE2-BB08-32EB746F8E39}">
+                  <File Id="Gadgeteer42_WebClient_DLL_LE" Name="Gadgeteer.WebClient.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_WebClient_PDBX_LE" Name="Gadgeteer.WebClient.pdbx" />
+                  <File Id="Gadgeteer42_WebClient_PE_LE" Name="Gadgeteer.WebClient.pe" />
+                  <File Id="Gadgeteer42_WebClient_PDB_LE" Name="Gadgeteer.WebClient.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core WebServer Library 4.2 -->
+            <Directory Id="GadgeteerCore42WebServerDir" Name=".NET Micro Framework 4.2" FileSource="$(var.WebServer42.TargetDir)">
+
+              <Component Id="GadgeteerCore42WebServerFiles" Guid="{6420FEA9-4198-4311-9FA1-ED5C5AE5446D}">
+                <File Id="Gadgeteer42_WebServer_DLL" Name="Gadgeteer.WebServer.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer42_WebServer_XML" Name="Gadgeteer.WebServer.xml" />
+                <File Id="Gadgeteer42_WebServer_PDB" Name="Gadgeteer.WebServer.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore42WebServerBEDir" Name ="be">
+                <Component Id="GadgeteerCore42WebServerBEFiles" Guid="{7E4F72A5-DF26-46EA-B0F2-10ECB7C8EA7A}">
+                  <File Id="Gadgeteer42_WebServer_DLL_BE" Name="Gadgeteer.WebServer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_WebServer_PDBX_BE" Name="Gadgeteer.WebServer.pdbx" />
+                  <File Id="Gadgeteer42_WebServer_PE_BE" Name="Gadgeteer.WebServer.pe" />
+                  <File Id="Gadgeteer42_WebServer_PDB_BE" Name="Gadgeteer.WebServer.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore42WebServerLEDir" Name ="le">
+                <Component Id="GadgeteerCore42WebServerLEFiles" Guid="{68141419-37CD-4E0A-867E-354116AA5BCE}">
+                  <File Id="Gadgeteer42_WebServer_DLL_LE" Name="Gadgeteer.WebServer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_WebServer_PDBX_LE" Name="Gadgeteer.WebServer.pdbx" />
+                  <File Id="Gadgeteer42_WebServer_PE_LE" Name="Gadgeteer.WebServer.pe" />
+                  <File Id="Gadgeteer42_WebServer_PDB_LE" Name="Gadgeteer.WebServer.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core DaisyLink Library 4.2 -->
+            <Directory Id="GadgeteerCore42DaisyLinkDir" Name=".NET Micro Framework 4.2" FileSource="$(var.DaisyLink42.TargetDir)">
+
+              <Component Id="GadgeteerCore42DaisyLinkFiles" Guid="{F0768721-3CB2-40C1-8606-990EE8BC455A}">
+                <File Id="Gadgeteer42_DaisyLink_DLL" Name="Gadgeteer.DaisyLink.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer42_DaisyLink_XML" Name="Gadgeteer.DaisyLink.xml" />
+                <File Id="Gadgeteer42_DaisyLink_PDB" Name="Gadgeteer.DaisyLink.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore42DaisyLinkBEDir" Name ="be">
+                <Component Id="GadgeteerCore42DaisyLinkBEFiles" Guid="{8F5133DC-5F94-428A-8060-6FA3F3BFF8E3}">
+                  <File Id="Gadgeteer42_DaisyLink_DLL_BE" Name="Gadgeteer.DaisyLink.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_DaisyLink_PDBX_BE" Name="Gadgeteer.DaisyLink.pdbx" />
+                  <File Id="Gadgeteer42_DaisyLink_PE_BE" Name="Gadgeteer.DaisyLink.pe" />
+                  <File Id="Gadgeteer42_DaisyLink_PDB_BE" Name="Gadgeteer.DaisyLink.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore42DaisyLinkLEDir" Name ="le">
+                <Component Id="GadgeteerCore42DaisyLinkLEFiles" Guid="{87AB57B4-53F4-4C16-88DF-56CE84EE15AB}">
+                  <File Id="Gadgeteer42_DaisyLink_DLL_LE" Name="Gadgeteer.DaisyLink.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_DaisyLink_PDBX_LE" Name="Gadgeteer.DaisyLink.pdbx" />
+                  <File Id="Gadgeteer42_DaisyLink_PE_LE" Name="Gadgeteer.DaisyLink.pe" />
+                  <File Id="Gadgeteer42_DaisyLink_PDB_LE" Name="Gadgeteer.DaisyLink.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core Serial Library 4.2 -->
+            <Directory Id="GadgeteerCore42SerialDir" Name=".NET Micro Framework 4.2" FileSource="$(var.Serial42.TargetDir)">
+
+              <Component Id="GadgeteerCore42SerialFiles" Guid="{59BD78E4-8D9F-4C04-BC98-64E179C281F9}">
+                <File Id="Gadgeteer42_Serial_DLL" Name="Gadgeteer.Serial.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer42_Serial_XML" Name="Gadgeteer.Serial.xml" />
+                <File Id="Gadgeteer42_Serial_PDB" Name="Gadgeteer.Serial.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore42SerialBEDir" Name ="be">
+                <Component Id="GadgeteerCore42SerialBEFiles" Guid="{46178B52-AD22-44FD-BF4F-16422329E44F}">
+                  <File Id="Gadgeteer42_Serial_DLL_BE" Name="Gadgeteer.Serial.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_Serial_PDBX_BE" Name="Gadgeteer.Serial.pdbx" />
+                  <File Id="Gadgeteer42_Serial_PE_BE" Name="Gadgeteer.Serial.pe" />
+                  <File Id="Gadgeteer42_Serial_PDB_BE" Name="Gadgeteer.Serial.pdb" />
+                </Component>
+              </Directory>
+
+              <!--Files that go into Assemblies\.NET Micro Framework 4.2\le\ subdirectory-->
+              <Directory Id ="GadgeteerCore42SerialLEDir" Name ="le">
+                <Component Id="GadgeteerCore42SerialLEFiles" Guid="{33C4D9C2-5C35-4A3D-9184-636E4A958915}">
+                  <File Id="Gadgeteer42_Serial_DLL_LE" Name="Gadgeteer.Serial.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_Serial_PDBX_LE" Name="Gadgeteer.Serial.pdbx" />
+                  <File Id="Gadgeteer42_Serial_PE_LE" Name="Gadgeteer.Serial.pe" />
+                  <File Id="Gadgeteer42_Serial_PDB_LE" Name="Gadgeteer.Serial.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core SPI Library 4.2 -->
+            <Directory Id="GadgeteerCore42SPIDir" Name=".NET Micro Framework 4.2" FileSource="$(var.SPI42.TargetDir)">
+
+              <Component Id="GadgeteerCore42SPIFiles" Guid="{5B6F3229-1F3C-4582-821C-F86675B8F8B1}">
+                <File Id="Gadgeteer42_SPI_DLL" Name="Gadgeteer.SPI.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer42_SPI_XML" Name="Gadgeteer.SPI.xml" />
+                <File Id="Gadgeteer42_SPI_PDB" Name="Gadgeteer.SPI.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore42SPIBEDir" Name ="be">
+                <Component Id="GadgeteerCore42SPIBEFiles" Guid="{8FD09782-436B-46C3-8F50-1E12430B6CB6}">
+                  <File Id="Gadgeteer42_SPI_DLL_BE" Name="Gadgeteer.SPI.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_SPI_PDBX_BE" Name="Gadgeteer.SPI.pdbx" />
+                  <File Id="Gadgeteer42_SPI_PE_BE" Name="Gadgeteer.SPI.pe" />
+                  <File Id="Gadgeteer42_SPI_PDB_BE" Name="Gadgeteer.SPI.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.2\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore42SPILEDir" Name ="le">
+                <Component Id="GadgeteerCore42SPILEFiles" Guid="{CF10B668-F123-44AC-BDCB-2A0C6A31D38B}">
+                  <File Id="Gadgeteer42_SPI_DLL_LE" Name="Gadgeteer.SPI.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer42_SPI_PDBX_LE" Name="Gadgeteer.SPI.pdbx" />
+                  <File Id="Gadgeteer42_SPI_PE_LE" Name="Gadgeteer.SPI.pe" />
+                  <File Id="Gadgeteer42_SPI_PDB_LE" Name="Gadgeteer.SPI.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+
+            <!-- == Gadgeteer Core 4.1 == -->
+            <Directory Id="GadgeteerCore41Dir" Name=".NET Micro Framework 4.1" FileSource="$(var.Gadgeteer41.TargetDir)">
+
+              <Component Id="GadgeteerCore41Files" Guid="{20CDFFF1-2E36-45CE-A4C1-1DFA1FB123CC}">
+                <File Id="Gadgeteer41_DLL" Name="Gadgeteer.dll"  KeyPath="yes" />
+                <File Id="Gadgeteer41_XML" Name="Gadgeteer.xml" />
+                <File Id="Gadgeteer41_PDB" Name="Gadgeteer.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.1\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore41BEDir" Name ="be">
+                <Component Id="GadgeteerCore41BEFiles" Guid="{A8BF5A8C-FE29-46D9-948A-D58846A4492B}">
+                  <File Id="Gadgeteer41_DLL_BE" Name="Gadgeteer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer41_PDBX_BE" Name="Gadgeteer.pdbx" />
+                  <File Id="Gadgeteer41_PE_BE" Name="Gadgeteer.pe" />
+                  <File Id="Gadgeteer41_PDB_BE" Name="Gadgeteer.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.1\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore41LEDir" Name ="le">
+                <Component Id="GadgeteerCore41LEFiles" Guid="{C8A4D825-5FA2-43EB-A344-69B708438FB4}">
+                  <File Id="Gadgeteer41_DLL_LE" Name="Gadgeteer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer41_PDBX_LE" Name="Gadgeteer.pdbx" />
+                  <File Id="Gadgeteer41_PE_LE" Name="Gadgeteer.pe" />
+                  <File Id="Gadgeteer41_PDB_LE" Name="Gadgeteer.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core WebClient Library 4.1 -->
+            <Directory Id="GadgeteerCore41WebClientDir" Name=".NET Micro Framework 4.1" FileSource="$(var.WebClient41.TargetDir)">
+
+              <Component Id="GadgeteerCore41WebClientFiles" Guid="{603C3B94-8D2D-4EB2-9155-A420911194E8}">
+                <File Id="Gadgeteer41_WebClient_DLL" Name="Gadgeteer.WebClient.dll" KeyPath="yes" />
+                <File Id="Gadgeteer41_WebClient_XML" Name="Gadgeteer.WebClient.xml" />
+                <File Id="Gadgeteer41_WebClient_PDB" Name="Gadgeteer.WebClient.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.1\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore41WebClientBEDir" Name ="be">
+                <Component Id="GadgeteerCore41WebClientBEFiles" Guid="{67612494-AF78-46A2-AE28-133B90E64B35}">
+                  <File Id="Gadgeteer41_WebClient_DLL_BE" Name="Gadgeteer.WebClient.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer41_WebClient_PDBX_BE" Name="Gadgeteer.WebClient.pdbx" />
+                  <File Id="Gadgeteer41_WebClient_PE_BE" Name="Gadgeteer.WebClient.pe" />
+                  <File Id="Gadgeteer41_WebClient_PDB_BE" Name="Gadgeteer.WebClient.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.1\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore41WebClientLEDir" Name ="le">
+                <Component Id="GadgeteerCore41WebClientLEFiles" Guid="{6497F27B-314E-4885-BC35-13F4160CA9AA}">
+                  <File Id="Gadgeteer41_WebClient_DLL_LE" Name="Gadgeteer.WebClient.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer41_WebClient_PDBX_LE" Name="Gadgeteer.WebClient.pdbx" />
+                  <File Id="Gadgeteer41_WebClient_PE_LE" Name="Gadgeteer.WebClient.pe" />
+                  <File Id="Gadgeteer41_WebClient_PDB_LE" Name="Gadgeteer.WebClient.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!-- Gadgeteer Core WebServer Library 4.1 -->
+            <Directory Id="GadgeteerCore41WebServerDir" Name=".NET Micro Framework 4.1" FileSource="$(var.WebServer41.TargetDir)">
+
+              <Component Id="GadgeteerCore41WebServerFiles" Guid="{4AF9BF11-0A26-48C2-9B79-2393DE1CAD73}">
+                <File Id="Gadgeteer41_WebServer_DLL" Name="Gadgeteer.WebServer.dll" KeyPath="yes" />
+                <File Id="Gadgeteer41_WebServer_XML" Name="Gadgeteer.WebServer.xml" />
+                <File Id="Gadgeteer41_WebServer_PDB" Name="Gadgeteer.WebServer.pdb" />
+              </Component>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.1\be\ subdirectory -->
+              <Directory Id ="GadgeteerCore41WebServerBEDir" Name ="be">
+                <Component Id="GadgeteerCore41WebServerBEFiles" Guid="{304A452D-F8EE-4D8E-97AC-B124F298A598}">
+                  <File Id="Gadgeteer41_WebServer_DLL_BE" Name="Gadgeteer.WebServer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer41_WebServer_PDBX_BE" Name="Gadgeteer.WebServer.pdbx" />
+                  <File Id="Gadgeteer41_WebServer_PE_BE" Name="Gadgeteer.WebServer.pe" />
+                  <File Id="Gadgeteer41_WebServer_PDB_BE" Name="Gadgeteer.WebServer.pdb" />
+                </Component>
+              </Directory>
+
+              <!-- Files that go into Assemblies\.NET Micro Framework 4.1\le\ subdirectory -->
+              <Directory Id ="GadgeteerCore41WebServerLEDir" Name ="le">
+                <Component Id="GadgeteerCore41WebServerLEFiles" Guid="{A9BDA637-3CB1-432B-A5BB-29CB35D315E9}">
+                  <File Id="Gadgeteer41_WebServer_DLL_LE" Name="Gadgeteer.WebServer.dll" KeyPath="yes"/>
+                  <File Id="Gadgeteer41_WebServer_PDBX_LE" Name="Gadgeteer.WebServer.pdbx" />
+                  <File Id="Gadgeteer41_WebServer_PE_LE" Name="Gadgeteer.WebServer.pe" />
+                  <File Id="Gadgeteer41_WebServer_PDB_LE" Name="Gadgeteer.WebServer.pdb" />
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+
+          <!-- Release notes -->
+          <Component Id="ReleaseNotesFiles" Guid="{A29BB08A-4351-42ED-835B-45764F873886}">
+            <File Name="ReleaseNotes.txt" Source="..\..\ReleaseNotes.txt" KeyPath="yes">
+              <!--
+              <Shortcut Id="ReleaseNotesShortcut" Advertise="yes" Directory="ProgramMenuSubFolder" Name="Release Notes">
+                <Icon Id="TextFileIcon.exe" SourceFile="notepad.ico" />
+              </Shortcut>
+              -->
+            </File>
+
+            <!--<RemoveFolder Id="ProgramMenuSubFolderRemove" Directory="ProgramMenuSubFolder" On="uninstall" />-->
+          </Component>
+
+          <!-- Files that go into Documentation -->
+          <Directory Id="DocumentationDir" Name="Documentation">
+            <!-- CHM -->
+            <!--
+            <Component Id="CHMFile" Guid="{024781FD-1F87-4B05-89EC-4FD91859E082}" Win64="$(var.Win64)">
+              <File Name="MicrosoftGadgeteerSDK.chm" KeyPath="yes">
+                <Shortcut Id="CHMShortcut" Advertise="yes" Directory="ProgramMenuSubFolder" Name="Microsoft Gadgeteer Help">
+                  <Icon Id="HelpFileIcon.exe" SourceFile="help.ico" />
+                </Shortcut>
+              </File>
+
+              <RemoveFolder Id="ProgramMenuSubFolderRemove" Directory="ProgramMenuSubFolder" On="uninstall" />
+            </Component>
+            -->
+          </Directory>
+
+        </Directory>
+      </Directory>
+    </Directory>
+    <!-- Program Files -->
+
+    <!-- Start menu folder -->
+    <!--
+    <Directory Id="ProgramMenuFolder">
+      <Directory Id="ProgramMenuSubFolder" Name="!(loc.GadgeteerName)"/>
+    </Directory>
+    -->
+    <!-- Start menu folder -->
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- Visual Studio 2015 -->
+    <Directory Id="VS14_ROOT">
+      <!-- This is C:\Program Files (x86)\Microsoft Visual Studio 14.0\ for an X64 machine using standard directory locations. -->
+
+      <!-- Schema -->
+      <Directory Id="VS14_Xml" Name="xml">
+        <Directory Id="VS14_Xml_Schemas" Name="Schemas" FileSource="..\..\">
+          <Component Id="VS14_Schema" Guid="{68FA3043-E7A8-4ABB-AA32-2FC220B36E26}">
+            <Condition>VS14_ROOT</Condition>
+            <File Id="VS14_Schema_XSD" Name="GadgeteerHardware.xsd" KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+      <!-- Schema -->
+
+      <!-- Extensions -->
+      <Directory Id="VS14_Common7" Name="Common7">
+        <Directory Id="VS14_IDE" Name="IDE">
+
+          <!-- REMOVE FALSE CONDITIONS ON ALL 2013 COMPONENTS WHEN PLK IS READY -->
+
+          <!-- Visual Studio 2015 Community or higher editions -->
+          <Directory Id="VS14_Ext" Name="Extensions">
+            <Directory Id="VS14_Ext_Msft" Name="Microsoft">
+
+              <!-- Templates -->
+              <Directory Id="VS14_Ext_Msft_Gdgtr" Name="Gadgeteer" FileSource=".\">
+                <Component Id="VS14_ExtensionManifest" Guid="{3D05CFCB-7218-405B-85FB-23CAFCB24607}">
+                  <Condition>VS14_ROOT</Condition>
+                  <File Id="VS14_Extension_VSIXMANIFEST" Name="Extension.vsixmanifest" KeyPath="yes"/>
+                </Component>
+
+                <!-- Project Templates -->
+                <Directory Id="VS14_PT" Name="ProjectTemplates">
+
+                  <!-- C# -->
+                  <Directory Id="VS14_CS" Name="CSharp">
+                    <Directory Id ="VS14_CS_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VS14_CS_1033" Name="1033">
+                        <Component Id="VS14_CS_AppTemplate" Guid="{03EB4E4E-C955-4F5A-91AE-E823F72AD813}">
+                          <Condition>VS14_ROOT</Condition>
+                          <File Id="VS14_CS_AppTemplateCS_ZIP" Name="A.zip" Source="$(var.AppTemplateCS.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                  <!-- VB -->
+                  <Directory Id="VS14_VB" Name="VisualBasic">
+                    <Directory Id ="VS14_VB_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VS14_VB_1033" Name="1033">
+                        <Component Id="VS14_VB_AppTemplate" Guid="{A6A2EFFC-3CED-47D0-B697-9DE232346000}">
+                          <Condition>VS14_ROOT</Condition>
+                          <File Id="VS14_VB_AppTemplateVB_ZIP" Name="A.zip" Source="$(var.AppTemplateVB.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                </Directory>
+                <!-- Project Templates -->
+
+              </Directory>
+              <!-- Templates -->
+
+            </Directory>
+          </Directory>
+          <!-- Visual Studio 2015 Professional or higher editions -->
+        </Directory>
+      </Directory>
+      <!-- Extensions -->
+
+    </Directory>
+    <!-- Visual Studio 2015 -->
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- Visual Studio 2013 -->
+    <Directory Id="VS12_ROOT">
+      <!-- This is C:\Program Files (x86)\Microsoft Visual Studio 11.0\ for an X64 machine using standard directory locations. -->
+
+      <!-- Schema -->
+      <Directory Id="VS12_Xml" Name="xml">
+        <Directory Id="VS12_Xml_Schemas" Name="Schemas" FileSource="..\..\">
+          <Component Id="VS12_Schema" Guid="{F2BF4E86-0E5C-46B7-9DB6-495E8BE841B4}">
+            <Condition>VS12_ROOT</Condition>
+            <File Id="VS12_Schema_XSD" Name="GadgeteerHardware.xsd" KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+      <!-- Schema -->
+
+      <!-- Extensions -->
+      <Directory Id="VS12_Common7" Name="Common7">
+        <Directory Id="VS12_IDE" Name="IDE">
+
+          <!-- REMOVE FALSE CONDITIONS ON ALL 2013 COMPONENTS WHEN PLK IS READY -->
+
+          <!-- Visual Studio 2013 Professional or higher editions -->
+          <Directory Id="VS12_Ext" Name="Extensions">
+            <Directory Id="VS12_Ext_Msft" Name="Microsoft">
+
+              <!-- Templates -->
+              <Directory Id="VS12_Ext_Msft_Gdgtr" Name="Gadgeteer" FileSource=".\">
+                <Component Id="VS12_ExtensionManifest" Guid="{6F25FF1A-5B2C-4BDE-9D71-B703D9ADA1AC}">
+                  <Condition>VS12_ROOT</Condition>
+                  <File Id="VS12_Extension_VSIXMANIFEST" Name="Extension.vsixmanifest" KeyPath="yes"/>
+                </Component>
+
+                <!-- Project Templates -->
+                <Directory Id="VS12_PT" Name="ProjectTemplates">
+
+                  <!-- C# -->
+                  <Directory Id="VS12_CS" Name="CSharp">
+                    <Directory Id ="VS12_CS_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VS12_CS_1033" Name="1033">
+                        <Component Id="VS12_CS_AppTemplate" Guid="{541EA8FE-8A7B-4680-ABC4-6A766E55C175}">
+                          <Condition>VS12_ROOT</Condition>
+                          <File Id="VS12_CS_AppTemplateCS_ZIP" Name="A.zip" Source="$(var.AppTemplateCS.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                  <!-- VB -->
+                  <Directory Id="VS12_VB" Name="VisualBasic">
+                    <Directory Id ="VS12_VB_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VS12_VB_1033" Name="1033">
+                        <Component Id="VS12_VB_AppTemplate" Guid="{A54785C3-65C1-4CB9-966A-8B40EF1AF65C}">
+                          <Condition>VS12_ROOT</Condition>
+                          <File Id="VS12_VB_AppTemplateVB_ZIP" Name="A.zip" Source="$(var.AppTemplateVB.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                </Directory>
+                <!-- Project Templates -->
+
+              </Directory>
+              <!-- Templates -->
+
+            </Directory>
+          </Directory>
+          <!-- Visual Studio 2013 Professional or higher editions -->
+
+          <!-- Visual Studio Express 2013 for Windows Desktop -->
+          <Directory Id="VSE12_Ext" Name="WDExpressExtensions">
+            <Directory Id="VSE12_Ext_Msft" Name="Microsoft">
+
+              <!-- Templates -->
+              <Directory Id="VSE12_Ext_Msft_Gdgtr" Name="Gadgeteer" FileSource=".\">
+                <Component Id="VSE12_ExtensionManifest" Guid="{3D4F25A7-CA2F-4674-B471-E51328EE809B}">
+                  <Condition>VS12_ROOT</Condition>
+                  <File Id="VSE12_Extension_VSIXMANIFEST" Name="Extension.vsixmanifest" KeyPath="yes"/>
+                </Component>
+
+                <!-- Project Templates -->
+                <Directory Id="VSE12_PT" Name="ProjectTemplates">
+
+                  <!-- C# -->
+                  <Directory Id="VSE12_CS" Name="CSharp">
+                    <Directory Id ="VSE12_CS_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VSE12_CS_1033" Name="1033">
+                        <Component Id="VSE12_CS_AppTemplate" Guid="{8DDA3D0B-ADA2-480A-B4B5-0802636C8267}">
+                          <Condition>VS12_ROOT</Condition>
+                          <File Id="VSE12_CS_AppTemplateCS_ZIP" Name="A.zip" Source="$(var.AppTemplateCS.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                  <!-- VB -->
+                  <Directory Id="VSE12_VB" Name="VisualBasic">
+                    <Directory Id ="VSE12_VB_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VSE12_VB_1033" Name="1033">
+                        <Component Id="VSE12_VB_AppTemplate" Guid="{D1B6997F-9AB1-435C-B13B-FE1623AFB45C}">
+                          <Condition>VS12_ROOT</Condition>
+                          <File Id="VSE12_VB_AppTemplateVB_ZIP" Name="A.zip" Source="$(var.AppTemplateVB.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                </Directory>
+                <!-- Project Templates -->
+
+              </Directory>
+              <!-- Templates -->
+
+            </Directory>
+          </Directory>
+          <!-- Visual Studio Express 2013 for Windows Desktop -->
+
+        </Directory>
+      </Directory>
+      <!-- Extensions -->
+
+    </Directory>
+    <!-- Visual Studio 2013 -->
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <!-- Visual Studio 2012 -->
+    <Directory Id="VS11_ROOT">
+      <!-- This is C:\Program Files (x86)\Microsoft Visual Studio 11.0\ for an X64 machine using standard directory locations. -->
+
+      <!-- Schema -->
+      <Directory Id="VS11_Xml" Name="xml">
+        <Directory Id="VS11_Xml_Schemas" Name="Schemas" FileSource="..\..\">
+          <Component Id="VS11_Schema" Guid="{F07F646D-F7D3-4ECC-948A-5C534DC86286}">
+            <Condition>VS11_ROOT</Condition>
+            <File Id="VS11_Schema_XSD" Name="GadgeteerHardware.xsd" KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+      <!-- Schema -->
+
+      <!-- Extensions -->
+      <Directory Id="VS11_Common7" Name="Common7">
+        <Directory Id="VS11_IDE" Name="IDE">
+
+          <!-- Visual Studio 2012 Professional or higher editions -->
+          <Directory Id="VS11_Ext" Name="Extensions">
+            <Directory Id="VS11_Ext_Msft" Name="Microsoft">
+
+              <!-- Templates -->
+              <Directory Id="VS11_Ext_Msft_Gdgtr" Name="Gadgeteer" FileSource=".\">
+                <Component Id="VS11_ExtensionManifest" Guid="{65E5B1C4-1138-4A9C-8041-3F76988241BB}">
+                  <Condition>VS11_ROOT</Condition>
+                  <File Id="VS11_Extension_VSIXMANIFEST" Name="Extension.vsixmanifest" KeyPath="yes"/>
+                </Component>
+
+                <!-- Project Templates -->
+                <Directory Id="VS11_PT" Name="ProjectTemplates">
+
+                  <!-- C# -->
+                  <Directory Id="VS11_CS" Name="CSharp">
+                    <Directory Id ="VS11_CS_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VS11_CS_1033" Name="1033">
+                        <Component Id="VS11_CS_AppTemplate" Guid="{9619CC6D-D295-4AF2-A65A-D623FB633653}">
+                          <Condition>VS11_ROOT</Condition>
+                          <File Id="VS11_CS_AppTemplateCS_ZIP" Name="A.zip" Source="$(var.AppTemplateCS.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                  <!-- VB -->
+                  <Directory Id="VS11_VB" Name="VisualBasic">
+                    <Directory Id ="VS11_VB_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VS11_VB_1033" Name="1033">
+                        <Component Id="VS11_VB_AppTemplate" Guid="{E2727B05-AFC5-4280-A7DF-E68675E9EF0B}">
+                          <Condition>VS11_ROOT</Condition>
+                          <File Id="VS11_VB_AppTemplateVB_ZIP" Name="A.zip" Source="$(var.AppTemplateVB.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                </Directory>
+                <!-- Project Templates -->
+                
+              </Directory>
+              <!-- Templates -->
+
+            </Directory>
+          </Directory>
+          <!-- Visual Studio 2012 Professional or higher editions -->
+
+          <!-- Visual Studio Express 2012 for Windows Desktop -->
+          <Directory Id="VSE11_Ext" Name="WDExpressExtensions">
+            <Directory Id="VSE11_Ext_Msft" Name="Microsoft">
+
+              <!-- Templates -->
+              <Directory Id="VSE11_Ext_Msft_Gdgtr" Name="Gadgeteer" FileSource=".\">
+                <Component Id="VSE11_ExtensionManifest" Guid="{31F22CB9-65EF-41EA-9E16-973EA5F91651}">
+                  <Condition>VS11_ROOT</Condition>
+                  <File Id="VSE11_Extension_VSIXMANIFEST" Name="Extension.vsixmanifest" KeyPath="yes"/>
+                </Component>
+
+                <!-- Project Templates -->
+                <Directory Id="VSE11_PT" Name="ProjectTemplates">
+
+                  <!-- C# -->
+                  <Directory Id="VSE11_CS" Name="CSharp">
+                    <Directory Id ="VSE11_CS_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VSE11_CS_1033" Name="1033">
+                        <Component Id="VSE11_CS_AppTemplate" Guid="{48D6CED8-C31F-4FD3-8334-CBAF82572C43}">
+                          <Condition>VS11_ROOT</Condition>
+                          <File Id="VSE11_CS_AppTemplateCS_ZIP" Name="A.zip" Source="$(var.AppTemplateCS.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                        <!--<Component Id="VSE11_CS_AppTemplates42" Guid="{390EAFFC-29F3-4266-97BF-ABCA9C64058E}">
+                          <Condition>VS11_ROOT AND MF42_INSTALLING</Condition>
+                          <File Id="VSE11_CS_AppTemplate42_ZIP" Name="A42.zip" Source="$(var.AppTemplate42.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                        <Component Id="VSE11_CS_AppTemplates41" Guid="{FDFDAAD9-0642-42E4-983A-B945E3E0C5F2}">
+                          <Condition>VS11_ROOT AND MF41_INSTALLING</Condition>
+                          <File Id="VSE11_CS_AppTemplate41_ZIP" Name="A41.zip" Source="$(var.AppTemplate41.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>-->
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                  <!-- VB -->
+                  <Directory Id="VSE11_VB" Name="VisualBasic">
+                    <Directory Id ="VSE11_VB_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VSE11_VB_1033" Name="1033">
+                        <Component Id="VSE11_VB_AppTemplate" Guid="{9870FDA9-F3CB-409B-BE6D-EC7AC7BDEBE4}">
+                          <Condition>VS11_ROOT</Condition>
+                          <File Id="VSE11_VB_AppTemplateVB_ZIP" Name="A.zip" Source="$(var.AppTemplateVB.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                        <!--<Component Id="VSE11_VB_AppTemplates42" Guid="{B2E40E38-95CD-4BAE-B429-2F1A3AC9BEBB}">
+                          <Condition>VS11_ROOT AND MF42_INSTALLING</Condition>
+                          <File Id="VSE11_VB_AppTemplate42_ZIP" Name="A42.zip" Source="$(var.VBAppTemplate42.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>-->
+                        <!-- Visual Basic does not support 4.1 version. -->
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                </Directory>
+                <!-- Project Templates -->
+              
+              </Directory>
+              <!-- Templates -->
+              
+            </Directory>
+          </Directory>
+          <!-- Visual Studio Express 2012 for Windows Desktop -->
+
+        </Directory>
+      </Directory>
+      <!-- Extensions -->
+
+    </Directory>
+    <!-- Visual Studio 2012 -->
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- Visual Studio 2010 -->
+    <Directory Id="VS10_ROOT">
+      <!-- This is C:\Program Files (x86)\Microsoft Visual Studio 10.0\ for an x64 machine using standard directory locations. -->
+
+      <!-- Schema -->
+      <Directory Id="VS10_Xml" Name="xml">
+        <Directory Id="VS10_Xml_Schemas" Name="Schemas" FileSource="..\..\">
+          <Component Id="VS10_Schema" Guid="{9C55A6DB-CB21-43A2-80D6-60D103E40E14}">
+            <Condition>VS10_ROOT</Condition>
+            <File Id="VS10_Schema_XSD" Name="GadgeteerHardware.xsd" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+      <!-- Schema -->
+      
+      <!-- Extensions -->
+      <Directory Id="VS10_Common7" Name="Common7">
+        <Directory Id="VS10_IDE" Name="IDE">
+
+          <!-- Visual Studio 2010 Standard or higher editions -->
+          <Directory Id="VS10_Ext" Name="Extensions">
+            <Directory Id="VS10_Ext_Msft" Name="Microsoft">
+
+              <!-- Templates -->
+              <Directory Id="VS10_Ext_Msft_Gdgtr" Name="Gadgeteer" FileSource=".\">
+                <Component Id="VS10_ExtensionManifest" Guid="{3AEAE680-4CBF-482D-AB0D-52AF0848C552}">
+                  <Condition>VS10_ROOT</Condition>
+                  <File Id="VS10_Extension_VSIXMANIFEST" Name="Extension.vsixmanifest" KeyPath="yes"/>
+                </Component>
+
+                <!-- Project Templates -->
+                <Directory Id="VS10_PT" Name="ProjectTemplates">
+
+                  <!-- C# -->
+                  <Directory Id="VS10_CS" Name="CSharp">
+                    <Directory Id ="VS10_CS_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VS10_CS_1033" Name="1033">
+                        <Component Id="VS10_CS_AppTemplate" Guid="{24B70D09-E269-46DE-9D1D-50BCF4639B0A}">
+                          <Condition>VS10_ROOT</Condition>
+                          <File Id="VS10_CS_AppTemplateCS_ZIP" Name="A.zip" Source="$(var.AppTemplateCS.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                        <!--<Component Id="VS10_CS_AppTemplates42" Guid="{F91897B7-D3A5-4BCA-A3AB-4C36F9C83824}">
+                          <Condition>VS10_ROOT AND MF42_INSTALLING</Condition>
+                          <File Id="VS10_CS_AppTemplate42_ZIP" Name="A42.zip" Source="$(var.AppTemplate42.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                        <Component Id="VS10_CS_AppTemplates41" Guid="{B6C531AF-B4B2-47C8-854C-D2A018701DA7}">
+                          <Condition>VS10_ROOT AND MF41_INSTALLING</Condition>
+                          <File Id="VS10_CS_AppTemplate41_ZIP" Name="A41.zip" Source="$(var.AppTemplate41.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes"/>
+                        </Component>-->
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                  <!-- VB -->
+                  <Directory Id="VS10_VB" Name="VisualBasic">
+                    <Directory Id ="VS10_VB_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VS10_VB_1033" Name="1033">
+                        <Component Id="VS10_VB_AppTemplate" Guid="{D356BD45-B987-42A5-9A0E-0C22D633546E}">
+                          <Condition>VS10_ROOT</Condition>
+                          <File Id="VS10_VB_AppTemplateVB_ZIP" Name="A.zip" Source="$(var.AppTemplateVB.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes"/>
+                        </Component>
+                        <!--<Component Id="VS10_VB_AppTemplates42" Guid="{1AB5B244-244F-4B56-AC8A-50E62403D680}">
+                          <Condition>VS10_ROOT AND MF42_INSTALLING</Condition>
+                          <File Id="VS10_VB_AppTemplate42_ZIP" Name="A42.zip" Source="$(var.VBAppTemplate42.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes"/>
+                        </Component>-->
+                        <!-- Visual Basic does not support 4.1 version. -->
+                      </Directory>
+                    </Directory>
+                  </Directory>
+
+                </Directory>
+                <!-- Project Templates -->
+                
+              </Directory>
+              <!-- Templates -->
+              
+            </Directory>
+          </Directory>
+          <!-- Visual Studio 2010 Standard or higher editions -->
+
+          <!-- Visual C# Express 2010 -->
+          <Directory Id="VSE10_CS_Ext" Name="VCSExpressExtensions">
+            <Directory Id="VSE10_CS_Ext_Msft" Name="Microsoft">
+
+              <!-- Templates -->
+              <Directory Id="VSE10_CS_Ext_Msft_Gdgtr" Name="Gadgeteer" FileSource=".\">
+                <Component Id="VSE10_CS_ExtensionManifest" Guid="{AF5A1BBE-ED3E-442C-B061-399CDFBE3D73}">
+                  <Condition>VS10_ROOT</Condition>
+                  <File Id="VSE10_CS_Extension_VSIXMANIFEST" Name="Extension.vsixmanifest" KeyPath="yes"/>
+                </Component>
+
+                <!-- Project Templates -->
+                <Directory Id="VSE10_CS_PT" Name="ProjectTemplates">
+                  
+                  <!-- C# -->
+                  <Directory Id="VSE10_CS" Name="CSharp">
+                    <Directory Id ="VSE10_CS_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VSE10_CS_1033" Name="1033">
+                        <Component Id="VSE10_CS_AppTemplate" Guid="{973175AA-30D5-4F86-845B-4031BFF404D9}">
+                          <Condition>VS10_ROOT</Condition>
+                          <File Id="VSE10_CS_AppTemplateCS_ZIP" Name="A.zip" Source="$(var.AppTemplateCS.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                        <!--<Component Id="VSE10_CS_AppTemplates42" Guid="{A480A18F-6CB8-4980-9824-04B9207BF0EE}">
+                          <Condition>VS10_ROOT AND MF42_INSTALLING</Condition>
+                          <File Id="VSE10_CS_AppTemplate42_ZIP" Name="A42.zip" Source="$(var.AppTemplate42.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>
+                        <Component Id="VSE10_CS_AppTemplates41" Guid="{8B30D472-AACC-475A-985B-0268859E72E7}">
+                          <Condition>VS10_ROOT AND MF41_INSTALLING</Condition>
+                          <File Id="VSE10_CS_AppTemplate41_ZIP" Name="A41.zip" Source="$(var.AppTemplate41.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes" />
+                        </Component>-->
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                  
+                </Directory>
+                <!-- Project Templates -->
+                
+              </Directory>
+              <!-- Templates -->
+
+            </Directory>
+          </Directory>
+          <!-- Visual C# Express 2010 -->
+
+          <!-- Visual Basic Express 2010 -->
+          <Directory Id="VSE10_VB_Ext" Name="VBExpressExtensions">
+            <Directory Id="VSE10_VB_Ext_Msft" Name="Microsoft">
+
+              <!-- Templates -->
+              <Directory Id="VSE10_VB_Ext_Msft_Gdgtr" Name="Gadgeteer" FileSource=".\">
+                <Component Id="VSE10_VB_ExtensionManifest" Guid="{38A9E104-872F-4A44-B048-C44FA358D37F}">
+                  <Condition>VS10_ROOT</Condition>
+                  <File Id="VSE10_VB_Extension_VSIXMANIFEST" Name="Extension.vsixmanifest" KeyPath="yes"/>
+                </Component>
+
+                <!-- Project Templates -->
+                <Directory Id="VSE10_VB_PT" Name="ProjectTemplates">
+                  
+                  <!-- VB -->
+                  <Directory Id="VSE10_VB" Name="VisualBasic">
+                    <Directory Id ="VSE10_VB_Gdgtr" Name="Gadgeteer">
+                      <Directory Id="VSE10_VB_1033" Name="1033">
+                        <Component Id="VSE10_VB_AppTemplate" Guid="{5061AA15-9ED2-4F11-A6EF-F660CEEBBF9B}">
+                          <Condition>VS10_ROOT</Condition>
+                          <File Id="VSE10_VB_AppTemplateVB_ZIP" Name="A.zip" Source="$(var.AppTemplateVB.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes"/>
+                        </Component>
+                        <!--<Component Id="VSE10_VB_AppTemplates42" Guid="{B79E6ADE-6060-49CE-99F5-4AFE822840C4}">
+                          <Condition>VS10_ROOT AND MF42_INSTALLING</Condition>
+                          <File Id="VSE10_VB_AppTemplate42_ZIP" Name="A42.zip" Source="$(var.VBAppTemplate42.TargetDir)\ProjectTemplates\VisualBasic\Gadgeteer\1033\AppTemplate.zip" KeyPath="yes"/>
+                        </Component>-->
+                        <!-- Visual Basic does not support 4.1 version. -->
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                  
+                </Directory>
+                <!-- Project Templates -->
+                
+              </Directory>
+              <!-- Templates -->
+              
+            </Directory>
+          </Directory>
+          <!-- Visual Basic Express 2010 -->
+
+        </Directory>
+      </Directory>
+      <!-- Extensions -->
+      
+    </Directory>
+    <!-- Visual Studio 2010 -->
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- Registry stuff -->
+    <!-- This is marked as Win32 so that it puts it in the correct location in the registry on x64 machines with registry redirection. -->
+    <Component Id="RegistryKeys" Guid="{1EAE4C06-469C-43EC-BFE2-6DB741B28AD0}" Win64="no">
+      <!--<RegistryValue Id="NetFxAssemblyGAC" Root="HKLM" Type="string" Key="SOFTWARE\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\Microsoft .NET Gadgeteer" Value="[PRODUCTDIR]Assemblies\.NET Framework 4.0" />-->
+      <RegistryValue Id="MF41_AssemblyGAC" Root="HKLM" Type="string" Key="SOFTWARE\Microsoft\.NETMicroFramework\v4.1\AssemblyFoldersEx\Microsoft .NET Gadgeteer" Value="[PRODUCTDIR]Assemblies\.NET Micro Framework 4.1"/>
+      <RegistryValue Id="MF42_AssemblyGAC" Root="HKLM" Type="string" Key="SOFTWARE\Microsoft\.NETMicroFramework\v4.2\AssemblyFoldersEx\Microsoft .NET Gadgeteer" Value="[PRODUCTDIR]Assemblies\.NET Micro Framework 4.2"/>
+      <RegistryValue Id="MF43_AssemblyGAC" Root="HKLM" Type="string" Key="SOFTWARE\Microsoft\.NETMicroFramework\v4.3\AssemblyFoldersEx\Microsoft .NET Gadgeteer" Value="[PRODUCTDIR]Assemblies\.NET Micro Framework 4.3"/>
+      <RegistryValue Id="MF44_AssemblyGAC" Root="HKLM" Type="string" Key="SOFTWARE\Microsoft\.NETMicroFramework\v4.4\AssemblyFoldersEx\Microsoft .NET Gadgeteer" Value="[PRODUCTDIR]Assemblies\.NET Micro Framework 4.4"/>
+    </Component>
+    <!-- Registry stuff -->
+
+  </Directory>
+</Include>

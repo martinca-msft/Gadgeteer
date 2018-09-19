@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+ProductStrings_en-us.wxl
+
+Product strings for en-us culture
+
+-->
+<WixLocalization xmlns="http://schemas.microsoft.com/wix/2006/localization"
+                 Culture="en-us">
+  <String Id="Manufacturer">Microsoft Corporation</String>
+  <String Id="GadgeteerCoreName">Microsoft .NET Gadgeteer Core</String>
+  <String Id="GadgeteerName">Microsoft .NET Gadgeteer</String>
+  <String Id="ProductSubDir">Core</String>
+  <String Id="ClientProductDescription">Microsoft .NET Gadgeteer is a rapid prototyping platform for small devices built on .NET Micro Framework.  This installer provides core libraries and templates for the .NET Gadgeteer platform.</String>
+  <String Id="NewerVersionFound">A newer version of Microsoft .NET Gadgeteer Core is already installed. Setup will now exit.</String>
+  <String Id="SameVersionInstalled">Version number was not updated correctly. Please manually uninstall Microsoft .NET Gadgeteer Core and run setup again.</String>
+  <String Id="NetMFNotInstalled">Please install Microsoft .NET Micro Framework (e.g. from http://netmf.com/ ) first.</String>
+</WixLocalization>

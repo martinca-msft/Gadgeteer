@@ -1,0 +1,142 @@
+======================================================================
+Microsoft .NET Gadgeteer Core 
+RELEASE NOTES
+Version 2.42.600       11 May 2012
+
+======================================================================
+Supported Platforms
+======================================================================
+
+Microsoft Windows 8, Windows 7, Windows Vista SP2 or Windows XP SP3
+
+Microsoft Visual Studio 2010 (any edition) http://www.microsoft.com/visualstudio/
+ OR
+Microsoft Visual C# 2010 Express http://www.microsoft.com/express/downloads/ 
+ OR
+Microsoft Visual Basic 2010 Express http://www.microsoft.com/express/downloads/  
+
+Microsoft .NET Micro Framework SDK 4.2 (RTM QFE1) http://netmf.codeplex.com/releases/view/82448#DownloadId=343358
+       (supports both v4.2 and v4.1 hardware) 
+ OR
+Microsoft .NET Micro Framework SDK 4.1 http://www.microsoft.com/download/en/details.aspx?id=8515
+       (supports v4.1 hardware only)
+
+======================================================================
+Change Logs
+======================================================================
+
+Version 2.42.600, 11 May 2012
+
+MAJOR CHANGES
+- NETMF 4.2 support added alongside NETMF 4.1 support
+- Visual Basic apps supported in NETMF 4.2, using Visual Studio or Visual Basic 2010 Express
+- Module/mainboard/kit templates changed to enable simultaneous NETMF 4.1/4.2 support, and wizard added to ease module/mainboard creation
+- For NETMF 4.2, GadgeteerCore's SPI, Serial and DaisyLink/SoftwareI2C features are split into separate DLLs so they can be left out to save RAM when not necessary.
+
+MINOR CHANGES
+- Bugfix in Gadgeteer.Interfaces.SPI 
+- Blocking the dispatcher now causes a runtime warning
+- Reboot() call added to GT.Program
+- Documentation updates to some of the APIs
+- Designer checks for more dependencies between hardware (from GadgeteerHardware.xml files)
+
+KNOWN ISSUES
+- VC# Express and VB Express installation fails if VS is also installed and VS and VC#/VB do not share the same directory root
+   i.e. if VC# Express is installed under where VS is, e.g. C:\Program Files\Microsoft Visual Studio 10.0\ then it works OK.
+- DaisyLink assigns global addresses but it could use per-bus addresses (normally one bus per socket) to increase total addressable devices
+
+======================================================================
+
+Version 2.41.500, 13 February 2012
+
+MINOR CHANGES
+- GTI.I2CBus bugfix to Read method
+- Software I2C exposed under Gadgeteer.Interfaces - previously it was a hidden part of the DaisyLink implementation
+- NetworkModule bugfix to NetworkSettings, UseDHCP and IsNetworkUp behaviour
+- Added PDB files for all assemblies
+- Added XML doc files for web client/server assemblies
+- Added reference to System.Collections to default App template
+- Added Invoke event to Program as a way of easily invoking methods on the dispatcher
+- DisplayModule reboots less frequently to update display settings, and allows WPF on any display
+- Mainboard interface supports abstraction of storage device mounting/unmounting allows storage device modules (e.g. SD card) to be written in a mainboard-independent way.
+
+======================================================================
+
+Version 2.41.401, 30 November 2011
+
+MINOR CHANGES
+- Fixed bug with caused Visual Studio Designer to not upgrade correctly
+
+======================================================================
+
+Version 2.41.400, 25 November 2011
+
+MAJOR CHANGES 
+- Web client and web server libraries moved from Gadgeteer.dll into separate assemblies Gadgeteer.WebServer.dll and Gadgeteer.WebClient.dll. These are referenced by default in the app template. API location moved from GTM.NetworkModule to Gadgeteer.Networking.
+- Cloud library moved from GadgeteerCore into separate dll MicrosoftResearch.Gadgeteer.Cloud.dll, and not referenced by default from app template. GadgeteerCore MSI still includes the DLL though (so Add Reference works)
+
+MINOR CHANGES
+- Added I2C transactions API to Gadgeteer.Interfaces.I2CBus class
+- System.Threading and Microsoft.SPOT.Touch references added to App Template
+- References created by Designer now set SpecificVersion=false so that newer versions of module/mainboard libraries are picked up by projects
+- Designer now deletes references and "usings" when a module/mainbaord is no longer used by a project 
+- Fixes to how DisplayModule handles switching between display types and display <-> headless.
+
+======================================================================
+
+Version 2.41.301, 30 September 2011
+
+MINOR CHANGES
+- Fixed bug with rendering F1 help content in designer
+
+======================================================================
+
+Version 2.41.300, 26 September 2011
+
+MAJOR CHANGES 
+- Graphical hardware configuration view included!
+- Kit template updated since kit-specific end user templates are no longer required 
+   (designer does a better job - auto adds only the required references, and works with any manufacturer's modules)
+- Module template moved to GadgeteerBuilderTemplates MSI 
+
+MINOR CHANGES
+- GTI.I2CBus.Address setter bugfix
+- GTI.AnalogInput.Active property added
+- StorageDevice: added CreateDirectory and Delete methods
+- DisplayModule: added automatic reboots when display configuration changes, and better error messages 
+- NetworkModule: added web proxy support 
+
+======================================================================
+
+Version 2.41.200, 19 August 2011
+
+MINOR CHANGES
+- GadgeteerCore now checks that NETMF is installed when installing
+- Module template MSIs now check that GadgeteerCore is installed when installing
+- Module template - lots of inline documentation updates
+- GTI.Serial now reserves pins 6 and 7 if hardware handshaking is supported by the module.
+- Gadgeteer.Module and Gadgeter.Program expose a Mainboard property enabling modules and advanced end users to directly use this API.
+
+======================================================================
+
+Version 2.41.100, 26 July 2011
+
+Initial public release.
+
+======================================================================
+
+
+======================================================================
+License
+======================================================================
+
+Copyright (c) Microsoft Corporation.  All rights reserved.  
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
+this file except in compliance with the License.  You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
+CONDITIONS OF ANY KIND, either express or implied. See the License for the 
+specific language governing permissions and limitations under the License.

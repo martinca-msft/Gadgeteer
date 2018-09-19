@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <UI>
+    <Error Id="1001">!(loc.Error_1001)</Error>
+    <Error Id="1638">!(loc.Error_1638)</Error>
+  </UI>
+</Include>

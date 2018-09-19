@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="Microsoft.Gadgeteer.Designer.DocViewPowerOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Padding="1" Background="White"> <!-- without the padding, right and bottom borders would get cropped -->
+    <UserControl.Resources>
+        <Style x:Key="ElementStyle" TargetType="TextBlock">
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="VerticalAlignment" Value="Center" />            
+            <Setter Property="Typography.NumeralAlignment" Value="Tabular" />
+            <!-- red infinity -->
+            <!--
+            <Style.Triggers>
+                <Trigger Property="Text" Value="∞">
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+            -->            
+        </Style>
+        <Style x:Key="CellStyle" TargetType="DataGridCell">
+            <Setter Property="BorderBrush" Value="Gainsboro" />
+            <Setter Property="BorderThickness" Value="0,0,1,1" />
+        </Style>
+
+        <Style x:Key="InfoPanel" TargetType="Border">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="TextBlock.Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}" />
+            <Setter Property="TextBlock.FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
+            <Setter Property="TextBlock.FontSize" Value="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}" />
+            <Setter Property="TextBlock.FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
+            <Setter Property="TextBlock.FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
+        </Style>
+    </UserControl.Resources>
+
+    <Border Background="WhiteSmoke" BorderBrush="Gainsboro" BorderThickness="1" Padding="5" SnapsToDevicePixels="True">
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap" Margin="0,0,0,2">Power estimate:</TextBlock>
+            
+            <Border DockPanel.Dock="Bottom" Style="{StaticResource InfoPanel}" Margin="0,2,0,0" TextBlock.FontSize="10" MaxWidth="{Binding ActualWidth, ElementName=PowerGrid, Mode=OneWay}" Visibility="{Binding NoteVisibility, Mode=OneTime}">
+                <TextBlock TextWrapping="Wrap" Text="{Binding Note, Mode=OneTime}" ToolTip="{Binding MissingModelsString, Mode=OneTime}" />
+            </Border>
+
+            <DataGrid Name="PowerGrid" IsReadOnly="True" AutoGenerateColumns="False" CanUserSortColumns="False" RowHeaderWidth="0" TextBlock.FontSize="10" TextBlock.TextAlignment="Center" ItemsSource="{Binding Requirements.Values, Mode=OneTime}" BorderThickness="1,1,0,0" BorderBrush="Gainsboro" SnapsToDevicePixels="True" GridLinesVisibility="None" SelectionUnit="Cell">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header=""        Binding="{Binding VoltageString, Mode=OneTime}" ElementStyle="{StaticResource ElementStyle}" CellStyle="{StaticResource CellStyle}" />
+                    <DataGridTextColumn Header="Typical" Binding="{Binding TypicalString, Mode=OneTime}" ElementStyle="{StaticResource ElementStyle}" CellStyle="{StaticResource CellStyle}" />
+                    <DataGridTextColumn Header="Maximum" Binding="{Binding MaximumString, Mode=OneTime}" ElementStyle="{StaticResource ElementStyle}" CellStyle="{StaticResource CellStyle}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+    </Border>
+</UserControl>

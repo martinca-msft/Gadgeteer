@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <InstallUISequence>
+    <Show Dialog="FatalErrorDlg" OnExit="error"/>
+    <Show Dialog="UserExitDlg"   OnExit="cancel"></Show>
+    <Show Dialog="WelcomeDlg"  After="MigrateFeatureStates">NOT Installed</Show>
+    <Show Dialog="ProgressDlg" Before="ExecuteAction"></Show>
+    <Show Dialog="ExitDlg"       OnExit="success"></Show>
+  </InstallUISequence>
+
+  <AdminUISequence>
+    <Show Dialog="FatalErrorDlg" OnExit="error" />
+    <Show Dialog="UserExitDlg"   OnExit="cancel" />
+    <Show Dialog="ExitDlg"       OnExit="success" />
+  </AdminUISequence>
+
+  <UI>
+    <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+    <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+    <Publish Dialog="LicenseAgreementDlg" Control="Accept" Event="NewDialog" Value="InstallLocationDlg">1</Publish>
+    <Publish Dialog="InstallLocationDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+
+    <!-- Feature strings. These should get automatically referenced had we used a separate dialog for feature selection. -->
+    <UIText Id="MenuAbsent">!(loc.UIText_MenuAbsent)</UIText>
+    <UIText Id="MenuAdvertise">!(loc.UIText_MenuAdvertise)</UIText>
+    <UIText Id="MenuAllCD">!(loc.UIText_MenuAllCD)</UIText>
+    <UIText Id="MenuAllLocal">!(loc.UIText_MenuAllLocal)</UIText>
+    <UIText Id="MenuAllNetwork">!(loc.UIText_MenuAllNetwork)</UIText>
+    <UIText Id="MenuCD">!(loc.UIText_MenuCD)</UIText>
+    <UIText Id="MenuLocal">!(loc.UIText_MenuLocal)</UIText>
+    <UIText Id="MenuNetwork">!(loc.UIText_MenuNetwork)</UIText>
+    <UIText Id="ScriptInProgress">!(loc.UIText_ScriptInProgress)</UIText>
+    <UIText Id="SelAbsentAbsent">!(loc.UIText_SelAbsentAbsent)</UIText>
+    <UIText Id="SelAbsentAdvertise">!(loc.UIText_SelAbsentAdvertise)</UIText>
+    <UIText Id="SelAbsentCD">!(loc.UIText_SelAbsentCD)</UIText>
+    <UIText Id="SelAbsentLocal">!(loc.UIText_SelAbsentLocal)</UIText>
+    <UIText Id="SelAbsentNetwork">!(loc.UIText_SelAbsentNetwork)</UIText>
+    <UIText Id="SelAdvertiseAbsent">!(loc.UIText_SelAdvertiseAbsent)</UIText>
+    <UIText Id="SelAdvertiseAdvertise">!(loc.UIText_SelAdvertiseAdvertise)</UIText>
+    <UIText Id="SelAdvertiseCD">!(loc.UIText_SelAdvertiseCD)</UIText>
+    <UIText Id="SelAdvertiseLocal">!(loc.UIText_SelAdvertiseLocal)</UIText>
+    <UIText Id="SelAdvertiseNetwork">!(loc.UIText_SelAdvertiseNetwork)</UIText>
+    <UIText Id="SelCDAbsent">!(loc.UIText_SelCDAbsent)</UIText>
+    <UIText Id="SelCDAdvertise">!(loc.UIText_SelCDAdvertise)</UIText>
+    <UIText Id="SelCDCD">!(loc.UIText_SelCDCD)</UIText>
+    <UIText Id="SelCDLocal">!(loc.UIText_SelCDLocal)</UIText>
+    <UIText Id="SelCostPending">!(loc.UIText_SelCostPending)</UIText>
+    <UIText Id="SelLocalAbsent">!(loc.UIText_SelLocalAbsent)</UIText>
+    <UIText Id="SelLocalAdvertise">!(loc.UIText_SelLocalAdvertise)</UIText>
+    <UIText Id="SelLocalCD">!(loc.UIText_SelLocalCD)</UIText>
+    <UIText Id="SelLocalLocal">!(loc.UIText_SelLocalLocal)</UIText>
+    <UIText Id="SelLocalNetwork">!(loc.UIText_SelLocalNetwork)</UIText>
+    <UIText Id="SelNetworkAbsent">!(loc.UIText_SelNetworkAbsent)</UIText>
+    <UIText Id="SelNetworkAdvertise">!(loc.UIText_SelNetworkAdvertise)</UIText>
+    <UIText Id="SelNetworkLocal">!(loc.UIText_SelNetworkLocal)</UIText>
+    <UIText Id="SelNetworkNetwork">!(loc.UIText_SelNetworkNetwork)</UIText>
+  </UI>
+</Include>

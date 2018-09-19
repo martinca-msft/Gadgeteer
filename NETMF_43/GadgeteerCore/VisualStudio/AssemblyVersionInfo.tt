@@ -1,0 +1,11 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.IO" #>
+<#
+  string versionFileName = this.Host.ResolvePath(@"version.txt");
+  string version = File.ReadAllText(versionFileName).Trim();
+#>
+using System.Reflection;
+
+[assembly:AssemblyVersion("<#= version #>")]
+[assembly:AssemblyFileVersion("<#= version #>")]

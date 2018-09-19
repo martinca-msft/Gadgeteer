@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Include>
+  <!-- this must be kept in sync with the version numbering in Gadgeteer\AssemblyInfoGlobal.cs and (when updating the Designer) VisualStudio\version.txt -->
+  
+  <!-- this file is included by the GadgeteerBuilderTemplates msi as well as the GadgeteerCore msi -->
+  
+  <?define ProductVersion = "2.43.1090.0" ?>
+
+</Include>

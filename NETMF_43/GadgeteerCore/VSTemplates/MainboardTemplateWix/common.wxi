@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!-- Change this whenever building a new installer.  The fourth number is ignored, so change one of the top three.
+  Otherwise, users will not be able to upgrade properly; Windows Installer will exit with an error instead of upgrading. -->
+  <!-- Also change the version numbers in Properties/AssemblyInfo.cs for each NETMF version supported -->
+  <?define MainboardSoftwareVersion = "1.0.0.0" ?>
+
+  <!-- Alternatively, to synchronize this mainboard version to a kit version, uncomment the below lines, edit the pathname
+  to point to your kit, and comment out the line above.  You also need to edit AssemblyInfo.cs.  See the kit readme.txt 
+  for more details of how and why to do this. -->
+  <!--
+  <?include $(var.SourcePath)..\..\..\..\..\Kits\$ManufacturerShortName$\KitName\Software\KitName\version.wxi ?>
+  <?define MainboardSoftwareVersion = "$(var.KitVersion)" ?>
+  -->
+
+  <!-- FullMainboardName can have spaces, e.g. My Mainboard.  This shows up as the product name in add/remove programs. -->
+  <?define FullMainboardName = "$HardwareFullName$" ?>
+
+  <!-- SafeMainboardName should match the name printed on the mainboard PCB, without any spaces/punctuation. -->
+  <?define SafeMainboardName = "$HardwareShortName$" ?>
+
+  <!-- SafeManufacturer should match the manufacturer name printed on the mainboard PCB, without any spaces/punctuation. -->
+  <?define SafeManufacturer = "$ManufacturerShortName$" ?>
+
+  <!-- FullManufacturer can have spaces, e.g. Microsoft Research.  This shows up as the manufacturer name in add/remove programs. -->
+  <?define FullManufacturer = "$ManufacturerFullName$" ?>
+
+  <!-- These define which versions of NETMF are supported - comment out or delete any unsupported NETMF versions. -->
+  $Netmf41XmlPrefix$?define NETMF41Supported ?$Netmf41XmlSuffix$
+  $Netmf42XmlPrefix$?define NETMF42Supported ?$Netmf42XmlSuffix$
+  $Netmf43XmlPrefix$?define NETMF43Supported ?$Netmf43XmlSuffix$
+
+
+  <!-- No need to change anything below this line. -->
+  <?define OutputFileName = "$(var.SafeManufacturer).Gadgeteer.$(var.SafeMainboardName)"?>
+  <?define ProjectPath = "$HardwareFileSystemName$" ?>
+
+  <!-- These two should be copied over if upgrading from an older template -->
+  <?define guid_msi_upgrade_code =  "$guid8$" ?>
+  <?define guid_msm_package_id = "$guid9$" ?>
+
+  <?define guid_msm_comp_resources_id = "$guid6$" ?>
+  <?define guid_msm_comp_registry_id = "$guid7$" ?>
+  <?define guid_msm_comp_gadgeteerhardware_id = "$guid10$"?>
+
+  <?define guid_msm_comp_files_id_41 = "$WizardGuid41$" ?>
+  <?define guid_msm_comp_files_be_id_41 = "$WizardGuid41be$" ?>
+  <?define guid_msm_comp_files_le_id_41 = "$WizardGuid41le$" ?>
+
+  <?define guid_msm_comp_files_id_42 = "$WizardGuid42$" ?>
+  <?define guid_msm_comp_files_be_id_42 = "$WizardGuid42be$" ?>
+  <?define guid_msm_comp_files_le_id_42 = "$WizardGuid42le$" ?>
+
+  <?define guid_msm_comp_files_id_43 = "$WizardGuid43$" ?>
+  <?define guid_msm_comp_files_be_id_43 = "$WizardGuid43be$" ?>
+  <?define guid_msm_comp_files_le_id_43 = "$WizardGuid43le$" ?>
+</Include>
+

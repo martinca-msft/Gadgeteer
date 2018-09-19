@@ -1,0 +1,95 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Gadgeteer.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    -->
+
+    <Style x:Key="Caption" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
+        <Setter Property="FontSize"   Value="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" />
+        <Setter Property="FontStyle"  Value="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}" />
+        <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}" />
+        <Setter Property="TextDecorations" Value="{DynamicResource {x:Static SystemFonts.CaptionFontTextDecorationsKey}}" />
+    </Style>
+
+    <Style x:Key="ButtonPanel" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
+        <Setter Property="BorderThickness" Value="0,1,0,0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="MinWidth" Value="80" />
+        <Setter Property="Margin"   Value="5,0" />
+        <Setter Property="Padding"  Value="8,2" />
+    </Style>
+
+    <Style x:Key="ContentPanel" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="InfoPanel" TargetType="Border">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="TextBlock.Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}" />
+        <Setter Property="TextBlock.FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
+        <Setter Property="TextBlock.FontSize" Value="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}" />
+        <Setter Property="TextBlock.FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
+        <Setter Property="TextBlock.FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
+    </Style>
+
+    <!-- Images -->
+
+    <SolidColorBrush x:Key="ColorizationOpaqueBrush" Color="Black" />
+
+    <DrawingImage x:Key="DownloadImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{DynamicResource ColorizationOpaqueBrush}" Geometry="F1 M 0,0L 49,0L 49,49L 0,49L 0,0 Z "/>
+                <GeometryDrawing Brush="White" Geometry="F1 M 21.948,24.6623L 14.3387,16.5943L 14.3387,23.1556L 24.5227,33.9529L 34.6613,23.2022L 34.6613,16.6422L 27.092,24.6623L 27.092,6.46628L 21.948,6.46628L 21.948,24.6623 Z "/>
+                <GeometryDrawing Brush="White" Geometry="F1 M 15.0288,37.5164C 14.6581,37.5164 14.3568,37.8177 14.3568,38.1857L 14.3568,41.8631C 14.3568,42.2337 14.6581,42.5337 15.0288,42.5337L 33.9714,42.5337C 34.3368,42.5337 34.6408,42.2337 34.6408,41.8631L 34.6408,38.1857C 34.6408,37.8177 34.3368,37.5164 33.9714,37.5164L 15.0288,37.5164 Z "/>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="VisualStudio11Image">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#6A2977" Geometry="M-50,-50 V 440 H 440 V -50 Z" />
+                <GeometryDrawing Brush="White" Geometry="M38.4675,77.256 L136.283,152.322 L289.054,0 L385.222,38.9024 L385.222,345.739 L289.054,384.094 L136.283,231.77 L67.5927,284.919 L38.4675,307.384 L0,288.206 L0,96.4331
+                                                         M38.4675,134.788 L38.4675,249.852 L96.1666,192.32
+                                                         M187.389,192.32 289.054,270.674L 289.054,113.42" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="SettingsImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{DynamicResource ColorizationOpaqueBrush}" Geometry="F1 M -5,-5L 31,-5L 31,31L -5,31 Z" />
+                <GeometryDrawing Brush="White" Geometry="F1 M 15.6946,18.26C 12.7293,19.7787 9.08795,18.612 7.5719,15.6427C 6.0506,12.6747 7.22266,9.04137 10.1866,7.51735C 13.1533,6.00002 16.7906,7.1747 18.3093,10.1373C 19.8319,13.104 18.6627,16.736 15.6946,18.26 Z M 25.8693,11.736L 24.8693,7.53871L 21.1946,7.93202C 20.824,7.30672 20.3933,6.73604 19.9106,6.2267L 21.2693,2.93202L 17.5906,0.666702L 15.296,3.51472C 14.5,3.30672 13.6813,3.20271 12.8533,3.19737L 11.416,1.52588e-005L 7.23859,1.12001L 7.72931,4.65871C 7.15332,5.01472 6.6239,5.42137 6.15332,5.86671L 2.98126,4.5627L 0.714661,8.23604L 3.44397,10.44C 3.24396,11.1893 3.12659,11.968 3.11066,12.7521L 0,14.0414L 1.00256,18.244L 4.47327,17.8721C 4.87463,18.5667 5.34399,19.1974 5.88928,19.7521L 4.61066,22.848L 8.28662,25.112L 10.4933,22.38C 11.2413,22.5654 12.0026,22.6694 12.7813,22.6774L 14.088,25.8227L 18.2906,24.8227L 17.9106,21.2521C 18.5599,20.856 19.16,20.4027 19.6746,19.8934L 22.896,21.2187L 25.1627,17.5414L 22.312,15.244C 22.4839,14.5441 22.58,13.8254 22.5906,13.1014L 25.8693,11.736 Z "/>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="EditImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{DynamicResource ColorizationOpaqueBrush}" Geometry="F1 M 0,0L 49,0L 49,49L 0,49L 0,0 Z "/>
+                <GeometryDrawing Brush="White" Geometry="F1 M 14.4759,38.5081C 14.9999,38.3801 15.1145,37.9614 14.7332,37.5841L 12.3919,35.2508C 12.0119,34.8721 11.5932,34.9894 11.4652,35.5081L 10.7079,38.5601C 10.5772,39.0841 10.8972,39.4041 11.4212,39.2734M 38.0145,12.0001C 35.4132,9.39874 32.8479,11.4041 32.8479,11.4041C 32.4212,11.7321 31.7706,12.3107 31.3946,12.6801C 31.0199,13.0547 31.0279,13.6721 31.4052,14.0521L 35.9625,18.6094C 36.3426,18.9921 36.9599,18.9974 37.3372,18.6227C 37.7106,18.2481 38.2852,17.5934 38.6145,17.1694C 38.6145,17.1694 40.6212,14.6068 38.0145,12.0001 Z M 19.8665,36.0867C 19.4892,36.4694 18.8639,36.4694 18.4866,36.0867L 13.9266,31.5294C 13.5466,31.1481 13.5466,30.5294 13.9266,30.1468L 28.5039,15.5761C 28.8826,15.1961 29.5039,15.1961 29.8852,15.5761L 34.4372,20.1334C 34.8199,20.5161 34.8199,21.1387 34.4372,21.5161L 19.8665,36.0867 Z "/>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+</ResourceDictionary>

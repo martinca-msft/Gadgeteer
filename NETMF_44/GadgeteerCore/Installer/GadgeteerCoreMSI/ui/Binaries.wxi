@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  
+  <Binary Id="completi"   SourceFile="ui\Icons\completi.ico" />
+  <Binary Id="custicon"   SourceFile="ui\Icons\custicon.ico" />
+  <Binary Id="exclamic"   SourceFile="ui\Icons\exclamic.ico" />
+  <Binary Id="info"       SourceFile="ui\Icons\info.ico" />
+  <Binary Id="New"        SourceFile="ui\Icons\New.ico" />
+  <Binary Id="removico"   SourceFile="ui\Icons\removico.ico" />
+  <Binary Id="repairic"   SourceFile="ui\Icons\repairic.ico" />
+  <Binary Id="Up"         SourceFile="ui\Icons\Up.ico" />
+  <Binary Id="Background" SourceFile="ui\Images\background.jpg" />
+  <Binary Id="UserCancelDlg_Background" SourceFile="ui\Images\CancelBGWithIcon.jpg" />
+  
+  <!--Change this icon to change the icon displayed in add remove programs-->
+  <Icon Id="AppAddRemoveIcon" SourceFile="ui\Icons\appIcon.ico"/>
+
+  <Property Id="ARPPRODUCTICON" Value="AppAddRemoveIcon"/>
+
+  <Property Id="RemoveIcon"><![CDATA[removico]]></Property>
+  <Property Id="CustomSetupIcon"><![CDATA[custicon]]></Property>
+  <Property Id="RepairIcon"><![CDATA[repairic]]></Property>
+  <Property Id="ExclamationIcon"><![CDATA[exclamic]]></Property>
+  <Property Id="CompleteSetupIcon"><![CDATA[completi]]></Property>
+  <Property Id="InfoIcon"><![CDATA[info]]></Property>
+  <Property Id="Background_Bitmap">Background</Property>
+  <Property Id="UserCancelDlg_Background_Bitmap">UserCancelDlg_Background</Property>
+  <Property Id="AlertSymbol_Bitmap">AlertSymbol</Property>
+
+</Include>

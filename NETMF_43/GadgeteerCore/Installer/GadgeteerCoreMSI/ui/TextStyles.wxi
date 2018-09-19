@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <UI>
+    <TextStyle Id="SmallFont"     FaceName="Segoe UI" Size="9"  Red="102" Green="102" Blue="102" /> 
+    <TextStyle Id="LargeFont"     FaceName="Segoe UI" Size="14" Red="102" Green="102" Blue="102" />
+    <TextStyle Id="Segoe18"       FaceName="Segoe UI" Size="18" Red="102" Green="102" Blue="102" />
+    <TextStyle Id="SegoeOrange18" FaceName="Segoe UI" Size="12" Red="0"   Green="0"   Blue="0"   />
+  </UI>
+</Include>

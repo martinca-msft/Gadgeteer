@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.5</ProductVersion>
+    <ProjectGuid>{59a47b50-967b-45d9-8bc8-d8a165fc4b7f}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>GadgeteerCore</OutputName>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug;StagingPath=$(Temp)\staging</DefineConstants>
+    <SuppressPdbOutput>True</SuppressPdbOutput>
+    <Cultures>en-US</Cultures>
+    <LinkerAdditionalOptions>-ext wixvsextension.dll</LinkerAdditionalOptions>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <LinkerAdditionalOptions>-ext wixvsextension.dll</LinkerAdditionalOptions>
+    <SuppressSpecificWarnings>1056;1076</SuppressSpecificWarnings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Product.wxs" />
+    <Compile Include="VisualStudio.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\AssemblyInfoGlobal.cs">
+      <Link>AssemblyInfoGlobal.cs</Link>
+    </Content>
+    <Content Include="..\..\GadgeteerHardware.xsd">
+      <Link>GadgeteerHardware.xsd</Link>
+    </Content>
+    <Content Include="Components.wxi" />
+    <Content Include="EvalLicense.rtf" />
+    <Content Include="extension.vsixmanifest" />
+    <Content Include="MicroFramework.wxi" />
+    <Content Include="ReleaseLicense.rtf" />
+    <Content Include="Version.wxi" />
+    <Content Include="help.ico" />
+    <Content Include="html.ico" />
+    <Content Include="notepad.ico" />
+    <Content Include="Sequences.wxi" />
+    <Content Include="ui\Binaries.wxi" />
+    <Content Include="ui\ca\CustomAction.dll" />
+    <Content Include="ui\CommonDialogs.wxi" />
+    <Content Include="ui\CustomActions.wxi" />
+    <Content Include="ui\Errors.wxi" />
+    <Content Include="ui\Icons\appIcon.ico" />
+    <Content Include="ui\Icons\completi.ico" />
+    <Content Include="ui\Icons\custicon.ico" />
+    <Content Include="ui\Icons\exclamic.ico" />
+    <Content Include="ui\Icons\info.ico" />
+    <Content Include="ui\Icons\New.ico" />
+    <Content Include="ui\Icons\removico.ico" />
+    <Content Include="ui\Icons\repairic.ico" />
+    <Content Include="ui\Icons\Up.ico" />
+    <Content Include="ui\images\background-small.jpg" />
+    <Content Include="ui\images\background.jpg" />
+    <Content Include="ui\images\cancelbgwithIcon.jpg" />
+    <Content Include="ui\InstallSequences.wxi" />
+    <Content Include="ui\TextStyles.wxi" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="loc" />
+    <Folder Include="ui" />
+    <Folder Include="ui\ca" />
+    <Folder Include="ui\Icons" />
+    <Folder Include="ui\images" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="loc\Features.en-us.wxl" />
+    <EmbeddedResource Include="loc\ProductStrings.en-us.wxl" />
+    <EmbeddedResource Include="loc\UI.en-us.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\NETMF_43\GadgeteerCore\VSTemplates\AppTemplate41\AppTemplate41.csproj">
+      <Name>AppTemplate41</Name>
+      <Project>{940db422-0edb-47dd-9816-82b70e89aaaa}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\NETMF_43\GadgeteerCore\VSTemplates\AppTemplate42\AppTemplate42.csproj">
+      <Name>AppTemplate42</Name>
+      <Project>{154e05da-9f68-4de5-9d6d-6f20c3af13b3}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\NETMF_43\GadgeteerCore\VSTemplates\AppTemplateCS\AppTemplateCS.csproj">
+      <Name>AppTemplateCS</Name>
+      <Project>{783c8da0-b71f-4361-b986-b3f10df2880b}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\NETMF_43\GadgeteerCore\VSTemplates\AppTemplateVB\AppTemplateVB.csproj">
+      <Name>AppTemplateVB</Name>
+      <Project>{e2069de1-4adc-406e-a551-2b60f8721296}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\NETMF_43\GadgeteerCore\VSTemplates\AppTemplateWizard\AppTemplateWizard.csproj">
+      <Name>AppTemplateWizard</Name>
+      <Project>{4ed8cdff-7588-440f-831a-7ec43b28a36b}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\NETMF_43\GadgeteerCore\VSTemplates\VBAppTemplate42\VBAppTemplate42.csproj">
+      <Name>VBAppTemplate42</Name>
+      <Project>{60331440-2412-456c-b531-94689db5047b}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Gadgeteer41\Gadgeteer41.csproj">
+      <Name>Gadgeteer41</Name>
+      <Project>{6e8e7801-45d9-4d81-8f0b-d3b1b9edd882}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Gadgeteer42\Gadgeteer42.csproj">
+      <Name>Gadgeteer42</Name>
+      <Project>{16f46f9a-6fa2-4e4c-a0dd-5c53319dbcab}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Gadgeteer43\Gadgeteer43.csproj">
+      <Name>Gadgeteer43</Name>
+      <Project>{9c152709-420a-4464-8ccc-a13edf27d6cb}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\DaisyLink42\DaisyLink42.csproj">
+      <Name>DaisyLink42</Name>
+      <Project>{667269a2-4009-4f76-a439-c52da88e17cd}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\DaisyLink43\DaisyLink43.csproj">
+      <Name>DaisyLink43</Name>
+      <Project>{61a956d1-d6fb-4496-b030-58942d07cb3b}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\Serial42\Serial42.csproj">
+      <Name>Serial42</Name>
+      <Project>{4479a1df-c362-4e99-803d-6866d7967c4f}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\Serial43\Serial43.csproj">
+      <Name>Serial43</Name>
+      <Project>{61996327-11f7-4eb8-a361-cfc450773065}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\SPI42\SPI42.csproj">
+      <Name>SPI42</Name>
+      <Project>{40a98a5d-8e22-46db-b194-5f907d4570c8}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\SPI43\SPI43.csproj">
+      <Name>SPI43</Name>
+      <Project>{50552249-db46-432e-b942-57860a846fb3}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\WebClient41\WebClient41.csproj">
+      <Name>WebClient41</Name>
+      <Project>{5b87cf3a-79af-46d8-b4ee-326cb839e93d}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\WebClient42\WebClient42.csproj">
+      <Name>WebClient42</Name>
+      <Project>{4bef0ea5-8ef3-4b21-b50e-b6aec3652dae}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\WebClient43\WebClient43.csproj">
+      <Name>WebClient43</Name>
+      <Project>{00f7632e-9150-4455-8dd3-3674b7f006cb}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\WebServer41\WebServer41.csproj">
+      <Name>WebServer41</Name>
+      <Project>{05526000-0003-46b7-965a-903d7955db6d}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\WebServer42\WebServer42.csproj">
+      <Name>WebServer42</Name>
+      <Project>{202f3223-66cd-4e92-877a-882707a90691}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\WebServer43\WebServer43.csproj">
+      <Name>WebServer43</Name>
+      <Project>{2024ce24-1038-40ee-90ab-445d8e8714f2}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <PropertyGroup>
+    <PostBuildEvent>rem pushd $(TargetDir)en-us
+rem setLocal EnableDelayedExpansion
+rem set /p version=&lt;..\..\..\..\..\VisualStudio\version.txt
+rem ren $(TargetFileName) $(TargetName)-%version%.msi
+rem popd</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>rem not doing auto-rename since designer version is not the same as gadgeteer.dll version
+rem if exist $(TargetDir)en-us\$(TargetName)-%2a.msi del /q $(TargetDir)en-us\$(TargetName)-%2a.msi</PreBuildEvent>
+  </PropertyGroup>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

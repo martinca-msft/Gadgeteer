@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include version.wxi?>
+  <?include common.wxi?>
+  <Product Name='!(loc.KitName) !(loc.ForGadgeteer)' 
+           Id='*' 
+           UpgradeCode='$(var.guid_msi_upgrade_code)'
+           Language='1033' Codepage='1252' 
+           Version='$(var.KitVersion)' 
+           Manufacturer='!(loc.DistributorFull)'>
+
+    <Package Id='*' 
+             Manufacturer='!(loc.DistributorFull)'
+             InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252'
+             InstallPrivileges='elevated'/>
+
+    <!-- Upgrade related stuff-->
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Property Id="SAMEVERSIONINSTALLED" Secure="yes"/>
+    <Upgrade Id="$(var.guid_msi_upgrade_code)">
+      <UpgradeVersion Maximum="$(var.KitVersion)"
+                      Property="PREVIOUSVERSIONSINSTALLED"
+                      IncludeMinimum="yes"
+                      IncludeMaximum="no"
+                      OnlyDetect="no"/>
+
+      <UpgradeVersion Minimum="$(var.KitVersion)"
+                      Property="NEWERVERSIONINSTALLED"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"/>
+
+      <UpgradeVersion Minimum="$(var.KitVersion)"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.KitVersion)"
+                      IncludeMaximum="yes"
+                      Property="SAMEVERSIONINSTALLED"
+                      OnlyDetect="yes"/>
+
+    </Upgrade>
+
+    <!-- Error conditions -->
+    <CustomAction Id='NoDowngrade' Error='!(loc.NewerVersionFoundPrefix) !(loc.KitName) !(loc.NewerVersionFoundSuffix)' />
+    <CustomAction Id='SameVersionError' Error='!(loc.SameVersionInstalledPrefix) !(loc.KitName) !(loc.SameVersionInstalledSuffix)'/>
+    <CustomAction Id='GadgeteerCoreNotInstalledError' Error='!(loc.GadgeteerCoreIsNotInstalled)'/>
+    <Property Id="GADGETEER_CORE_INSTALLED">
+      <ComponentSearch Id="id_GadgeteerCoreInstalledComponentSearch" Guid="20CDFFF1-2E36-45CE-A4C1-1DFA1FB123CC" Type="file"/>
+    </Property>
+    
+    <!--ARP stuff (Add/Remove Programs)-->
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+    
+    <!-- Files -->
+    <Media Id="1" Cabinet="product.cab" EmbedCab="yes" />
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+
+      <!-- Getting Started Guide -->
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <Directory Id='id_dir_distr_msi' Name='!(loc.DistributorFull)'>
+          <Directory Id='id_dir_gdgtr_msi' Name='!(loc.GadgeteerDirectoryName)'>
+            <Directory Id='id_dir_kits_msi' Name='!(loc.KitDirectoryName)'>
+              <Directory Id='INSTALLDIR' Name='!(loc.KitName)'>
+                <Directory Id='id_dir_docs_msi' Name='!(loc.DocsDirectoryName)'>
+                  <Directory Id='id_dir_gsg_msi' Name='!(loc.GSGDirectoryName)' FileSource='..\Getting Started Guide'>
+                    <Component Id="GettingStartedHtmFiles" Guid="$(var.guid_msi_gsg)">
+                      <!-- This is the filename of the getting started guide HTML file.  It should be in a "Getting Started Guide" directory under the Kit solution -->
+                      <File Name="GettingStarted.htm" KeyPath="yes">
+                          <Shortcut Id="GettingStartedHTMShortcut" Advertise="yes" Directory="ProgramMenuSubFolder" Name="Getting Started">
+                          <Icon Id="HtmlFileIcon.exe" SourceFile="html.ico" />
+                        </Shortcut>
+                      </File>
+                      <!-- List all images used in the getting started guide here (and put them in the same directory as the Getting Started Guide) -->
+                      <File Name="Image.jpg"/>
+
+                      <RemoveFolder Id="ProgramMenuSubFolderRemove" Directory="ProgramMenuSubFolder" On="uninstall" />
+                      <RemoveFolder Id="ProgramMenuMfrSubFolderRemove" Directory="ProgramMenuMfrSubFolder" On="uninstall" />
+                    </Component>
+
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <!--Getting Started Guide Start menu folder-->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuMfrSubFolder" Name="!(loc.DistributorFull)">
+          <Directory Id="ProgramMenuSubFolder" Name="!(loc.KitName) !(loc.ForGadgeteer)"/>
+        </Directory>
+      </Directory>
+
+      <!-- List merge modules for mainboard(s) and module(s) here
+      Useful tip: copy one of the lines below, select it, Ctrl-H (Quick Replace), set "Look In" to "Selection", and replace "Button" with the name of the module. Also replace "MSR" with the right manufacturer name
+      NB the relative path reference below should work if your local directory structure matches the source control repository at http://gadgeteer.codeplex.com/ 
+      
+      <Merge Id="id_Button_msm" Language="1033" SourceFile="$(var.SourcePath)\..\..\..\..\..\Modules\MSR\Button\Software\Button\Button\bin\Release\Installer\Button.msm" DiskId="1" />
+      <Merge Id="id_MainboardName_msm" Language="1033" SourceFile="$(var.SourcePath)\..\..\..\..\..\Mainboards\MSR\MainboardName\Software\MainboardName\MainboardName\bin\Release\Installer\MainboardName.msm" DiskId="1" />
+      -->
+
+    </Directory>
+
+    <Feature Id="main" Title="Main" Level="1">
+      <!-- List all merge modules above here, e.g.:
+      <MergeRef Id="id_Button_msm" />
+      <MergeRef Id="id_MainboardName_msm" />
+      -->
+
+      <ComponentRef Id="GettingStartedHtmFiles"/>
+    </Feature>
+
+    <Icon Id="AppAddRemoveIcon" SourceFile="$(var.SourcePath)\G.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="AppAddRemoveIcon"/>
+
+    <!--Sequences-->
+    <InstallExecuteSequence>
+
+      <!--In case this is a newer version then remove the existing product-->
+      <RemoveExistingProducts Before="InstallInitialize"/>
+
+      <!--In case you're installing an older version tell the user and exit -->
+      <Custom Action="NoDowngrade" After="FindRelatedProducts">NEWERVERSIONINSTALLED</Custom>
+
+      <!--Display an error if overwriting the same version-->
+      <Custom Action="SameVersionError" After="FindRelatedProducts">SAMEVERSIONINSTALLED</Custom>
+
+      <!--Display an error if gadgeteer core is not installed-->
+      <Custom Action="GadgeteerCoreNotInstalledError" Before="InstallInitialize">&amp;main&gt;2 AND NOT GADGETEER_CORE_INSTALLED</Custom>
+    </InstallExecuteSequence>
+   
+  </Product>
+</Wix>

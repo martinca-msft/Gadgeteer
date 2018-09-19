@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include "..\DslPackage\WixVersion.wxi" ?>
+  
+  <!--Do all vs stuff-->
+
+  <Module Id="GadgeteerDesigner" Language="1033" Version="$(var.SharedVersion)">
+
+    <Package Id="07af1a53-eacf-46a5-8951-92acb4465b73" Manufacturer="Microsoft" InstallerVersion="200" />
+
+    <!--Pick up the assemblies from the "Signed" location. This will fail if the designer assemblies are 
+    not present in this location. If this is giving you trouble, see below-->
+    <?define AssemblySrc="$(var.DslPackage.ProjectDir)..\..\Signed" ?>
+    
+    <!-- Comment the above line and uncomment this one if you need to build the installer with the unsigned assemblies.
+    But DO NOT CHECK THIS IN. Doing so will result in official releases containing unsigned assemblies.-->
+    <!-- ?define AssemblySrc="$(var.DslPackage.TargetDir)" ?-->
+
+    <?include vs.wxi?>
+    
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="!(loc.GadgeteerName)">
+          <Directory Id="PRODUCTDIR" Name="!(loc.ProductSubDir)">
+            <Directory Id="DesignerDirectory" Name=".">
+              <Component Id="c_Icon" Guid="{D7628128-7956-49B7-87F0-F46029A3CA2E}">
+                <Condition>VCSHARP2010EXPRESS_IDE OR VB2010EXPRESS_IDE OR VS2010DEVENV</Condition>
+                <File Id="f_VS_Icon" Name="File.ico" Source="$(var.DslPackage.ProjectDir)\Resources\File.ico" />
+                <RegistryValue Root="HKCR" Key=".gadgeteer" Type="string"  Value="GadgeteerDSL" />
+                <RegistryValue Root="HKCR" Key="GadgeteerDSL" Type="string"  Value="Gadgeteer Diagram" />
+                <RegistryValue Root="HKCR" Key="GadgeteerDSL\DefaultIcon" Type="string"  Value="[DesignerDirectory]\File.ico,0" />
+                <!--TODO: Should we register VS or C# Express? -->
+                <!--<RegistryValue Root="HKCR" Key="GadgeteerDSL\Shell\Open\Command" Type="string"  Value='"[ProgramFilesFolder]Microsoft Visual Studio 10.0\Common7\IDE\devenv.exe" %1' />-->
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="VS2010_ROOT_FOLDER">
+        <!--Install the GadgeteerDSL schema to avoid warnings in VS-->
+        <Directory Id="VS_XML" Name="Xml" >
+          <Directory Id="VS_SCHEMAS" Name="Schemas">
+            <Component Id="DSLSchema" Guid="{5B58ADF6-E637-4A4A-B8EB-6547E2541116}">
+              <Condition>VCSHARP2010EXPRESS_IDE OR VB2010EXPRESS_IDE OR VS2010DEVENV</Condition>
+              <File Id="f_dsl_schema" Name="GadgeteerDSLSchema.xsd" Source="$(var.DslPackage.TargetDir)\GeneratedCode\GadgeteerDSLSchema.xsd" />
+            </Component>
+          </Directory>
+        </Directory>
+        
+        <Directory Id="VS_Common7" Name="Common7">
+          <Directory Id="VS_IDE" Name="IDE">
+
+            <Directory Id="VCE_Ext" Name="VCSExpressExtensions">
+              <Directory Id="VCE_Ext_Mfgr" Name="Microsoft">
+                <Directory Id="VCE_Ext_DSL" Name="GadgeteerDSL" >
+                  <Directory Id="VCE_Ext_DSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc)">
+                    <Component Id="VCE_GadgeteerDesigner" Guid="9e27390c-c1b5-4323-b17c-ae3ca57d4a48">
+                      <Condition>VCSHARP2010EXPRESS_IDE</Condition>
+                      <File Id="f_vce_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_vce_vsixmanifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_vce_pkgdef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_vce_PLK_pkgdef" Name="PLK.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_vce_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="f_vce_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />                      
+                      <File Id="f_vce_VSModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />                      
+                    </Component>
+
+                    <!--Item template (NB the directory structure output of DSLPackage is odd so the filesource is VisualBasic) -->
+                    <!-- REMOVED since item templates are not used by themselves (project templates are used)
+                    <Directory Id="VCE_IT" Name="ItemTemplates" >
+                      <Directory Id="VCE_ITCS" Name="CSharp" FileSource="$(var.DslPackage.TargetDir)\VisualBasic">
+                        <Directory Id="VCE_IT1033" Name="1033">
+                          <Component Id="VCE_IT" Guid="{AAA1BF51-07B6-427C-8F19-BE73CEF9BF14}">
+                            <Condition>VCSHARP2010EXPRESS_IDE</Condition>
+                            <File Id="VCE_GDSL_ZIP" Name="GadgeteerDSL.zip" />
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                    -->
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+            
+            <Directory Id="VB_Ext" Name="VBExpressExtensions">
+              <Directory Id="VB_Ext_Mfgr" Name="Microsoft">
+                <Directory Id="VB_Ext_DSL" Name="GadgeteerDSL" >
+                  <Directory Id="VB_Ext_DSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc)">
+                    <Component Id="VB_GadgeteerDesigner" Guid="28DE9FDA-F7BF-4BCC-AD4B-6B44F67FE546">
+                      <Condition>VB2010EXPRESS_IDE</Condition>
+                      <File Id="f_vb_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_vb_vsixmanifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_vb_pkgdef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_vb_PLK_VBExpress_pkgdef" Name="PLK_VBExpress.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_vb_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="f_vb_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />
+                      <File Id="f_vb_VSModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+
+                    <!--Item template (NB the directory structure output of DSLPackage is odd) -->
+                    <!-- REMOVED since item templates are not used by themselves (project templates are used)
+                    <Directory Id="VB_IT" Name="ItemTemplates" >
+                      <Directory Id="VB_ITVB" Name="VisualBasic" FileSource="$(var.DslPackage.TargetDir)\VisualBasic">
+                        <Directory Id="VB_IT1033" Name="1033">
+                          <Component Id="VB_IT" Guid="{D38FF063-6FBB-4A0F-9E5A-5C612A4DC8B1}">
+                            <Condition>VB2010EXPRESS_IDE</Condition>
+                            <File Id="VB_GDSL_ZIP" Name="GadgeteerDSL.zip" Source="$(var.DslPackage.TargetDir)\VisualBasic\1033\VisualBasic.zip" />
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                    -->
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+            
+            <Directory Id="VS_Ext" Name="Extensions">
+              <Directory Id="VS_Ext_Mfgr" Name="Microsoft">
+                <Directory Id="VS_Ext_DSL" Name="GadgeteerDSL" >
+                  <Directory Id="VS_Ext_DSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc)">
+                    <Component Id="VS_GadgeteerDesigner" Guid="{C42D9F57-0E54-4FD0-9703-34EBD013881F}">
+                      <Condition>VS2010DEVENV</Condition>
+                      <File Id="f_VS_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_VS_vsixmanifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_VS_pkgdef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_VS_PLK_pkgdef" Name="PLK.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="f_VS_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="f_VS_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />                      
+                      <File Id="f_VS_VSModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+
+                    <!--Item template (NB the directory structure output of DSLPackage is odd so the filesource is VisualBasic) -->
+                    <!-- REMOVED since item templates are not used by themselves (project templates are used)
+                    <Directory Id="VS_IT" Name="ItemTemplates" >
+                      <Directory Id="VS_ITCS" Name="CSharp" FileSource="$(var.DslPackage.TargetDir)\VisualBasic">
+                        <Directory Id="VS_IT1033" Name="1033">
+                          <Component Id="VS_IT" Guid="{6D1839BC-86EA-4D2F-9D60-BDF5A89D65F0}">
+                            <Condition>VS2010DEVENV</Condition>
+                            <File Id="VS_GDSL_ZIP" Name="GadgeteerDSL.zip" />
+                          </Component>
+                        </Directory>
+                      </Directory>
+                      <Directory Id="VS_ITVB" Name="VisualBasic" FileSource="$(var.DslPackage.TargetDir)\VisualBasic">
+                        <Directory Id="VS_IT1033VB" Name="1033">
+                          <Component Id="VS_IT_VB" Guid="{D0BE31CC-FB37-478C-8FF1-CCA22A14A357}">
+                            <Condition>VS2010DEVENV</Condition>
+                            <File Id="VS_GDSL_VB_ZIP" Name="GadgeteerDSL.zip" Source="$(var.DslPackage.TargetDir)\VisualBasic\1033\VisualBasic.zip"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                    -->
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+  </Module>
+</Wix>

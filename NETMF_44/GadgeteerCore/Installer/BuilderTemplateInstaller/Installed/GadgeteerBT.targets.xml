@@ -1,0 +1,287 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- WiX properties -->
+  <PropertyGroup>
+    <OutputName Condition=" '$(OutputName)' == '' ">$(ProjectName)</OutputName>
+  </PropertyGroup>
+
+  <!-- Allow GadgeteerDefinition build action for the GadgeteerHardware.xml -->
+  <ItemGroup>
+    <AvailableItemName Include="GadgeteerDefinition" />   
+  </ItemGroup>
+  
+  <!-- Paths initialization -->
+  <PropertyGroup>
+    <GadgeteerRegistryBase Condition=" '$(GadgeteerRegistryBase)' == '' ">Software\Microsoft\.NETGadgeteer</GadgeteerRegistryBase>
+    <GadgeteerInstallRoot>$(Registry:HKEY_LOCAL_MACHINE\Software\Microsoft\.NETGadgeteer\v2\BuilderTemplates@InstallRoot)</GadgeteerInstallRoot>
+    
+    <GadgeteerBuilderTasksPath>$(GadgeteerInstallRoot)Microsoft.Gadgeteer.BuilderTasks.dll</GadgeteerBuilderTasksPath>
+    <GadgeteerIconPath>$(GadgeteerInstallRoot)Gadgeteer.ico</GadgeteerIconPath>
+
+    <WixLibraryTransformPath>$(GadgeteerInstallRoot)GadgeteerDefinition.wixlib.xslt</WixLibraryTransformPath>
+    <WixModuleTransformPath>$(GadgeteerInstallRoot)GadgeteerDefinition.msm.xslt</WixModuleTransformPath>
+    <WixInstallerTransformPath>$(GadgeteerInstallRoot)GadgeteerDefinition.msi.xslt</WixInstallerTransformPath>
+  </PropertyGroup>
+
+  <!-- Include generic strings -->
+  <ItemGroup>
+    <EmbeddedResource Include="$(GadgeteerInstallRoot)Strings.*.wxl" />
+  </ItemGroup>
+
+  <!-- Gadgeteer Tasks -->
+
+  <UsingTask TaskName="GetAssemblyHighestVersion" AssemblyFile="$(GadgeteerBuilderTasksPath)" />
+  <UsingTask TaskName="XslTransformWithFunctions" AssemblyFile="$(GadgeteerBuilderTasksPath)" />
+
+  <!-- Gadgeteer Targets -->
+  
+  <!--
+        Should run in the following order:
+        
+        * BeforeBuild
+        SetWixPreprocessorVariables
+        SetWixPreprocessorCompatibilityVariables
+        GenerateWixLibrary
+        * Build
+        GenerateWixModule
+        GenerateWixInstaller
+  -->
+
+  <!-- ==================================================================================================================================================== -->
+  <!--                                          Target: SetWixVariables                                                                                     -->
+  <!-- ==================================================================================================================================================== -->
+
+  <Target Name="SetWixPreprocessorVariables" BeforeTargets="BeforeBuild">
+
+    <PropertyGroup>
+      <AssemblyName Condition=" '$(AssemblyName)' == '' ">GTM.$(ManufacturerSafeName).$(ProjectSafeName)</AssemblyName>
+      <ApplicationIcon Condition=" '$(ApplicationIcon)' == '' ">$(GadgeteerIconPath)</ApplicationIcon>
+    </PropertyGroup>
+    
+    <!-- Version -->
+    <CreateProperty Value="$(ProjectDefineConstants);ProjectVersion=$(ProjectVersion)" Condition=" '$(ProjectVersion)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <!-- Project name -->
+    <CreateProperty Value="$(ProjectDefineConstants);ProjectSafeName=$(ProjectSafeName)" Condition=" '$(ProjectSafeName)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <!-- Assembly name -->
+    <CreateProperty Value="$(ProjectDefineConstants);AssemblyName=$(AssemblyName)" Condition=" '$(AssemblyName)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <!-- Manufacturer -->
+    <CreateProperty Value="$(ProjectDefineConstants);ManufacturerName=$(ManufacturerName)" Condition=" '$(ManufacturerName)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <CreateProperty Value="$(ProjectDefineConstants);ManufacturerSafeName=$(ManufacturerSafeName)" Condition=" '$(ManufacturerSafeName)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <!-- GUIDs -->
+    <CreateProperty Value="$(ProjectDefineConstants);ProjectUpgradeCode=$(ProjectUpgradeCode)" Condition=" '$(ProjectUpgradeCode)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <CreateProperty Value="$(ProjectDefineConstants);ProjectPackageID=$(ProjectPackageID)" Condition=" '$(ProjectPackageID)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <!-- Icon -->
+    <CreateProperty Value="$(ProjectDefineConstants);ApplicationIcon=$(ApplicationIcon)" Condition=" '$(ApplicationIcon)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+
+  </Target>
+
+  <!-- ==================================================================================================================================================== -->
+  <!--                                          Target: SetWixPreprocessorCompatibilityVariables                                                            -->
+  <!-- ==================================================================================================================================================== -->
+
+  <Target Name="SetWixPreprocessorCompatibilityVariables" BeforeTargets="BeforeBuild" Condition=" '$(GadgeteerTemplatesVersion)' == '4.2' or '$(GadgeteerTemplatesVersion)' == '' ">
+
+    <!-- These are WiX preprocessor used by msm.wxs in .NET Gadgeteer 4.2 and below. -->
+
+    <PropertyGroup>
+      <AssemblyName Condition=" '$(AssemblyName)' == 'Ignore' ">GTM.$(ManufacturerSafeName).$(ProjectSafeName)</AssemblyName>
+    </PropertyGroup>
+
+    <!-- Version -->
+    <CreateProperty Value="$(ProjectDefineConstants);MainboardSoftwareVersion=$(ProjectVersion)" Condition=" '$(ProjectVersion)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <CreateProperty Value="$(ProjectDefineConstants);ModuleSoftwareVersion=$(ProjectVersion)" Condition=" '$(ProjectVersion)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <!-- Project name -->
+    <CreateProperty Value="$(ProjectDefineConstants);SafeMainboardName=$(ProjectSafeName)" Condition=" '$(ProjectSafeName)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <CreateProperty Value="$(ProjectDefineConstants);SafeModuleName=$(ProjectSafeName)" Condition=" '$(ProjectSafeName)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <!-- Manufacturer -->
+    <CreateProperty Value="$(ProjectDefineConstants);SafeManufacturer=$(ManufacturerName)" Condition=" '$(ManufacturerName)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <CreateProperty Value="$(ProjectDefineConstants);FullManufacturer=$(ManufacturerSafeName)" Condition=" '$(ManufacturerSafeName)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <!-- GUIDs -->
+    <CreateProperty Value="$(ProjectDefineConstants);guid_msi_upgrade_code=$(ProjectUpgradeCode)" Condition=" '$(ProjectUpgradeCode)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <CreateProperty Value="$(ProjectDefineConstants);guid_msm_package_id=$(ProjectPackageID)" Condition=" '$(ProjectPackageID)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <!-- Paths -->
+    <CreateProperty Value="$(ProjectDefineConstants);BinPath=$(OutDir)" Condition=" '$(OutDir)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+    <CreateProperty Value="$(ProjectDefineConstants);SourcePath=$(ProjectDir)" Condition=" '$(ProjectDir)' != '' ">
+      <Output TaskParameter="Value" PropertyName="ProjectDefineConstants" />
+    </CreateProperty>
+
+  </Target>
+
+  <!-- ==================================================================================================================================================== -->
+  <!--                                          Target: GenerateWixVersion                                                                                  -->
+  <!-- ==================================================================================================================================================== -->
+
+  <!--
+  <Target Name="GenerateWixVersion" DependsOnTargets="PrepareForBuild;ResolveReferences">
+        
+    <!- Find out all identites of referenced projects. ->
+    <GetAssemblyIdentity AssemblyFiles="@(_ResolvedProjectReferencePaths)">
+      <Output TaskParameter="Assemblies" ItemName="_ResolvedProjectReferenceIdentities" />
+    </GetAssemblyIdentity>
+
+    <!- Find the highest version number. ->
+    <GetAssemblyHighestVersion Assemblies="@(_ResolvedProjectReferenceIdentities)">
+      <Output TaskParameter="AssemblyVersion" PropertyName="ProjectVersion" />
+    </GetAssemblyHighestVersion>
+
+  </Target>
+  -->
+  
+  <!-- ==================================================================================================================================================== -->
+  <!--                                          Target: GenerateWixLibrary                                                                                  -->
+  <!-- ==================================================================================================================================================== -->
+
+  <Target Name="GenerateWixLibrary" BeforeTargets="BeforeBuild" DependsOnTargets="PrepareForBuild">
+
+    <!-- PrepareForBuild creates the $(IntermediateOutputPath) directory  -->
+    
+    <XslTransformWithFunctions XslInputPaths="$(WixLibraryTransformPath)" XmlInputPaths="@(GadgeteerDefinition)" 
+                       OutputPaths="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).g.wxs')"
+                       ParameterContents="@(GadgeteerDefinition->'&lt;P&gt;&lt;Parameter Name=&quot;SourceName&quot; Value=&quot;%(Filename)&quot; /&gt;&lt;/P&gt;')" />
+
+    <!--
+    <Candle
+      SourceFiles="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).g.wxs')"
+      DefineConstants="$(DefineConstants);$(SolutionDefineConstants);$(ProjectDefineConstants);$(ProjectReferenceDefineConstants)"
+      OutputFile="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).g$(IntermediateExt)')"
+      ToolPath="$(WixToolPath)"
+      />
+
+
+    <Lit
+      ObjectFiles="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).g$(IntermediateExt)')"
+      OutputFile="$(OutDir)\..\Installer\$(ProjectSafeName).wixlib"
+      ToolPath="$(WixToolPath)"
+      />
+    -->
+    <!--
+    <Light
+      ObjectFiles="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).g$(IntermediateExt)')"
+      LocalizationFiles="@(EmbeddedResource)"
+      OutputFile="$(OutDir)\..\Installer\$(ProjectSafeName).msm"
+      ToolPath="$(WixToolPath)"
+      />
+     -->
+
+    <ItemGroup>
+      <!--<_ResolvedWixLibraryPaths Include="$(OutDir)\..\Installer\$(ProjectSafeName).wixlib" />
+      <WixLibrary Include="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).g$(IntermediateExt)')" />-->
+      <Compile Include="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).g.wxs')" />
+    </ItemGroup>
+  </Target>
+
+   <!-- ==================================================================================================================================================== --> 
+   <!--                                            Target: GenerateWixModule                                                                                 -->                                                                                   
+   <!-- ==================================================================================================================================================== -->
+  
+  <Target Name="GenerateWixModule" AfterTargets="AfterBuild" Condition=" '$(BuildModule)' == 'True' ">
+       
+    <!-- Files included in all generated WiX files -->
+    <ItemGroup>
+      <WixIncludeItems Include="@(Content)" Condition="'%(Extension)' == '.wxi'" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_WixIncludePaths>@(WixIncludeItems->'%(FullPath)')</_WixIncludePaths>
+    </PropertyGroup>
+
+    <XslTransformWithFunctions XslInputPaths="$(WixModuleTransformPath)" XmlInputPaths="@(GadgeteerDefinition)"
+                   OutputPaths="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).msm.g.wxs')"
+                   ParameterContents="@(GadgeteerDefinition->'
+                    &lt;P&gt;
+                      &lt;Parameter Name=&quot;SourceName&quot; Value=&quot;%(Filename)&quot; /&gt;
+                      &lt;Parameter Name=&quot;IncludePaths&quot; Value=&quot;$(_WixIncludePaths)&quot; /&gt;
+                    &lt;/P&gt;')" />
+
+    <Message Text="Compiling $(ProjectName) installer module..." />
+
+    <Candle SourceFiles="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).msm.g.wxs')"
+            DefineConstants="$(DefineConstants);$(SolutionDefineConstants);$(ProjectDefineConstants);$(ProjectReferenceDefineConstants)"
+            OutputFile="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).msm.g$(IntermediateExt)')"
+            ToolPath="$(WixToolPath)" />
+    
+    <Message Text="Linking $(ProjectName) installer module..." />
+
+    <Light ObjectFiles="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).msm.g$(IntermediateExt)');$(TargetPath)"
+           LocalizationFiles="@(EmbeddedResource)"
+           OutputFile="$(OutDir)\..\Installer\$(ProjectSafeName).msm"
+           ToolPath="$(WixToolPath)" />
+
+  </Target>
+
+  <!-- ==================================================================================================================================================== -->
+  <!--                                          Target: GenerateWixInstaller                                                                                -->
+  <!-- ==================================================================================================================================================== -->
+
+  <Target Name="GenerateWixInstaller" AfterTargets="AfterBuild" DependsOnTargets="GenerateWixModule" Condition=" '$(BuildInstaller)' == 'True' ">
+
+    <!-- GenerateWixModule creates the msm file and _WixIncludePaths property -->
+    
+    <XslTransformWithFunctions XslInputPaths="$(WixInstallerTransformPath)" XmlInputPaths="@(GadgeteerDefinition)"
+                   OutputPaths="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).msi.g.wxs')"
+                   ParameterContents="@(GadgeteerDefinition->'
+                    &lt;P&gt;
+                      &lt;Parameter Name=&quot;SourceName&quot; Value=&quot;%(Filename)&quot; /&gt;
+                      &lt;Parameter Name=&quot;IncludePaths&quot; Value=&quot;$(_WixIncludePaths)&quot; /&gt;
+                    &lt;/P&gt;')" />
+
+    <Message Text="Compiling $(ProjectName) installer..." />
+
+    <Candle SourceFiles="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).msi.g.wxs')"
+            DefineConstants="$(DefineConstants);$(SolutionDefineConstants);$(ProjectDefineConstants);$(ProjectReferenceDefineConstants)"
+            OutputFile="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).msi.g$(IntermediateExt)')"
+            ToolPath="$(WixToolPath)" />
+
+    <Message Text="Linking $(ProjectName) installer..." />
+
+    <Light ObjectFiles="@(GadgeteerDefinition->'$(IntermediateOutputPath)%(Filename)%(Extension).msi.g$(IntermediateExt)');$(TargetPath)"
+           LocalizationFiles="@(EmbeddedResource)"
+           OutputFile="$(OutDir)\..\Installer\$(ProjectSafeName).msi"
+           ToolPath="$(WixToolPath)" />
+
+  </Target>
+
+
+  <!--
+    <Target Name="GenerateWixInstaller" AfterTargets="AfterBuild" DependsOnTargets="GenerateWixLibrary" Condition=" '$(BuildInstaller)' == 'True' ">
+    <Message Text="Compiling installer..." />
+    <Candle ToolPath="$(WixToolPath)" DefineConstants="BinPath=$(OutDir);SourcePath=$(ProjectDir)" SourceFiles="msi.wxs" OutputFile="$(WixIntermediateFolderPath)\msi.wixobj" />
+    <Message Text="Linking installer..." />
+    <Light ToolPath="$(WixToolPath)" LocalizationFiles="en-us.wxl" ObjectFiles="$(WixIntermediateFolderPath)\msi.wixobj" OutputFile="$(WixOutputFolderPath)\AnalogInput.msi" />
+    </Target>
+   -->
+
+</Project>

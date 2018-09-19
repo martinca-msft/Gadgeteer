@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GadgeteerDefinitions xmlns="http://schemas.microsoft.com/Gadgeteer/2011/Hardware">
+  <ModuleDefinitions>
+    <ModuleDefinition Name="Camera"
+            UniqueId="{015DF700-5A47-4282-BD91-BFD024D038FC}"
+            Manufacturer="Acme"
+            Description="A low resolution camera module"
+            InstanceName="camera"
+            Type="Gadgeteer.Modules.MicrosoftResearch.Camera"
+            ModuleSuppliesPower="false"
+            HardwareVersion="1.0"
+            Image="Images\camera_back.png"
+            BoardWidth="47"
+            BoardHeight="26.9"
+            MinimumGadgeteerCoreVersion="2.41.200"
+            HelpUrl="test.xml"
+          >
+      <Assemblies>
+        <Assembly MFVersion="4.1" Name="Foo" />
+        <Assembly MFVersion="4.2" Name="Foo42"  />
+      </Assemblies>
+      <Sockets>
+        <Socket Optional="true" TypesLabel="H" Left="43" Top="13" ConstructorOrder="0">
+          <Types>
+            <Type>H</Type>
+          </Types>            
+          <Pins>
+            <Pin>5</Pin>
+            <Pin>6</Pin>
+            <Pin>7</Pin>
+            <Pin>8</Pin>
+          </Pins>
+        </Socket>
+      </Sockets>
+      <ExtraLibrariesRequired>
+        <Assembly MFVersion="4.1" Name="FooHelper"/>
+      </ExtraLibrariesRequired>
+    </ModuleDefinition>
+
+    <ModuleDefinition Name="Bluetooth"
+            UniqueId="{EB168A99-2628-4F37-9236-716C507136F1}"
+            Manufacturer="Acme"
+            Description="A Bluetooth device"
+            InstanceName="bluetooth"
+            Type="Gadgeteer.Modules.MicrosoftResearch.Bluetooth"
+            ModuleSuppliesPower="true"
+            HardwareVersion="1.2"
+            Image="Resources\Front.jpg"
+            BoardWidth="55"
+            BoardHeight="45"
+            MinimumGadgeteerCoreVersion="2.41.200"
+            HelpUrl ="http://research.microsoft.com/en-us/"
+          >
+      <Assemblies>
+        <Assembly MFVersion="4.1" Name="Foo" />
+        <Assembly MFVersion="4.2" Name="Foo42"  />
+      </Assemblies>
+      <Sockets>
+        <Socket Optional="true" TypesLabel="F,GH" Left="7.5" Top="10" Orientation="45" ConstructorOrder="0">
+          <Types>
+            <Type>X</Type>
+            <Type>Y</Type>
+          </Types>
+          <Pins>
+            <Pin Shared="true">3</Pin>
+            <Pin Shared="true">4</Pin>
+            <Pin>5</Pin>
+            <Pin>6</Pin>
+            <Pin>7</Pin>
+          </Pins>
+        </Socket>
+        <Socket TypesLabel="B" Left="20" Top="10" ConstructorOrder="1">
+          <Types>
+            <Type>A</Type>
+            <Type>Y</Type>
+            <CompositeType>
+              <Types>
+                <Type>A</Type>
+                <Type>C</Type>
+              </Types>
+            </CompositeType>
+          </Types>
+          <Pins>
+            <Pin>5</Pin>
+            <Pin>6</Pin>
+            <Pin>8</Pin>
+          </Pins>
+        </Socket>
+      </Sockets>
+
+      <!--Provided -->
+      <ProvidedSockets>
+        <ProvidedSocket Label="1" Left="7.5" Top="40" Orientation="90" ConstructorParameter="S1">
+          <Types>
+            <Type>A</Type>
+            <Type>X</Type>
+            <Type>Y</Type>
+          </Types>
+          <SharedPinMaps>
+            <SharedPinMap SocketPin="8" NetId="SPI_MOSI_1" />
+            <SharedPinMap SocketPin="9" NetId="SPI_MISO_1" />
+          </SharedPinMaps>
+        </ProvidedSocket>
+        <ProvidedSocket Label="2" Left="40" Top="30" Orientation="0" ConstructorParameter="S2">
+          <Types>
+            <Type>A</Type>
+          </Types>
+          <SharedPinMaps>
+            <SharedPinMap SocketPin="5" NetId="GPIO83" />
+          </SharedPinMaps>
+        </ProvidedSocket>
+      </ProvidedSockets>
+      <LibrariesProvided>
+        <Assembly MFVersion="4.1" Name="FooHelper"/>
+      </LibrariesProvided>
+    </ModuleDefinition>
+
+  </ModuleDefinitions>
+  <MainboardDefinitions>
+    <!--fake data-->
+    <MainboardDefinition Name="GHI Spider" Type="GHI.Spider"
+            HardwareVersion="1.1"
+            Image="Images\spider_ghi_board.png"
+            BoardWidth="57.15"
+            BoardHeight="52.07"
+            MinimumGadgeteerCoreVersion="2.41.200">
+      <Assemblies>
+        <Assembly MFVersion="4.1" Name="Foo" />
+        <Assembly MFVersion="4.2" Name="Foo42"  />
+      </Assemblies>
+      <ProvidedSockets>
+        <ProvidedSocket Label="3" Left="42.860" Top="5.5" Orientation="90" ConstructorParameter="3">
+          <Types>
+            <Type>H</Type>            
+          </Types>
+          <SharedPinMaps>
+            <SharedPinMap SocketPin="9" NetId="GPIO_38" />
+            <SharedPinMap SocketPin="8" NetId="GPIO_39" />
+          </SharedPinMaps>
+        </ProvidedSocket>
+        <ProvidedSocket Label="4" Left="42.860" Top="28.5" Orientation="90" ConstructorParameter="3">
+          <Types>
+            <Type>H</Type>
+          </Types>
+          <SharedPinMaps>
+            <SharedPinMap SocketPin="9" NetId="GPIO_38" />
+            <SharedPinMap SocketPin="8" NetId="GPIO_39" />
+          </SharedPinMaps>
+        </ProvidedSocket>
+        <ProvidedSocket Label="*" Left="14.16" Top="5.5" Orientation="90" ConstructorParameter="4">
+          <Types>
+            <Type>*</Type>
+          </Types>
+        </ProvidedSocket>
+        <!--<ProvidedSocket Label="1" Left="10" Top="20" Orientation="0" ConstructorParameter="DaisylinkSocketNumber">
+          <Types>
+            <Type>A</Type>
+          </Types>
+        </ProvidedSocket>-->
+        </ProvidedSockets>
+      <LibrariesProvided>
+        <Assembly MFVersion="4.1" Name="FooHelper"/>
+      </LibrariesProvided>
+    </MainboardDefinition>
+
+    <MainboardDefinition Name="GHI Spider 2" Type="GHI.Spider2"
+            HardwareVersion="1.1"
+            Image="Images\spider_ghi_board.png"
+            BoardWidth="57.15"
+            BoardHeight="52.07"
+            MinimumGadgeteerCoreVersion="2.41.200">
+      <Assemblies>
+        <Assembly MFVersion="4.1" Name="Foo" />
+        <Assembly MFVersion="4.2" Name="Foo42"  />
+      </Assemblies>
+      <ProvidedSockets>
+        <ProvidedSocket Label="3" Left="42.860" Top="5.5" Orientation="90" ConstructorParameter="3">
+          <Types>
+            <Type>H</Type>
+          </Types>
+          <SharedPinMaps>
+            <SharedPinMap SocketPin="9" NetId="GPIO_38" />
+            <SharedPinMap SocketPin="8" NetId="GPIO_39" />
+          </SharedPinMaps>
+        </ProvidedSocket>
+        <ProvidedSocket Label="4" Left="42.860" Top="28.5" Orientation="90" ConstructorParameter="3">
+          <Types>
+            <Type>H</Type>
+          </Types>
+          <SharedPinMaps>
+            <SharedPinMap SocketPin="9" NetId="GPIO_38" />
+            <SharedPinMap SocketPin="8" NetId="GPIO_39" />
+          </SharedPinMaps>
+        </ProvidedSocket>
+        <ProvidedSocket Label="*" Left="14.16" Top="5.5" Orientation="90" ConstructorParameter="4">
+          <Types>
+            <Type>*</Type>
+          </Types>
+        </ProvidedSocket>
+        <!--<ProvidedSocket Label="1" Left="10" Top="20" Orientation="0" ConstructorParameter="DaisylinkSocketNumber">
+          <Types>
+            <Type>A</Type>
+          </Types>
+        </ProvidedSocket>-->
+      </ProvidedSockets>
+      <LibrariesProvided>
+        <Assembly MFVersion="4.1" Name="FooHelper"/>
+      </LibrariesProvided>
+    </MainboardDefinition>
+
+    <MainboardDefinition Name="Board 2" Type="Foo"
+            HardwareVersion="1.1"
+            Image="Resources\Front.jpg"
+            BoardWidth="75"
+            BoardHeight="65"
+            MinimumGadgeteerCoreVersion="2.41.200">
+      <Assemblies>
+        <Assembly MFVersion="4.1" Name="Foo" />
+        <Assembly MFVersion="4.2" Name="Foo42"  />
+      </Assemblies>
+      <ProvidedSockets>
+        <ProvidedSocket Label="1" Left="10" Top="20" Orientation="90" ConstructorParameter="1">
+          <Types>
+            <Type>A</Type>
+            <Type>X</Type>
+            <Type>Y</Type>
+          </Types>
+          <SharedPinMaps>
+            <SharedPinMap SocketPin="9" NetId="GPIO_12" />
+            <SharedPinMap SocketPin="8" NetId="GPIO_17" />
+          </SharedPinMaps>
+        </ProvidedSocket>
+        <ProvidedSocket Label="2" Left="10" Top="30" Orientation="0" ConstructorParameter="1">
+          <Types>
+            <Type>A</Type>
+          </Types>
+        </ProvidedSocket>
+      </ProvidedSockets>
+    </MainboardDefinition>
+  </MainboardDefinitions>
+</GadgeteerDefinitions>

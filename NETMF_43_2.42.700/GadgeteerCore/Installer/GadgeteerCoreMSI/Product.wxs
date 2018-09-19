@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <?include Version.wxi?>
+
+  <Product Id="*" Name="!(loc.GadgeteerCoreName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="!(loc.Manufacturer)" UpgradeCode="672DF6EC-E3A2-4226-B1A3-399879A08A90">
+    <Package InstallerVersion="300" Compressed="yes" Platform="x86" InstallPrivileges="elevated"/>
+
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Property Id="SAMEVERSIONINSTALLED" Secure="yes"/>
+    <Upgrade Id="{672DF6EC-E3A2-4226-B1A3-399879A08A90}">
+      <UpgradeVersion Property="PREVIOUSVERSIONSINSTALLED" IncludeMaximum="no"  Maximum="$(var.ProductVersion)"                               
+                                                           IncludeMinimum="yes"                                 OnlyDetect="no"  />
+      
+      <UpgradeVersion Property="NEWERVERSIONINSTALLED"     IncludeMinimum="no"  Minimum="$(var.ProductVersion)" OnlyDetect="yes" />
+      
+      <UpgradeVersion Property="SAMEVERSIONINSTALLED"      IncludeMinimum="yes" Minimum="$(var.ProductVersion)" 
+                                                           IncludeMaximum="yes" Maximum="$(var.ProductVersion)" OnlyDetect="yes" />
+    </Upgrade>
+
+    <!-- Install for all users -->
+    <Property Id="ALLUSERS" Value="2"/>
+    
+    <!-- ARP stuff (Add/Remove Programs) -->
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+    <!-- Visual Studio registration -->
+    <PropertyRef Id="RequiresVSRegistration" />
+    <UI>
+      <ProgressText Action="VS11Registration"   >!(loc.ProgressText_VSRegistration)</ProgressText>
+      <ProgressText Action="VS11Unregistration" >!(loc.ProgressText_VSRegistration)</ProgressText>
+      <ProgressText Action="VSE11Registration"  >!(loc.ProgressText_VSRegistration)</ProgressText>
+      <ProgressText Action="VSE11Unregistration">!(loc.ProgressText_VSRegistration)</ProgressText>
+    </UI>
+
+    <!-- Custom actions -->
+    <CustomAction Id='NoDowngrade' Error='!(loc.NewerVersionFound)' />
+    <CustomAction Id='SameVersionError' Error='!(loc.SameVersionInstalled)'/>
+    <!--
+    <CustomAction Id="NETMFNotInstalledError" Error="!(loc.NETMFNotInstalled)" />
+    -->
+
+    <?include MicroFramework.wxi?>
+    <?include Sequences.wxi?>
+
+    <PropertyRef Id="VS10_ENV" />
+    <PropertyRef Id="VS11_ENV" />
+    <?include Components.wxi?>
+
+    <!-- Features -->
+    <!-- To enable feature selection UI, uncomment the control in InstallLocationDlg dialog. -->
+    <Feature Id="Feature" Title="!(loc.FeatureT)" Description="!(loc.FeatureD)" Level="1" Display="expand" AllowAdvertise="no">
+
+      <!-- Common -->
+      <ComponentRef Id="ReleaseNotesFiles"/>
+      <ComponentRef Id="RegistryKeys"/>
+
+      <!-- .NET Micro Framework -->
+      <Feature Id="MF_Support" Title="!(loc.FeatureT_MF)" Description="!(loc.FeatureD_MF)" Level="1" Display="expand" AllowAdvertise="no">
+
+        <!-- .NET Micro Framework 4.1 -->
+        <Feature Id="MF41_Support" Title="!(loc.FeatureT_MF41)" Description="!(loc.FeatureD_MF41)" Level="1" AllowAdvertise="no">
+          <Condition Level="1">MF41_INSTALLED</Condition>
+          
+          <ComponentRef Id="GadgeteerCore41Files"/>
+          <ComponentRef Id="GadgeteerCore41BEFiles"/>
+          <ComponentRef Id="GadgeteerCore41LEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore41WebClientFiles"/>
+          <ComponentRef Id="GadgeteerCore41WebClientBEFiles"/>
+          <ComponentRef Id="GadgeteerCore41WebClientLEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore41WebServerFiles"/>
+          <ComponentRef Id="GadgeteerCore41WebServerBEFiles"/>
+          <ComponentRef Id="GadgeteerCore41WebServerLEFiles"/>
+        </Feature>
+
+        <!-- .NET Micro Framework 4.2 -->
+        <Feature Id="MF42_Support" Title="!(loc.FeatureT_MF42)" Description="!(loc.FeatureD_MF42)" Level="1" AllowAdvertise="no">
+          <Condition Level="1">MF42_INSTALLED</Condition>
+
+          <ComponentRef Id="GadgeteerCore42Files"/>
+          <ComponentRef Id="GadgeteerCore42BEFiles"/>
+          <ComponentRef Id="GadgeteerCore42LEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore42WebClientFiles"/>
+          <ComponentRef Id="GadgeteerCore42WebClientBEFiles"/>
+          <ComponentRef Id="GadgeteerCore42WebClientLEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore42WebServerFiles"/>
+          <ComponentRef Id="GadgeteerCore42WebServerBEFiles"/>
+          <ComponentRef Id="GadgeteerCore42WebServerLEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore42SerialFiles"/>
+          <ComponentRef Id="GadgeteerCore42SerialBEFiles"/>
+          <ComponentRef Id="GadgeteerCore42SerialLEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore42SPIFiles"/>
+          <ComponentRef Id="GadgeteerCore42SPIBEFiles"/>
+          <ComponentRef Id="GadgeteerCore42SPILEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore42DaisyLinkFiles"/>
+          <ComponentRef Id="GadgeteerCore42DaisyLinkBEFiles"/>
+          <ComponentRef Id="GadgeteerCore42DaisyLinkLEFiles"/>
+        </Feature>
+
+        <!-- .NET Micro Framework 4.3 -->
+        <Feature Id="MF43_Support" Title="!(loc.FeatureT_MF43)" Description="!(loc.FeatureD_MF43)" Level="1" AllowAdvertise="no">
+          <Condition Level="1">MF43_INSTALLED</Condition>
+
+          <ComponentRef Id="GadgeteerCore43Files"/>
+          <ComponentRef Id="GadgeteerCore43BEFiles"/>
+          <ComponentRef Id="GadgeteerCore43LEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore43WebClientFiles"/>
+          <ComponentRef Id="GadgeteerCore43WebClientBEFiles"/>
+          <ComponentRef Id="GadgeteerCore43WebClientLEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore43WebServerFiles"/>
+          <ComponentRef Id="GadgeteerCore43WebServerBEFiles"/>
+          <ComponentRef Id="GadgeteerCore43WebServerLEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore43SerialFiles"/>
+          <ComponentRef Id="GadgeteerCore43SerialBEFiles"/>
+          <ComponentRef Id="GadgeteerCore43SerialLEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore43SPIFiles"/>
+          <ComponentRef Id="GadgeteerCore43SPIBEFiles"/>
+          <ComponentRef Id="GadgeteerCore43SPILEFiles"/>
+
+          <ComponentRef Id="GadgeteerCore43DaisyLinkFiles"/>
+          <ComponentRef Id="GadgeteerCore43DaisyLinkBEFiles"/>
+          <ComponentRef Id="GadgeteerCore43DaisyLinkLEFiles"/>
+        </Feature>
+
+      </Feature>
+
+      <!-- Visual Studio -->
+      <Feature Id="VS_Support" Title="!(loc.FeatureT_VS)" Description="!(loc.FeatureD_VS)" Level="1" Display="collapse" AllowAdvertise="no">
+
+        <!-- Designer Module -->
+        <MergeRef Id="DesignerMM" />
+        
+        <!-- App Template Wizard -->
+        <ComponentRef Id="AppTemplateWizardFiles" />
+
+        <!-- Visual Studio 2010 -->
+        <Feature Id="VS10_Support" Title="!(loc.FeatureT_VS10)" Description="!(loc.FeatureD_VS10)" Level="1" AllowAdvertise="no">
+          <Condition Level="0">NOT VS10_ROOT</Condition>
+
+          <ComponentRef Id="VS10_Schema" />
+          <ComponentRef Id="VS10_ExtensionManifest" />
+          <ComponentRef Id="VS10_CS_AppTemplate" />
+          <ComponentRef Id="VS10_CS_AppTemplates42" />
+          <ComponentRef Id="VS10_CS_AppTemplates41" />
+          <ComponentRef Id="VS10_VB_AppTemplate" />
+          <ComponentRef Id="VS10_VB_AppTemplates42" />
+          <!-- Visual Basic does not support 4.1 version. -->
+
+          <!-- Visual C# 2010 Express -->
+          <ComponentRef Id="VSE10_CS_ExtensionManifest" />
+          <ComponentRef Id="VSE10_CS_AppTemplate" />
+          <ComponentRef Id="VSE10_CS_AppTemplates42" />
+          <ComponentRef Id="VSE10_CS_AppTemplates41" />
+          
+          <!-- Visual C# 2010 Express -->
+          <ComponentRef Id="VSE10_VB_ExtensionManifest"/>
+          <ComponentRef Id="VSE10_VB_AppTemplate" />
+          <ComponentRef Id="VSE10_VB_AppTemplates42" />
+          <!-- Visual Basic does not support 4.1 version. -->
+        </Feature>
+
+        <!-- Visual Studio 2012 -->
+        <Feature Id="VS11_Support" Title="!(loc.FeatureT_VS11)" Description="!(loc.FeatureT_VS11)" Level="1" AllowAdvertise="no">
+          <Condition Level="0">NOT VS11_ROOT</Condition>
+
+          <ComponentRef Id="VS11_Schema" />
+          <ComponentRef Id="VS11_ExtensionManifest" />
+          <ComponentRef Id="VS11_CS_AppTemplate" />
+          <ComponentRef Id="VS11_CS_AppTemplates42" />
+          <ComponentRef Id="VS11_CS_AppTemplates41" />
+          <ComponentRef Id="VS11_VB_AppTemplate" />
+          <ComponentRef Id="VS11_VB_AppTemplates42" />
+          <!-- Visual Basic does not support 4.1 version. -->
+          
+          <ComponentRef Id="VSE11_ExtensionManifest"/>
+          <ComponentRef Id="VSE11_CS_AppTemplate" />
+          <ComponentRef Id="VSE11_CS_AppTemplates42" />
+          <ComponentRef Id="VSE11_CS_AppTemplates41" />
+          <ComponentRef Id="VSE11_VB_AppTemplate" />
+          <ComponentRef Id="VSE11_VB_AppTemplates42" />
+          <!-- Visual Basic does not support 4.1 version. -->
+        </Feature>
+      </Feature>
+    </Feature>
+
+    <!-- Include all UI stuff -->
+    <Property Id="UI_INSTALLDIR" Value="INSTALLDIR" />
+    <Property Id="DISP_GETTING_STARTED" Value="1" />
+    <Property Id="DISP_RELEASE_NOTES" Value="1" />
+    <?include ui\Binaries.wxi?>
+    <?include ui\CommonDialogs.wxi?>
+    <?include ui\CustomActions.wxi?>
+    <?include ui\Errors.wxi?>
+    <?include ui\InstallSequences.wxi?>
+    <?include ui\TextStyles.wxi?>
+  </Product>
+</Wix>

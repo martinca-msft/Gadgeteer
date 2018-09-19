@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>.NET Gadgeteer Application (NETMF 4.1)</Name>
+    <Description>A template for a Microsoft .NET Gadgeteer application using .NET Micro Framework v4.1 allowing the user to specify a device design comprising a .NET Gadgeteer-compatible mainboard and modules, and write and debug C# software for that device.</Description>
+    <Icon>G.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <SortOrder>1001</SortOrder>
+    <TemplateID>42f848de-ed17-438f-966e-66d56faecc0c</TemplateID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>GadgeteerApp</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+      <Folder Name="Resources" TargetFolderName="Resources">
+        <ProjectItem ReplaceParameters="false" TargetFileName="NinaB.tinyfnt">NinaB.tinyfnt</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="small.tinyfnt">small.tinyfnt</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="true" OpenOrder="2">Program.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="true" OpenOrder="1">Program.gadgeteer</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Program.gadgeteer.diagram">Program.diagram</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Resources.resx">Resources.resx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Resources.Designer.cs">Resources.Designer.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
+
+
+  

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include "..\DslPackage\WixVersion.wxi" ?>
+
+  <Module Id="GadgeteerDesigner" Language="1033" Version="$(var.SharedVersion)">
+
+    <Package Id="07af1a53-eacf-46a5-8951-92acb4465b73" Manufacturer="Microsoft" InstallerVersion="200" />
+
+    <!-- Pick up the assemblies from the "Signed" location. This will fail if the designer assemblies are not present in this location. -->
+    <?define AssemblySrc="$(var.DslPackage.ProjectDir)..\..\..\..\..\NETMF_43\Builds\Release Drops\2.43.800\Signed" ?>
+
+    <!-- The AssemblySrc10 points to the designer files build with Visual Studio 2010 SP1 SDK and are used for the 2010 versions of products. -->
+    <!-- The AssemblySrc11 points to the designer files build with Visual Studio 2012 SDK / .NET 4.5 and are used for the 2012 versions of products. -->
+    
+    <?define AssemblySrc10="$(var.AssemblySrc)\signtemp10" ?>
+    <!--<?define AssemblySrc10="$(var.DslPackage.TargetDir)" ?>-->
+
+    <?define AssemblySrc11="$(var.AssemblySrc)\signtemp11" ?>
+    <!--<?define AssemblySrc11="$(var.DslPackage.TargetDir)" ?>-->
+
+    <?define AssemblySrc12="$(var.AssemblySrc)\signtemp12" ?>
+    <!--<?define AssemblySrc12="$(var.DslPackage.TargetDir)" ?>-->
+
+    <!--<?define AssemblySrc14="$(var.AssemblySrc)\signtemp14" ?>-->
+    <?define AssemblySrc14="$(var.DslPackage.TargetDir)" ?>
+
+    <!-- Comment the above lines and uncomment the others if you need to build the installer with the unsigned assemblies. -->
+    <!-- But DO NOT CHECK THIS IN. Doing so will result in official releases containing unsigned assemblies.-->
+
+    <PropertyRef Id="VS14_ROOT" />
+    <PropertyRef Id="VS12_ROOT" />
+    <PropertyRef Id="VS11_ROOT" />
+    <PropertyRef Id="VS10_ROOT" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="!(loc.GadgeteerName)">
+          <Directory Id="PRODUCTDIR" Name="!(loc.ProductSubDir)">
+            <Directory Id="DesignerDirectory" Name=".">
+              <Component Id="FileRegistration" Guid="{D7628128-7956-49B7-87F0-F46029A3CA2E}">
+                <File Id="Icon" Name="File.ico" Source="$(var.DslPackage.ProjectDir)\Resources\File.ico" />
+                <RegistryValue Root="HKCR" Key=".gadgeteer" Type="string" Value="GadgeteerDSL" />
+                <RegistryValue Root="HKCR" Key="GadgeteerDSL" Type="string" Value="Gadgeteer Diagram" />
+                <RegistryValue Root="HKCR" Key="GadgeteerDSL\DefaultIcon" Type="string" Value="[DesignerDirectory]\File.ico,0" />
+                
+                <!-- Does not make sense to register a shell verb for the file, as the designer requires a project context (e.g. MF version). -->
+                <!--<RegistryValue Root="HKCR" Key="GadgeteerDSL\Shell\Open\Command" Type="string"  Value='"[ProgramFilesFolder]Microsoft Visual Studio 10.0\Common7\IDE\devenv.exe" %1' />-->
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+      <!-- Visual Studio 2015 -->
+      <Directory Id="VS14_ROOT">
+        <!-- This is C:\Program Files (x86)\Microsoft Visual Studio 14.0\ for an x64 machine using standard directory locations. -->
+
+        <!-- Schema -->
+        <Directory Id="VS14_Xml" Name="Xml" >
+          <Directory Id="VS14_Xml_Schemas" Name="Schemas">
+            <Component Id="VS14_Schema" Guid="{5DAC830C-C3CE-48BF-987D-DC46E44ED3D0}">
+              <Condition>VS14_ENV</Condition>
+              <File Id="VS14_Schema_XSD" Name="GadgeteerDSLSchema.xsd" Source="$(var.DslPackage.TargetDir)\GeneratedCode\GadgeteerDSLSchema.xsd" />
+            </Component>
+          </Directory>
+        </Directory>
+
+        <!-- Designer -->
+        <Directory Id="VS14_Common7" Name="Common7">
+          <Directory Id="VS14_IDE" Name="IDE">
+
+            <!-- Visual Studio 2015 Community or higher editions -->
+            <Directory Id="VS14_Ext" Name="Extensions">
+              <Directory Id="VS14_Ext_Msft" Name="Microsoft">
+                <Directory Id="VS14_Ext_Msft_GdgtrDSL" Name="GadgeteerDSL" >
+                  <Directory Id="VS14_Ext_Msft_GdgtrDSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc14)">
+                    <Component Id="VS14_GadgeteerDesignerFiles" Guid="{D6928B2E-730D-4CBF-8A38-DDDC417AB794}">
+                      <Condition>VS14_ENV</Condition>
+                      <File Id="VS14_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS14_VsixManifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS14_PkgDef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS14_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="VS14_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />
+                      <File Id="VS14_VsModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+          </Directory>
+        </Directory>
+
+      </Directory>
+      <!-- Visual Studio 2013 -->
+
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+      <!-- Visual Studio 2013 -->
+      <Directory Id="VS12_ROOT">
+        <!-- This is C:\Program Files (x86)\Microsoft Visual Studio 12.0\ for an x64 machine using standard directory locations. -->
+
+        <!-- Schema -->
+        <Directory Id="VS12_Xml" Name="Xml" >
+          <Directory Id="VS12_Xml_Schemas" Name="Schemas">
+            <Component Id="VS12_Schema" Guid="{F5BC5FE5-F2F4-431A-8C9F-F9834DB04E02}">
+              <Condition>VS12_ENV</Condition>
+              <File Id="VS12_Schema_XSD" Name="GadgeteerDSLSchema.xsd" Source="$(var.DslPackage.TargetDir)\GeneratedCode\GadgeteerDSLSchema.xsd" />
+            </Component>
+          </Directory>
+        </Directory>
+
+        <!-- Designer -->
+        <Directory Id="VS12_Common7" Name="Common7">
+          <Directory Id="VS12_IDE" Name="IDE">
+
+            <!-- Visual Studio 2013 Professional or higher editions -->
+            <Directory Id="VS12_Ext" Name="Extensions">
+              <Directory Id="VS12_Ext_Msft" Name="Microsoft">
+                <Directory Id="VS12_Ext_Msft_GdgtrDSL" Name="GadgeteerDSL" >
+                  <Directory Id="VS12_Ext_Msft_GdgtrDSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc12)">
+                    <Component Id="VS12_GadgeteerDesignerFiles" Guid="{4B40A76D-75A6-46FA-98CB-259B99460FBD}">
+                      <Condition>VS12_ENV</Condition>
+                      <File Id="VS12_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS12_VsixManifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS12_PkgDef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS12_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="VS12_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />
+                      <File Id="VS12_VsModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <!-- Visual Studio Express 2013 for Windows Desktop -->
+            <Directory Id="VSE12_Ext" Name="WDExpressExtensions">
+              <Directory Id="VSE12_Ext_Msft" Name="Microsoft">
+                <Directory Id="VSE12_Ext_Msft_GdgtrDSL" Name="GadgeteerDSL" >
+                  <Directory Id="VSE12_Ext_Msft_GdgtrDSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc12)">
+                    <Component Id="VSE12_GadgeteerDesignerFiles" Guid="{13E2804D-DFEF-4CF1-96BA-DEE428429E0B}">
+                      <Condition>VSE12_ENV</Condition>
+                      <File Id="VSE12_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE12_VsixManifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE12_PkgDef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE12_PLK_PkgDef" Name="PLK_VSE12.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE12_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="VSE12_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />
+                      <File Id="VSE12_VsModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+          </Directory>
+        </Directory>
+
+      </Directory>
+      <!-- Visual Studio 2013 -->
+
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+      <!-- Visual Studio 2012 -->
+      <Directory Id="VS11_ROOT">
+        <!-- This is C:\Program Files (x86)\Microsoft Visual Studio 11.0\ for an x64 machine using standard directory locations. -->
+
+        <!-- Schema -->
+        <Directory Id="VS11_Xml" Name="Xml" >
+          <Directory Id="VS11_Xml_Schemas" Name="Schemas">
+            <Component Id="VS11_Schema" Guid="{78A63B62-2FCB-4B96-B530-C7E25E969D18}">
+              <Condition>VS11_ENV</Condition>
+              <File Id="VS11_Schema_XSD" Name="GadgeteerDSLSchema.xsd" Source="$(var.DslPackage.TargetDir)\GeneratedCode\GadgeteerDSLSchema.xsd" />
+            </Component>
+          </Directory>
+        </Directory>
+
+        <!-- Designer -->
+        <Directory Id="VS11_Common7" Name="Common7">
+          <Directory Id="VS11_IDE" Name="IDE">
+
+            <!-- Visual Studio 2012 Professional or higher editions -->
+            <Directory Id="VS11_Ext" Name="Extensions">
+              <Directory Id="VS11_Ext_Msft" Name="Microsoft">
+                <Directory Id="VS11_Ext_Msft_GdgtrDSL" Name="GadgeteerDSL" >
+                  <Directory Id="VS11_Ext_Msft_GdgtrDSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc11)">
+                    <Component Id="VS11_GadgeteerDesignerFiles" Guid="{6DA47B72-7567-49F2-8B5E-404D90360AA0}">
+                      <Condition>VS11_ENV</Condition>
+                      <File Id="VS11_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS11_VsixManifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS11_PkgDef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS11_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="VS11_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />
+                      <File Id="VS11_VsModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <!-- Visual Studio Express 2012 for Windows Desktop -->
+            <Directory Id="VSE11_Ext" Name="WDExpressExtensions">
+              <Directory Id="VSE11_Ext_Msft" Name="Microsoft">
+                <Directory Id="VSE11_Ext_Msft_GdgtrDSL" Name="GadgeteerDSL" >
+                  <Directory Id="VSE11_Ext_Msft_GdgtrDSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc11)">
+                    <Component Id="VSE11_GadgeteerDesignerFiles" Guid="{8EABA2E9-F3BA-4B82-B60F-FBE8EBDDEC2E}">
+                      <Condition>VSE11_ENV</Condition>
+                      <File Id="VSE11_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE11_VsixManifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE11_PkgDef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE11_PLK_PkgDef" Name="PLK_VSE11.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE11_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="VSE11_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />
+                      <File Id="VSE11_VsModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+          </Directory>
+        </Directory>
+      
+      </Directory>
+      <!-- Visual Studio 2012 -->
+
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+      <!-- Visual Studio 2010 -->
+      <Directory Id="VS10_ROOT">
+        <!-- This is C:\Program Files (x86)\Microsoft Visual Studio 10.0\ for an x64 machine using standard directory locations. -->
+
+        <!-- Schema -->
+        <Directory Id="VS10_Xml" Name="Xml" >
+          <Directory Id="VS10_Xml_Schemas" Name="Schemas">
+            <Component Id="VS10_Schema" Guid="{5B58ADF6-E637-4A4A-B8EB-6547E2541116}">
+              <Condition>VS10_ENV OR VSE10_CS_ENV OR VSE10_VB_ENV</Condition>
+              <File Id="VS10_Schema_XSD" Name="GadgeteerDSLSchema.xsd" Source="$(var.DslPackage.TargetDir)\GeneratedCode\GadgeteerDSLSchema.xsd" />
+            </Component>
+          </Directory>
+        </Directory>
+
+        <!-- Designer -->
+        <Directory Id="VS10_Common7" Name="Common7">
+          <Directory Id="VS10_IDE" Name="IDE">
+
+            <!-- Visual Studio 2010 Standard or higher editions -->
+            <Directory Id="VS10_Ext" Name="Extensions">
+              <Directory Id="VS10_Ext_Msft" Name="Microsoft">
+                <Directory Id="VS10_Ext_Msft_GdgtrDSL" Name="GadgeteerDSL" >
+                  <Directory Id="VS10_Ext_Msft_GdgtrDSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc10)">
+                    <Component Id="VS10_GadgeteerDesignerFiles" Guid="{C42D9F57-0E54-4FD0-9703-34EBD013881F}">
+                      <Condition>VS10_ENV</Condition>
+                      <File Id="VS10_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS10_VsixManifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS10_PkgDef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VS10_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="VS10_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />
+                      <File Id="VS10_VsModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <!-- Visual C# Express 2010 -->
+            <Directory Id="VSE10_CS_Ext" Name="VCSExpressExtensions">
+              <Directory Id="VSE10_CS_Ext_Msft" Name="Microsoft">
+                <Directory Id="VSE10_CS_Ext_Msft_GdgtrDSL" Name="GadgeteerDSL" >
+                  <Directory Id="VSE10_CS_Ext_Msft_GdgtrDSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc10)">
+                    <Component Id="VSE10_CS_GadgeteerDesignerFiles" Guid="{9E27390C-C1B5-4323-B17C-AE3CA57D4A48}">
+                      <Condition>VSE10_CS_ENV</Condition>
+                      <File Id="VSE10_CS_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE10_CS_VsixManifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE10_CS_PkgDef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE10_CS_PLK_PkgDef" Name="PLK_VSE10_CS.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE10_CS_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="VSE10_CS_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />
+                      <File Id="VSE10_CS_VsModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <!-- Visual Basic Express 2010 -->
+            <Directory Id="VSE10_VB_Ext" Name="VBExpressExtensions">
+              <Directory Id="VSE10_VB_Ext_Msft" Name="Microsoft">
+                <Directory Id="VSE10_VB_Ext_Msft_GdgtrDSL" Name="GadgeteerDSL" >
+                  <Directory Id="VSE10_VB_Ext_Msft_GdgtrDSL_Version" Name="1.0.0.0" FileSource="$(var.AssemblySrc10)">
+                    <Component Id="VSE10_VB_GadgeteerDesignerFiles" Guid="{28DE9FDA-F7BF-4BCC-AD4B-6B44F67FE546}">
+                      <Condition>VSE10_VB_ENV</Condition>
+                      <File Id="VSE10_VB_CodeGeneration" Name="CodeGeneration.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE10_VB_VsixManifest" Name="extension.vsixmanifest" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE10_VB_PkgDef" Name="Microsoft.Gadgeteer.Designer.DslPackage.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE10_VB_PLK_PkgDef" Name="PLK_VSE10_VB.pkgdef" Source="$(var.DslPackage.TargetDir)"/>
+                      <File Id="VSE10_VB_Dsl" Name="Microsoft.Gadgeteer.Designer.Dsl.dll" />
+                      <File Id="VSE10_VB_DslPackage" Name="Microsoft.Gadgeteer.Designer.DslPackage.dll" />
+                      <File Id="VSE10_VB_VsModuleManager" Name="Microsoft.Gadgeteer.VSModuleManager.dll" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+          </Directory>
+        </Directory>
+      
+      </Directory>
+      <!-- Visual Studio 2010 -->
+
+    </Directory>
+  </Module>
+</Wix>

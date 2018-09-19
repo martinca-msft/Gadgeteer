@@ -1,0 +1,11 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".wxi" #>
+<#@ import namespace="System.IO" #>
+<#
+  string versionFileName = this.Host.ResolvePath(@"..\..\version.txt");
+  string version = File.ReadAllText(versionFileName).Trim();
+#>
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define SharedVersion="<#= version #>" ?>
+</Include>

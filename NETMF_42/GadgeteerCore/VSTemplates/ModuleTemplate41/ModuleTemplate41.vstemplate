@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>.NET Gadgeteer Module (NETMF 4.1 subcomponent)</Name>
+    <Description>Template for a Microsoft .NET Gadgeteer module.  This template should only be used as a sub-template of the Module template, and never directly.</Description>
+    <Icon>G.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <SortOrder>5001</SortOrder>
+    <TemplateID>C446C0FE-ECB0-4084-BF37-EB3163AF9B3A</TemplateID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MyDevice</DefaultName>
+    <ProvideDefaultName>false</ProvideDefaultName>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
+      <ProjectItem TargetFileName="Properties\AssemblyInfo.cs" ReplaceParameters="true">AssemblyInfo.cs</ProjectItem>
+      <ProjectItem TargetFileName="$HardwareFileSystemName$_41.cs" ReplaceParameters="true" OpenInEditor="true">Module41.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.Gadgeteer.HardwareTemplateWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly>
+    <FullClassName>Microsoft.Gadgeteer.HardwareTemplateWizard.GTHardwareWizard</FullClassName>
+  </WizardExtension>
+  <WizardData Name="HardwareType">Module</WizardData>
+</VSTemplate>
+

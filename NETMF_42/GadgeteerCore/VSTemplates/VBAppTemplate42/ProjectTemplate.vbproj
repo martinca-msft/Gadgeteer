@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <!--VS2010 product version-->
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+
+    <!--This is an executable-->
+    <OutputType>Exe</OutputType>
+    <RootNamespace>$safeprojectname$</RootNamespace>
+    <AssemblyName>$safeprojectname$</AssemblyName>
+    <TargetFrameworkVersion>v4.2</TargetFrameworkVersion>
+    <!--Identify this as a MicroFramework, VisualBasic project-->
+    <ProjectTypeGuids>{bb063c12-22d6-4e50-a55f-f678d783e61d};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <ProjectGuid>$guid1$</ProjectGuid>
+    <MyType>Console</MyType>
+    <AssemblyBothEndian>true</AssemblyBothEndian>
+    
+    <!--This entry seems to be specific to NET MF projects-->
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+
+    <!-- Default transport and device-->
+    <DeployDevice>Gadgeteer</DeployDevice>
+    <DeployTransport>USB</DeployTransport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject>Sub Main</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject>Sub Main</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  
+  <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\VisualBasic.Targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.vb" />
+    <Compile Include="Program.vb" />
+    <Compile Include="Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Gadgeteer">
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Graphics" />
+    <Reference Include="Microsoft.SPOT.Hardware" /> 
+    <Reference Include="Microsoft.SPOT.Hardware.SerialPort" /> 
+    <Reference Include="Microsoft.SPOT.IO" />
+    <Reference Include="Microsoft.SPOT.Native"/>
+    <Reference Include="Microsoft.SPOT.Net" />
+    <Reference Include="Microsoft.SPOT.Net.Security" /> 
+    <Reference Include="Microsoft.SPOT.TinyCore" />
+    <Reference Include="Microsoft.SPOT.Touch" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Http" />
+    <Reference Include="System.IO" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Threading" />
+    <Import Include="Microsoft.SPOT" />
+    <Import Include="Microsoft.SPOT.Presentation" />
+    <Import Include="Microsoft.SPOT.Presentation.Controls" />
+    <Import Include="Microsoft.SPOT.Presentation.Media" />
+    <Import Include="Microsoft.SPOT.Touch" />
+    <Import Include="Microsoft.VisualBasic.Constants" />
+    <Import Include="Gadgeteer.Networking" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Program.gadgeteer" >
+      <Generator>GadgeteerFileCodeGenerator</Generator>
+    </None>
+    <None Include="Program.gadgeteer.diagram">
+      <DependentUpon>Program.gadgeteer</DependentUpon>
+    </None>
+    <None Include="Resources\NinaB.tinyfnt" />
+    <None Include="Resources\small.tinyfnt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
+  </ItemGroup>
+ </Project>

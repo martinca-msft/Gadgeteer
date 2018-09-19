@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- == == == == == == == == == == Gadgeteer Mark == == == == == == == == == == -->
+    
+    <SolidColorBrush x:Key="GadgeteerMarkBackgroundBrush" Color="Black" />
+    <Pen x:Key="GadgeteerMarkBackgroundPen" Brush="{StaticResource GadgeteerMarkBackgroundBrush}" Thickness="95250" LineJoin="Round" />
+
+    <SolidColorBrush x:Key="GadgeteerMarkForegroundBrush" Color="White" />
+    <Pen x:Key="GadgeteerMarkForegroundPen" Brush="{StaticResource GadgeteerMarkForegroundBrush}" Thickness="95250" LineJoin="Round" />
+
+    <DrawingImage x:Key="GadgeteerMarkImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <!-- Source geometry taken from Gadgeteer Mark + Logo.pptx -->
+                <GeometryDrawing Brush="{StaticResource GadgeteerMarkBackgroundBrush}" Pen="{StaticResource GadgeteerMarkBackgroundPen}" Geometry="M 47625,47625 V 2472690 H 2472690 V 47625 Z" />
+                <GeometryDrawing Brush="{StaticResource GadgeteerMarkForegroundBrush}" Pen="{StaticResource GadgeteerMarkForegroundPen}" Geometry="M 407671,407671 V 2175250 H 2112646 V 1127761 H 1127761 V 1392556 H 1847849 V 1910455 H 672466 V 672466 H 2112646 V 407671 Z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="GadgeteerMarkImageInverted">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource GadgeteerMarkForegroundBrush}" Pen="{StaticResource GadgeteerMarkForegroundPen}" Geometry="M 47625,47625 V 2472690 H 2472690 V 47625 Z" />
+                <GeometryDrawing Brush="{StaticResource GadgeteerMarkBackgroundBrush}" Pen="{StaticResource GadgeteerMarkBackgroundPen}" Geometry="M 407671,407671 V 2175250 H 2112646 V 1127761 H 1127761 V 1392556 H 1847849 V 1910455 H 672466 V 672466 H 2112646 V 407671 Z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+</ResourceDictionary>

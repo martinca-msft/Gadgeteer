@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema id="GadgeteerDSLSchema" targetNamespace="http://schemas.microsoft.com/dsltools/GadgeteerDSL" elementFormDefault="qualified" xmlns="http://schemas.microsoft.com/dsltools/GadgeteerDSL" xmlns:core="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import id="CoreSchema" namespace="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" />
+  <!-- GadgeteerModel -->
+  <xsd:element name="gadgeteerModel" type="GadgeteerModel" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="GadgeteerModel">
+    <xsd:annotation>
+      <xsd:documentation>The root in which all other elements are embedded. Appears as a diagram.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Relationship: GadgeteerModelHasGadgeteerHardware -->
+          <xsd:element name="gadgeteerHardware" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of GadgeteerModelHasGadgeteerHardware</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="gadgeteerModelHasGadgeteerHardware" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of GadgeteerModelHasGadgeteerHardware needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <!-- Relationship: GadgeteerModelHasComments -->
+          <xsd:element name="comments" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of GadgeteerModelHasComments</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="gadgeteerModelHasComments" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of GadgeteerModelHasComments needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- dslVersion -->
+        <xsd:attribute name="dslVersion" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Version of the model serialized in this file.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: NewModel -->
+        <xsd:attribute name="newModel" type="xsd:boolean" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- GadgeteerModel Moniker -->
+  <xsd:element name="gadgeteerModelMoniker" type="GadgeteerModelMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="GadgeteerModelMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for GadgeteerModel instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Mainboard -->
+  <xsd:element name="mainboard" type="Mainboard" substitutionGroup="gadgeteerHardware" />
+  <xsd:complexType name="Mainboard">
+    <xsd:complexContent>
+      <xsd:extension base="GadgeteerHardware">
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Name -->
+        <xsd:attribute name="name" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Mainboard Moniker -->
+  <xsd:element name="mainboardMoniker" type="MainboardMoniker" substitutionGroup="gadgeteerHardwareMoniker" />
+  <xsd:complexType name="MainboardMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for Mainboard instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GadgeteerHardwareMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Module -->
+  <xsd:element name="module" type="Module" substitutionGroup="gadgeteerHardware" />
+  <xsd:complexType name="Module">
+    <xsd:complexContent>
+      <xsd:extension base="GadgeteerHardware">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Relationship: ModuleHasSocketUses -->
+          <xsd:element name="socketUses" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of ModuleHasSocketUses</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="moduleHasSocketUses" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of ModuleHasSocketUses needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Name -->
+        <xsd:attribute name="name" type="xsd:string" />
+        <!-- Property: ModuleType -->
+        <xsd:attribute name="moduleType" type="xsd:string" />
+        <!-- Property: ModuleDefinitionId -->
+        <xsd:attribute name="moduleDefinitionId" type="xsd:string" />
+        <!-- Property: NetMicroFrameworkAssembly -->
+        <xsd:attribute name="netMicroFrameworkAssembly" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Module Moniker -->
+  <xsd:element name="moduleMoniker" type="ModuleMoniker" substitutionGroup="gadgeteerHardwareMoniker" />
+  <xsd:complexType name="ModuleMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for Module instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GadgeteerHardwareMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Socket -->
+  <xsd:element name="socket" type="Socket" substitutionGroup="socketBase" />
+  <xsd:complexType name="Socket">
+    <xsd:complexContent>
+      <xsd:extension base="SocketBase">
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Label -->
+        <xsd:attribute name="label" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Socket Moniker -->
+  <xsd:element name="socketMoniker" type="SocketMoniker" substitutionGroup="socketBaseMoniker" />
+  <xsd:complexType name="SocketMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for Socket instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="SocketBaseMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- SocketUse -->
+  <xsd:element name="socketUse" type="SocketUse" substitutionGroup="socketBase" />
+  <xsd:complexType name="SocketUse">
+    <xsd:complexContent>
+      <xsd:extension base="SocketBase">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Relationship: SocketUseReferencesSocket -->
+          <xsd:element name="socket" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instance of SocketUseReferencesSocket</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="socketUseReferencesSocket" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of SocketUseReferencesSocket needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Label -->
+        <xsd:attribute name="label" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- SocketUse Moniker -->
+  <xsd:element name="socketUseMoniker" type="SocketUseMoniker" substitutionGroup="socketBaseMoniker" />
+  <xsd:complexType name="SocketUseMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for SocketUse instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="SocketBaseMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- GadgeteerHardware -->
+  <xsd:element name="gadgeteerHardware" abstract="true" type="GadgeteerHardware" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="GadgeteerHardware" abstract="true" >
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Relationship: GadgeteerHardwareHasSockets -->
+          <xsd:element name="sockets" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instances of GadgeteerHardwareHasSockets</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element ref="gadgeteerHardwareHasSockets" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                    <xsd:documentation>[Instance of GadgeteerHardwareHasSockets needs to be serialized in full-form]</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: CachedDefinition -->
+        <xsd:attribute name="cachedDefinition" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- GadgeteerHardware Moniker -->
+  <xsd:element name="gadgeteerHardwareMoniker" abstract="true" type="GadgeteerHardwareMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="GadgeteerHardwareMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for GadgeteerHardware instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- SocketBase -->
+  <xsd:element name="socketBase" abstract="true" type="SocketBase" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="SocketBase" abstract="true" >
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- SocketBase Moniker -->
+  <xsd:element name="socketBaseMoniker" abstract="true" type="SocketBaseMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="SocketBaseMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for SocketBase instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Comment -->
+  <xsd:element name="comment" type="Comment" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="Comment">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <!-- Property: Text -->
+        <xsd:attribute name="text" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Comment Moniker -->
+  <xsd:element name="commentMoniker" type="CommentMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="CommentMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for Comment instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- ModuleHasSocketUses -->
+  <xsd:element name="moduleHasSocketUses" type="ModuleHasSocketUses" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="ModuleHasSocketUses">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end SocketUse -->
+          <xsd:element ref="socketUse" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- ModuleHasSocketUses Moniker -->
+  <xsd:element name="moduleHasSocketUsesMoniker" type="ModuleHasSocketUsesMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="ModuleHasSocketUsesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ModuleHasSocketUses instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- SocketUseReferencesSocket -->
+  <xsd:element name="socketUseReferencesSocket" type="SocketUseReferencesSocket" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="SocketUseReferencesSocket">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end Socket -->
+          <xsd:element ref="socketMoniker" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- SocketUseReferencesSocket Moniker -->
+  <xsd:element name="socketUseReferencesSocketMoniker" type="SocketUseReferencesSocketMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="SocketUseReferencesSocketMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for SocketUseReferencesSocket instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- GadgeteerModelHasGadgeteerHardware -->
+  <xsd:element name="gadgeteerModelHasGadgeteerHardware" type="GadgeteerModelHasGadgeteerHardware" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="GadgeteerModelHasGadgeteerHardware">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end GadgeteerHardware -->
+          <xsd:element ref="gadgeteerHardware" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- GadgeteerModelHasGadgeteerHardware Moniker -->
+  <xsd:element name="gadgeteerModelHasGadgeteerHardwareMoniker" type="GadgeteerModelHasGadgeteerHardwareMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="GadgeteerModelHasGadgeteerHardwareMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for GadgeteerModelHasGadgeteerHardware instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- GadgeteerHardwareHasSockets -->
+  <xsd:element name="gadgeteerHardwareHasSockets" type="GadgeteerHardwareHasSockets" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="GadgeteerHardwareHasSockets">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end Socket -->
+          <xsd:element ref="socket" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- GadgeteerHardwareHasSockets Moniker -->
+  <xsd:element name="gadgeteerHardwareHasSocketsMoniker" type="GadgeteerHardwareHasSocketsMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="GadgeteerHardwareHasSocketsMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for GadgeteerHardwareHasSockets instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- GadgeteerModelHasComments -->
+  <xsd:element name="gadgeteerModelHasComments" type="GadgeteerModelHasComments" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="GadgeteerModelHasComments">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end Comment -->
+          <xsd:element ref="comment" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- GadgeteerModelHasComments Moniker -->
+  <xsd:element name="gadgeteerModelHasCommentsMoniker" type="GadgeteerModelHasCommentsMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="GadgeteerModelHasCommentsMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for GadgeteerModelHasComments instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+</xsd:schema>
+

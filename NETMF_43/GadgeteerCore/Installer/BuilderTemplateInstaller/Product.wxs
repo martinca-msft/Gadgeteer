@@ -1,0 +1,426 @@
+<?xml version="1.0"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <?define UpgradeCode = "E6486E44-D84B-42B1-AE8B-43D83C4DDEE4"?>
+
+  <?include ..\GadgeteerCoreMSI\version.wxi?>
+
+  <Product Name='!(loc.ProductName)'
+           Id='*'
+           UpgradeCode='$(var.UpgradeCode)'
+           Language='1033' Codepage='1252'
+           Version='$(var.ProductVersion)'
+           Manufacturer='!(loc.Manufacturer)'>
+
+    <Package Id='*'
+             Manufacturer='!(loc.Manufacturer)'
+             InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252'
+             InstallPrivileges='elevated'/>
+
+    <!-- Upgrade related stuff-->
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Property Id="SAMEVERSIONINSTALLED" Secure="yes"/>
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Maximum="$(var.ProductVersion)"
+                      Property="PREVIOUSVERSIONSINSTALLED"
+                      IncludeMinimum="yes"
+                      IncludeMaximum="no"
+                      OnlyDetect="no"/>
+
+      <UpgradeVersion Minimum="$(var.ProductVersion)"
+                      Property="NEWERVERSIONINSTALLED"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"/>
+
+      <UpgradeVersion Minimum="$(var.ProductVersion)"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.ProductVersion)"
+                      IncludeMaximum="yes"
+                      Property="SAMEVERSIONINSTALLED"
+                      OnlyDetect="yes"/>
+
+    </Upgrade>
+
+    <CustomAction Id='NoDowngrade' Error='!(loc.NewerVersionFoundPrefix) !(loc.ProductName) !(loc.NewerVersionFoundSuffix)' />
+
+    <CustomAction Id='SameVersionError' Error='!(loc.SameVersionInstalledPrefix) !(loc.ProductName) !(loc.SameVersionInstalledSuffix)'/>
+
+    <CustomAction Id='GadgeteerCoreNotInstalledError' Error='!(loc.GadgeteerCoreIsNotInstalled)'/>
+
+    <Property Id="GADGETEER_CORE_INSTALLED">
+      <ComponentSearch Id="id_GadgeteerCoreInstalledComponentSearch" Guid="20CDFFF1-2E36-45CE-A4C1-1DFA1FB123CC" Type="file"/>
+    </Property>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- used to put anything under the VS folder -->
+    <PropertyRef Id="VS2010_ROOT_FOLDER" />
+
+    <!-- used to determine if VS 2010 Standard edition or higher is installed -->
+    <PropertyRef Id="VS2010DEVENV" />
+
+    <!-- used to determine if VC# Express 2010 is installed -->
+    <PropertyRef Id="VCSHARP2010EXPRESS_IDE" />
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- used to put anything under the VS folder -->
+    <PropertyRef Id="VS2012_ROOT_FOLDER" />
+    
+    <!-- used to determine if VS 2012 Pro edition or higher is installed -->
+    <PropertyRef Id="VS2012DEVENV" />
+    <!--<CustomAction Id="VS2012Setup" Property="VS2012DEVENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />-->
+
+    <!-- used to determine if Visual Studio Express for Desktop 2012 is installed -->
+    <Property Id="WDEXPRESS2012_IDE" Secure="yes">
+      <RegistrySearch Id="WDEXPRESS2012ProductPathSearch" Root="HKLM" Key="SOFTWARE\Microsoft\WDExpress\11.0\Setup\VS"  Name="EnvironmentPath" Type="raw" />
+    </Property>
+
+    <CustomAction Id="WDEXPRESS2012Setup" Property="WDEXPRESS2012_IDE" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />
+    <!-- <PropertyRef Id="WDEXPRESS2012_IDE" /> -->
+
+    <InstallExecuteSequence>
+      <Custom Action="WDEXPRESS2012Setup" Before="InstallFinalize" Overridable="yes">WDEXPRESS2012_IDE AND NOT INSTALLED</Custom>
+      <Custom Action="VS2012Setup" Before="InstallFinalize">NOT INSTALLED</Custom>
+    </InstallExecuteSequence>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- used to put anything under the VS folder -->
+    <PropertyRef Id="VS2013_ROOT_FOLDER" />
+
+    <!-- used to determine if VS 2013 Pro edition or higher is installed -->
+    <PropertyRef Id="VS2013DEVENV" />
+    <!--CustomAction Id="VS2013Setup" Property="VS2013DEVENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" /-->
+
+    <!-- used to determine if Visual Studio Express for Desktop 2013 is installed -->
+    <Property Id="WDEXPRESS2013_IDE" Secure="yes">
+      <RegistrySearch Id="WDEXPRESS2013ProductPathSearch" Root="HKLM" Key="SOFTWARE\Microsoft\WDExpress\12.0\Setup\VS"  Name="EnvironmentPath" Type="raw" />
+    </Property>
+
+    <CustomAction Id="WDEXPRESS2013Setup" Property="WDEXPRESS2013_IDE" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />
+    <!-- <PropertyRef Id="VS2013WDEXPRESS_IDE" /> -->
+
+    <InstallExecuteSequence>
+      <Custom Action="WDEXPRESS2013Setup" Before="InstallFinalize" Overridable="yes">WDEXPRESS2013_IDE AND NOT INSTALLED</Custom>
+      <Custom Action="VS2013Setup" Before="InstallFinalize">NOT INSTALLED</Custom>
+    </InstallExecuteSequence>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- used to put anything under the VS folder -->
+    <PropertyRef Id="VS2015_ROOT_FOLDER" />
+    
+    <!-- used to determine if VS 2015 Community edition or higher is installed -->
+    <PropertyRef Id="VS2015DEVENV" />
+    <!--CustomAction Id="VS2015Setup" Property="VS2015DEVENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" /-->
+   
+    <InstallExecuteSequence>
+      <Custom Action="VS2015Setup" Before="InstallFinalize">NOT INSTALLED</Custom>
+    </InstallExecuteSequence>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <!--ARP stuff (Add/Remove Programs)-->
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+
+    <!-- Files -->
+    <Media Id="1" Cabinet="product.cab" EmbedCab="yes" />
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="!(loc.GadgeteerName)">
+          <Directory Id="PRODUCTDIR" Name="!(loc.ProductSubDir)">
+            <Directory Name="Assemblies" Id="AssembliesDir" >
+
+              <!-- .NET Framework Assemblies -->
+              <Directory Id="NetFxDir" Name=".NET Framework 4.0">
+                <Component Id="NetFxFiles" Guid="{B1C14CC9-C92A-431E-AD02-22D6B0E4CA56}">
+                  <!-- This is a cached signed version -->
+                  <File Id="f_WizardDll" KeyPath="yes" Assembly=".net" Name="Microsoft.Gadgeteer.HardwareTemplateWizard.dll" Source="$(var.HardwareTemplateWizard.ProjectDir)..\..\..\Builds\Release Drops\2.43.800\Signed\Microsoft.Gadgeteer.HardwareTemplateWizard.dll" />
+
+                  <!-- The below is straight from the target directory so only delay signed - see http://blogs.msdn.com/b/junfeng/archive/2006/03/11/549363.aspx if you want to use it this way -->
+                   <!--<File Id="f_WizardDll" KeyPath="yes" Assembly=".net" Name="Microsoft.Gadgeteer.HardwareTemplateWizard.dll" Source="$(var.HardwareTemplateWizard.TargetDir)\Microsoft.Gadgeteer.HardwareTemplateWizard.dll" />--> 
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <!--VS and VCE additions: Templates and Text Adornment and schema -->
+      <Directory Id="VS2010_ROOT_FOLDER">
+        <Directory Id="VS_Common7" Name="Common7">
+          <Directory Id="VS_IDE" Name="IDE">
+
+            <!-- Items for VS 2010 Standard or higher editions -->
+            <Directory Id="VS2010_Ext" Name="Extensions">
+              <Directory Id="VS2010_Ext_Mfgr" Name="Microsoft">
+                <Directory Id="VS2010_Ext_Mfgr_Gdgtr" Name="GadgeteerBT43" FileSource=".\">
+
+                  <Component Id="VS2010_Extension.vsixManifest" Guid="{0153BA6E-DF1D-4CE9-9376-4A4E5F720BC7}">
+                    <Condition>VS2010DEVENV</Condition>
+                    <File Id="f_2010_ext_vsixmanifest" Name="extension.vsixmanifest" KeyPath="yes"/>
+                  </Component>
+
+                  <Directory Id="VS2010_PT" Name="ProjectTemplates">
+                    <Directory Id="VS2010_CSharp" Name="CSharp">
+                      <Directory Id ="VS2010_gdgtr" Name="Gadgeteer">
+                        <Directory Id="VS2010_1033" Name="1033">
+                          <Component Id="VS2010_Templates" Guid="{4A90F321-DBE0-4DC9-A935-48EA8CEA7A77}">
+                            <Condition>VS2010DEVENV</Condition>
+                            <File Id="f_MainboardTemplate.zip" Name="MB.zip" Source="$(var.MainboardTemplateWix.TargetDir)\MainboardTemplate.zip" KeyPath="yes"/>
+                            <File Id="f_ModuleTemplate.zip" Name="M.zip" Source="$(var.ModuleTemplateWix.TargetDir)\ModuleTemplate.zip"/>
+                            <File Id="f_KitTemplate.zip" Name="KT.zip" Source="$(var.KitInstallerTemplate.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\KitInstallerTemplate.zip"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <!--VC Express TEMPLATES-->
+            <Directory Id="VCE_Ext" Name="VCSExpressExtensions">
+              <Directory Id="VCE_Ext_Mfgr" Name="Microsoft">
+
+                <!-- Templates -->
+                <Directory Id="VCE_Ext_Mfgr_Gdgtr" Name="GadgeteerBT43" FileSource=".\">
+                  <Component Id="VCE_Extension.vsixManifest" Guid="{E747DC57-442F-46EB-9685-F4DD64144F36}">
+                    <Condition>VCSHARP2010EXPRESS_IDE</Condition>
+                    <File Id="f_vce_ext_vsixmanifest" Name="extension.vsixmanifest" KeyPath="yes"/>
+                  </Component>
+
+                  <Directory Id="VCE_PT" Name="ProjectTemplates">
+                    <Directory Id="VCE_CSharp" Name="CSharp">
+                      <Directory Id ="VCE_gdgtr" Name="Gadgeteer">
+                        <Directory Id="VCE_1033" Name="1033">
+                          <Component Id="VCE_Templates" Guid="{77C45705-2F1F-4925-B307-99403AC25621}">
+                            <Condition>VCSHARP2010EXPRESS_IDE</Condition>
+                            <File Id="f_vce_MainboardTemplate.zip" Name="MB.zip" Source="$(var.MainboardTemplateWix.TargetDir)\MainboardTemplate.zip" KeyPath="yes"/>
+                            <File Id="f_vce_ModuleTemplate.zip" Name="M.zip" Source="$(var.ModuleTemplateWix.TargetDir)\ModuleTemplate.zip"/>
+                            <File Id="f_vce_KitTemplate.zip" Name="KT.zip" Source="$(var.KitInstallerTemplate.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\KitInstallerTemplate.zip"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="VS2012_ROOT_FOLDER">
+        <Directory Id="VS2012_Common7" Name="Common7">
+          <Directory Id="VS2012_IDE" Name="IDE">
+
+            <!-- Items for VS 2012 Pro or higher editions -->
+            <Directory Id="VS2012_Ext" Name="Extensions">
+              <Directory Id="VS2012_Ext_Mfgr" Name="Microsoft">
+                <Directory Id="VS2012_Ext_Mfgr_Gdgtr" Name="GadgeteerBT43" FileSource=".\">
+
+                  <Component Id="VS2012_Extension.vsixManifest" Guid="{88704E76-B041-4973-84F2-03BD33ED2B84}">
+                    <Condition>VS2012DEVENV</Condition>
+                    <File Id="f_2012_ext_vsixmanifest" Name="extension.vsixmanifest" KeyPath="yes"/>
+                  </Component>
+
+                  <Directory Id="VS2012_PT" Name="ProjectTemplates">
+                    <Directory Id="VS2012_CSharp" Name="CSharp">
+                      <Directory Id ="VS2012_gdgtr" Name="Gadgeteer">
+                        <Directory Id="VS2012_1033" Name="1033">
+                          <Component Id="VS2012_Templates" Guid="{0856E463-7258-47F2-8FA3-F8FC7F49ED85}">
+                            <Condition>VS2012DEVENV</Condition>
+                            <File Id="f_2012_MainboardTemplate.zip" Name="MB.zip" Source="$(var.MainboardTemplateWix.TargetDir)\MainboardTemplate.zip" KeyPath="yes"/>
+                            <File Id="f_2012_ModuleTemplate.zip" Name="M.zip" Source="$(var.ModuleTemplateWix.TargetDir)\ModuleTemplate.zip"/>
+                            <File Id="f_2012_KitTemplate.zip" Name="KT.zip" Source="$(var.KitInstallerTemplate.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\KitInstallerTemplate.zip"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <!--WD Express TEMPLATES-->
+            <Directory Id="WDE_Ext" Name="WDExpressExtensions">
+              <Directory Id="WDE_Ext_Mfgr" Name="Microsoft">
+
+                <!-- Templates -->
+                <Directory Id="WDE_Ext_Mfgr_Gdgtr" Name="GadgeteerBT43" FileSource=".\">
+                  <Component Id="WDECS_Extension.vsixManifest" Guid="{E747DC57-442F-46EB-9685-F4DD64144F36}">
+                    <Condition>WDEXPRESS2012_IDE</Condition>
+                    <File Id="f_wde_ext_vsixmanifest" Name="extension.vsixmanifest" KeyPath="yes"/>
+                  </Component>
+
+                  <Directory Id="WDE_PT" Name="ProjectTemplates">
+                    <Directory Id="WDE_CSharp" Name="CSharp">
+                      <Directory Id ="WDE_gdgtr" Name="Gadgeteer">
+                        <Directory Id="WDE_1033" Name="1033">
+                          <Component Id="WDECS_Templates" Guid="{77C45705-2F1F-4925-B307-99403AC25621}">
+                            <Condition>WDEXPRESS2012_IDE</Condition>
+                            <File Id="f_wde_MainboardTemplate.zip" Name="MB.zip" Source="$(var.MainboardTemplateWix.TargetDir)\MainboardTemplate.zip" KeyPath="yes"/>
+                            <File Id="f_wde_ModuleTemplate.zip" Name="M.zip" Source="$(var.ModuleTemplateWix.TargetDir)\ModuleTemplate.zip"/>
+                            <File Id="f_wde_KitTemplate.zip" Name="KT.zip" Source="$(var.KitInstallerTemplate.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\KitInstallerTemplate.zip"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="VS2013_ROOT_FOLDER">
+        <Directory Id="VS2013_Common7" Name="Common7">
+          <Directory Id="VS2013_IDE" Name="IDE">
+
+            <!-- Items for VS 2013 Pro or higher editions -->
+            <Directory Id="VS2013_Ext" Name="Extensions">
+              <Directory Id="VS2013_Ext_Mfgr" Name="Microsoft">
+                <Directory Id="VS2013_Ext_Mfgr_Gdgtr" Name="GadgeteerBT43" FileSource=".\">
+
+                  <Component Id="VS2013_Extension.vsixManifest" Guid="{80D6BA86-F8F6-475E-81C0-28C4A094B00E}">
+                    <Condition>VS2013DEVENV</Condition>
+                    <File Id="f_2013_ext_vsixmanifest" Name="extension.vsixmanifest" KeyPath="yes"/>
+                  </Component>
+
+                  <Directory Id="VS2013_PT" Name="ProjectTemplates">
+                    <Directory Id="VS2013_CSharp" Name="CSharp">
+                      <Directory Id ="VS2013_gdgtr" Name="Gadgeteer">
+                        <Directory Id="VS2013_1033" Name="1033">
+                          <Component Id="VS2013_Templates" Guid="{FBA7D1CD-0DE5-46B3-ABC2-1C022E3382E0}">
+                            <Condition>VS2013DEVENV</Condition>
+                            <File Id="f_2013_MainboardTemplate.zip" Name="MB.zip" Source="$(var.MainboardTemplateWix.TargetDir)\MainboardTemplate.zip" KeyPath="yes"/>
+                            <File Id="f_2013_ModuleTemplate.zip" Name="M.zip" Source="$(var.ModuleTemplateWix.TargetDir)\ModuleTemplate.zip"/>
+                            <File Id="f_2013_KitTemplate.zip" Name="KT.zip" Source="$(var.KitInstallerTemplate.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\KitInstallerTemplate.zip"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <!--WD Express TEMPLATES-->
+            <Directory Id="WDE13_Ext" Name="WDExpressExtensions">
+              <Directory Id="WDE13_Ext_Mfgr" Name="Microsoft">
+
+                <!-- Templates -->
+                <Directory Id="WDE13_Ext_Mfgr_Gdgtr" Name="GadgeteerBT43" FileSource=".\">
+                  <Component Id="WDE13CS_Extension.vsixManifest" Guid="{BED80883-13D4-45AC-924A-443E5B73AEF4}">
+                    <Condition>WDEXPRESS2013_IDE</Condition>
+                    <File Id="f_wde13_ext_vsixmanifest" Name="extension.vsixmanifest" KeyPath="yes"/>
+                  </Component>
+
+                  <Directory Id="WDE13_PT" Name="ProjectTemplates">
+                    <Directory Id="WDE13_CSharp" Name="CSharp">
+                      <Directory Id ="WDE13_gdgtr" Name="Gadgeteer">
+                        <Directory Id="WDE13_1033" Name="1033">
+                          <Component Id="WDE13CS_Templates" Guid="{593FFD33-14C5-484B-A6F1-C56A214CE4EE}">
+                            <Condition>WDEXPRESS2013_IDE</Condition>
+                            <File Id="f_wde13_MainboardTemplate.zip" Name="MB.zip" Source="$(var.MainboardTemplateWix.TargetDir)\MainboardTemplate.zip" KeyPath="yes"/>
+                            <File Id="f_wde13_ModuleTemplate.zip" Name="M.zip" Source="$(var.ModuleTemplateWix.TargetDir)\ModuleTemplate.zip"/>
+                            <File Id="f_wde13_KitTemplate.zip" Name="KT.zip" Source="$(var.KitInstallerTemplate.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\KitInstallerTemplate.zip"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="VS2015_ROOT_FOLDER">
+        <Directory Id="VS2015_Common7" Name="Common7">
+          <Directory Id="VS2015_IDE" Name="IDE">
+
+            <!-- Items for VS 2015 Community or higher editions -->
+            <Directory Id="VS2015_Ext" Name="Extensions">
+              <Directory Id="VS2015_Ext_Mfgr" Name="Microsoft">
+                <Directory Id="VS2015_Ext_Mfgr_Gdgtr" Name="GadgeteerBT43" FileSource=".\">
+
+                  <Component Id="VS2015_Extension.vsixManifest" Guid="{F90C1BDB-0BE2-4E0F-AACA-D56ED8A27380}">
+                    <Condition>VS2015DEVENV</Condition>
+                    <File Id="f_2015_ext_vsixmanifest" Name="extension.vsixmanifest" KeyPath="yes"/>
+                  </Component>
+
+                  <Directory Id="VS2015_PT" Name="ProjectTemplates">
+                    <Directory Id="VS2015_CSharp" Name="CSharp">
+                      <Directory Id ="VS2015_gdgtr" Name="Gadgeteer">
+                        <Directory Id="VS2015_1033" Name="1033">
+                          <Component Id="VS2015_Templates" Guid="{356EFBE0-996D-4D61-989C-1D24D7787100}">
+                            <Condition>VS2015DEVENV</Condition>
+                            <File Id="f_2015_MainboardTemplate.zip" Name="MB.zip" Source="$(var.MainboardTemplateWix.TargetDir)\MainboardTemplate.zip" KeyPath="yes"/>
+                            <File Id="f_2015_ModuleTemplate.zip" Name="M.zip" Source="$(var.ModuleTemplateWix.TargetDir)\ModuleTemplate.zip"/>
+                            <File Id="f_2015_KitTemplate.zip" Name="KT.zip" Source="$(var.KitInstallerTemplate.TargetDir)\ProjectTemplates\CSharp\Gadgeteer\1033\KitInstallerTemplate.zip"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="main" Title="Main" Level="1">
+      <ComponentRef Id="NetFxFiles"/>
+      <ComponentRef Id="VS2010_Extension.vsixManifest"/>
+      <ComponentRef Id="VS2010_Templates"/>
+      <ComponentRef Id="VCE_Extension.vsixManifest"/>
+      <ComponentRef Id="VCE_Templates"/>
+      
+      <ComponentRef Id="VS2012_Extension.vsixManifest"/>
+      <ComponentRef Id="VS2012_Templates"/>
+      <ComponentRef Id="WDECS_Extension.vsixManifest"/>
+      <ComponentRef Id="WDECS_Templates"/>
+
+      <ComponentRef Id="VS2013_Extension.vsixManifest"/>
+      <ComponentRef Id="VS2013_Templates"/>
+      <ComponentRef Id="WDE13CS_Extension.vsixManifest"/>
+      <ComponentRef Id="WDE13CS_Templates"/>
+
+      <ComponentRef Id="VS2015_Extension.vsixManifest"/>
+      <ComponentRef Id="VS2015_Templates"/>
+    </Feature>
+
+    <Icon Id="AppAddRemoveIcon" SourceFile="$(var.ProjectDir)\G.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="AppAddRemoveIcon"/>
+
+    <!--Sequences-->
+    <InstallExecuteSequence>
+      <!--In case this is a newer version then remove the existing product-->
+      <RemoveExistingProducts Before="InstallInitialize"/>
+
+      <!--In case you're installing an older version tell the user and exit -->
+      <Custom Action="NoDowngrade" After="FindRelatedProducts">NEWERVERSIONINSTALLED</Custom>
+
+      <!--Display an error if overwriting the same version-->
+      <Custom Action="SameVersionError" After="FindRelatedProducts">SAMEVERSIONINSTALLED</Custom>
+
+      <!--Display an error if gadgeteer core is not installed-->
+      <Custom Action="GadgeteerCoreNotInstalledError" Before="InstallInitialize">&amp;main&gt;2 AND NOT GADGETEER_CORE_INSTALLED</Custom>
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>

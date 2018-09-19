@@ -1,0 +1,449 @@
+﻿<Window x:Class="Microsoft.Gadgeteer.HardwareTemplateWizard.WizardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:g="clr-namespace:Microsoft.Gadgeteer.HardwareTemplateWizard" DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        WindowStyle="ToolWindow" Height="425" Width="800">
+    <!-- Icon="{StaticResource GadgeteerMarkImageInverted}" -->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Microsoft.Gadgeteer.HardwareTemplateWizard;component/Gadgeteer.xaml" />
+                <ResourceDictionary Source="/Microsoft.Gadgeteer.HardwareTemplateWizard;component/App.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <g:MillimeterConverter x:Key="MillimeterConverter" />
+            <g:InvariantConverter x:Key="InvariantConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Name="HeaderPanel" PreviewMouseLeftButtonDown="DragWindow">
+            <DockPanel Margin="5">
+                <Image DockPanel.Dock="Left" Source="{StaticResource GadgeteerMarkImage}" Width="16" Height="16" Margin="5"  />
+                <TextBlock Text=".NET Gadgeteer Template Wizard" Style="{StaticResource Caption}" VerticalAlignment="Center" />
+            </DockPanel>
+        </Border>
+        <Border DockPanel.Dock="Bottom" Style="{StaticResource ButtonPanel}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5,10">
+                <Button IsDefault="True" Content="_Create" IsEnabled="{Binding IsInputValid}" Click="OnCreate" />
+                <Button IsCancel="True"  Content="C_ancel" Click="OnCancel" />
+            </StackPanel>
+        </Border>
+        <Border Style="{StaticResource ContentPanel}" BorderThickness="0" Padding="10">
+            <TabControl Name="WizardSteps" Padding="10">
+
+                <!-- == == == == == == == == == == == == == == == == == == == == == == == == == == == Names == == == == == == == == == == == == == == == == == == == == == == == -->
+
+                <TabItem Header="_About">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Target="{Binding ElementName=ProjectNameBox}">
+                            <Label.Content>
+                                <AccessText Text="{Binding TemplateType, StringFormat='{}{0} na_me:'}" />
+                            </Label.Content>
+                        </Label>
+                        <Label Grid.Row="1" Target="{Binding ElementName=ProjectSafeNameBox}">
+                            <Label.Content>
+                                <AccessText Text="{Binding TemplateType, StringFormat='{}{0} safe nam_e:'}" />
+                            </Label.Content>
+                        </Label>
+
+                        <Label Grid.Row="3" Target="{Binding ElementName=ManufacturerNameBox}">Manufacturer _full name:</Label>
+                        <Label Grid.Row="4" Target="{Binding ElementName=ManufacturerSafeNameBox}">Manufacturer _safe name:</Label>
+
+                        <TextBox Grid.Column="1" Grid.Row="0" Name="ProjectNameBox" Text="{Binding ProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" g:SelectAll.OnGotFocus="True" />
+                        <TextBox Grid.Column="1" Grid.Row="1" Name="ProjectSafeNameBox" Text="{Binding ProjectSafeName, Mode=TwoWay}" g:Sync.WhenEqualTo="{Binding ProjectName}" g:SafeCheck.IsEnabled="True" g:SelectAll.OnGotFocus="True" TextChanged="InvalidateWizard" />
+
+                        <TextBox Grid.Column="1" Grid.Row="3" Name="ManufacturerNameBox" Text="{Binding ManufacturerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" g:SelectAll.OnGotFocus="True" />
+                        <TextBox Grid.Column="1" Grid.Row="4" Name="ManufacturerSafeNameBox" Text="{Binding ManufacturerSafeName, Mode=TwoWay}" g:Sync.WhenEqualTo="{Binding ManufacturerName}" g:SafeCheck.IsEnabled="True" g:SelectAll.OnGotFocus="True" TextChanged="InvalidateWizard" />
+
+                        <Label Grid.Row="6" Grid.ColumnSpan="2">Supported .NET Micro Framework _versions:</Label>
+
+                        <StackPanel Grid.Row="7" Grid.Column="1">
+                            <CheckBox Name="NETMF41" IsChecked="True" Content=".NET Micro Framework 4._1" />
+                            <CheckBox Name="NETMF42" IsChecked="True" Content=".NET Micro Framework 4._2" />
+                            <CheckBox Name="NETMF43" IsChecked="True" Content=".NET Micro Framework 4._3" />
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <!-- == == == == == == == == == == == == == == == == == == == == == == == == == == == Sockets == == == == == == == == == == == == == == == == == == == == == == == -->
+
+                <TabItem Header="_Sockets">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+
+                        <DockPanel>
+                            <Label DockPanel.Dock="Top" Padding="0,5" Target="{Binding ElementName=SocketsGrid}">Soc_kets:</Label>
+
+                            <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0,5,0,0">
+                                <Button Margin="0" Click="OnAddSocket">A_dd socket</Button>
+                            </StackPanel>
+
+                            <TabControl DockPanel.Dock="Bottom" Style="{StaticResource NoteSelector}" Margin="0,4,0,0" SelectedIndex="{Binding SocketSelectedColumnIndex, Mode=OneWay}">
+                                <TextBlock TextWrapping="Wrap">The label printed beside this socket, usually listing the compatible socket types.  E.g. "H" for a USB Host module's socket.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Distance, in millimeters, from the center of the socket to the left edge of the mainboard/module.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Distance, in millimeters, from the center of the socket to the top edge of the mainboard/module.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">The direction of socket's notch.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Whether this socket must be connected.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Check if the module uses pin 3 on this socket. Partially check if the use of this pin permits sharing it with other modules.  E.g. this is true for SPI's MISO, MOSI and SCK or for I2C's SDA and SCL, but false for SPI's CS or an Interrupt GPIO.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Check if the module uses pin 4 on this socket. Partially check if the use of this pin permits sharing it with other modules.  E.g. this is true for SPI's MISO, MOSI and SCK or for I2C's SDA and SCL, but false for SPI's CS or an Interrupt GPIO.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Check if the module uses pin 5 on this socket. Partially check if the use of this pin permits sharing it with other modules.  E.g. this is true for SPI's MISO, MOSI and SCK or for I2C's SDA and SCL, but false for SPI's CS or an Interrupt GPIO.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Check if the module uses pin 6 on this socket. Partially check if the use of this pin permits sharing it with other modules.  E.g. this is true for SPI's MISO, MOSI and SCK or for I2C's SDA and SCL, but false for SPI's CS or an Interrupt GPIO.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Check if the module uses pin 7 on this socket. Partially check if the use of this pin permits sharing it with other modules.  E.g. this is true for SPI's MISO, MOSI and SCK or for I2C's SDA and SCL, but false for SPI's CS or an Interrupt GPIO.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Check if the module uses pin 8 on this socket. Partially check if the use of this pin permits sharing it with other modules.  E.g. this is true for SPI's MISO, MOSI and SCK or for I2C's SDA and SCL, but false for SPI's CS or an Interrupt GPIO.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Check if the module uses pin 9 on this socket. Partially check if the use of this pin permits sharing it with other modules.  E.g. this is true for SPI's MISO, MOSI and SCK or for I2C's SDA and SCL, but false for SPI's CS or an Interrupt GPIO.</TextBlock>
+                            </TabControl>
+
+                            <DataGrid Name="SocketsGrid" ItemsSource="{Binding Sockets}" AutoGenerateColumns="False" HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" CanUserAddRows="False" SelectionUnit="CellOrRowHeader" SelectionMode="Extended">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Types label" Binding="{Binding TypesLabel}" />
+                                    <DataGridTextColumn Header="Left">
+                                        <DataGridTextColumn.Binding>
+                                            <Binding Path="Left" Mode="TwoWay" Converter="{StaticResource MillimeterConverter}">
+                                                <Binding.ValidationRules>
+                                                    <g:LengthValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Top">
+                                        <DataGridTextColumn.Binding>
+                                            <Binding Path="Top" Mode="TwoWay" Converter="{StaticResource MillimeterConverter}">
+                                                <Binding.ValidationRules>
+                                                    <g:LengthValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridComboBoxColumn Header="Notch" SelectedItemBinding="{Binding Notch, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Source={StaticResource DockValues}}" />
+                                    <DataGridCheckBoxColumn Header="Optional" Binding="{Binding Optional}" />
+                                    <DataGridCheckBoxColumn Header="3" Binding="{Binding Pin3, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True" ElementStyle="{StaticResource PinBox}" />
+                                    <DataGridCheckBoxColumn Header="4" Binding="{Binding Pin4, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True" ElementStyle="{StaticResource PinBox}" />
+                                    <DataGridCheckBoxColumn Header="5" Binding="{Binding Pin5, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True" ElementStyle="{StaticResource PinBox}" />
+                                    <DataGridCheckBoxColumn Header="6" Binding="{Binding Pin6, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True" ElementStyle="{StaticResource PinBox}" />
+                                    <DataGridCheckBoxColumn Header="7" Binding="{Binding Pin7, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True" ElementStyle="{StaticResource PinBox}" />
+                                    <DataGridCheckBoxColumn Header="8" Binding="{Binding Pin8, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True" ElementStyle="{StaticResource PinBox}" />
+                                    <DataGridCheckBoxColumn Header="9" Binding="{Binding Pin9, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True" ElementStyle="{StaticResource PinBox}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+
+                        <GridSplitter Grid.Column="1" Background="Transparent" ResizeBehavior="PreviousAndNext" HorizontalAlignment="Stretch" />
+
+                        <DockPanel Grid.Column="2">
+                            <Label DockPanel.Dock="Top" Padding="0,5">Board:</Label>
+                            <Button DockPanel.Dock="Bottom" Content="Use p_icture..." HorizontalAlignment="Right" Margin="0,5,0,0" Click="OnUsePicture" />
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="5" />
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="5" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Width="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}">
+                                        <Line Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" X2="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}" VerticalAlignment="Center" />
+                                        <Path Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Data="M6,0 L0,6 L6,12" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                        <Path Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Data="M0,0 L6,6 L0,12" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                    </Grid>
+                                    <TextBox HorizontalAlignment="Center" Padding="5,0" g:SelectAll.OnGotFocus="True">
+                                        <TextBox.Text>
+                                            <Binding Path="HardwareWidth" Mode="TwoWay" Converter="{StaticResource MillimeterConverter}">
+                                                <Binding.ValidationRules>
+                                                    <g:LengthValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <Grid Grid.Row="2" Grid.Column="2" Height="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}">
+                                        <Line Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Y2="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}" HorizontalAlignment="Center" />
+                                        <Path Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Data="M0,6 L6,0 L12,6" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                                        <Path Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Data="M0,0 L6,6 L12,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+
+                                    </Grid>
+                                    <TextBox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Padding="5,0" g:SelectAll.OnGotFocus="True">
+                                        <TextBox.Text>
+                                            <Binding Path="HardwareHeight" Mode="TwoWay" Converter="{StaticResource MillimeterConverter}">
+                                                <Binding.ValidationRules>
+                                                    <g:LengthValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <Rectangle Grid.Row="2" RadiusX="0.35cm" RadiusY="0.35cm" Fill="#404040" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}" Height="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}" Focusable="False" SnapsToDevicePixels="True" />
+                                    <Image Grid.Row="2" Source="{Binding HardwareImage}" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}" Height="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}" SnapsToDevicePixels="True" />
+
+                                    <ItemsControl Grid.Row="2" ItemsSource="{Binding Sockets}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <Canvas ClipToBounds="False" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}" Height="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style>
+                                                <Setter Property="Canvas.Top" Value="{Binding Top, Converter={StaticResource MillimeterConverter}}" />
+                                                <Setter Property="Canvas.Left" Value="{Binding Left, Converter={StaticResource MillimeterConverter}}" />
+                                            </Style>
+                                        </ItemsControl.ItemContainerStyle>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Canvas>
+                                                    <Path Stroke="#FF8400" StrokeThickness="1.92" Data="M17.008,17.008 L17.008,0 L0,0 L0,45.354 L17.008,45.354 L17.008,28.384" Canvas.Left="-8.504" Canvas.Top="-22.677" RenderTransformOrigin="0.5,0.5" Fill="Transparent" Focusable="True" g:DragSocket.Target="{Binding}">
+                                                        <Path.RenderTransform>
+                                                            <TransformGroup>
+                                                                <RotateTransform Angle="{Binding Orientation}" />
+                                                                <ScaleTransform ScaleY="-1" />
+                                                            </TransformGroup>
+                                                        </Path.RenderTransform>
+                                                    </Path>
+                                                </Canvas>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </ScrollViewer>
+                        </DockPanel>
+
+                    </Grid>
+
+                    <TabItem.Style>
+                        <Style TargetType="TabItem">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding TemplateType}" Value="Mainboard">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabItem.Style>
+                </TabItem>
+
+                <!-- == == == == == == == == == == == == == == == == == == == == == == == == == == == Provided Sockets == == == == == == == == == == == == == == == == == == == == == == == -->
+
+                <TabItem Header="Provided S_ockets">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+
+                        <DockPanel>
+                            <Label DockPanel.Dock="Top" Padding="0,5" Target="{Binding ElementName=ProvidedSocketsGrid}">Soc_kets:</Label>
+
+                            <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0,5,0,0">
+                                <Button Margin="0" Click="OnAddProvidedSocket">A_dd socket</Button>
+                            </StackPanel>
+
+                            <TabControl DockPanel.Dock="Bottom" Style="{StaticResource NoteSelector}" Margin="0,4,0,0" SelectedIndex="{Binding ProvidedSocketSelectedColumnIndex, Mode=OneWay}">
+                                <TextBlock TextWrapping="Wrap">The label printed beside this provider-socket. Usually a number for mainboard sockets, e.g. "4".</TextBlock>
+                                <TextBlock TextWrapping="Wrap">List of the supported types for this provider-socket.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Distance, in millimeters, from the center of the socket to the left edge of the mainboard/module.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Distance, in millimeters, from the center of the socket to the top edge of the mainboard/module.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">The direction of socket's notch.</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Name of the PCB net to which the pin 3 is attached. The scope of this name is this PCB (different PCBs can reuse names and those are regarded as different nets).</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Name of the PCB net to which the pin 4 is attached. The scope of this name is this PCB (different PCBs can reuse names and those are regarded as different nets).</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Name of the PCB net to which the pin 5 is attached. The scope of this name is this PCB (different PCBs can reuse names and those are regarded as different nets).</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Name of the PCB net to which the pin 6 is attached. The scope of this name is this PCB (different PCBs can reuse names and those are regarded as different nets).</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Name of the PCB net to which the pin 7 is attached. The scope of this name is this PCB (different PCBs can reuse names and those are regarded as different nets).</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Name of the PCB net to which the pin 8 is attached. The scope of this name is this PCB (different PCBs can reuse names and those are regarded as different nets).</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Name of the PCB net to which the pin 9 is attached. The scope of this name is this PCB (different PCBs can reuse names and those are regarded as different nets).</TextBlock>
+                            </TabControl>
+
+                            <DataGrid Name="ProvidedSocketsGrid" ItemsSource="{Binding ProvidedSockets}" AutoGenerateColumns="False" HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" CanUserAddRows="False" SelectionUnit="CellOrRowHeader" SelectionMode="Extended">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Label" Binding="{Binding Label}" />
+                                    <DataGridTextColumn Header="Types" Binding="{Binding Types}" />
+                                    <DataGridTextColumn Header="Left">
+                                        <DataGridTextColumn.Binding>
+                                            <Binding Path="Left" Mode="TwoWay" Converter="{StaticResource MillimeterConverter}">
+                                                <Binding.ValidationRules>
+                                                    <g:LengthValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Top">
+                                        <DataGridTextColumn.Binding>
+                                            <Binding Path="Top" Mode="TwoWay" Converter="{StaticResource MillimeterConverter}">
+                                                <Binding.ValidationRules>
+                                                    <g:LengthValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridComboBoxColumn Header="Notch" SelectedItemBinding="{Binding Notch, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Source={StaticResource DockValues}}" />
+
+                                    <DataGridTextColumn Header="Net 3" Binding="{Binding Net3}" />
+                                    <DataGridTextColumn Header="Net 4" Binding="{Binding Net4}" />
+                                    <DataGridTextColumn Header="Net 5" Binding="{Binding Net5}" />
+                                    <DataGridTextColumn Header="Net 6" Binding="{Binding Net6}" />
+                                    <DataGridTextColumn Header="Net 7" Binding="{Binding Net7}" />
+                                    <DataGridTextColumn Header="Net 8" Binding="{Binding Net8}" />
+                                    <DataGridTextColumn Header="Net 9" Binding="{Binding Net9}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+
+                        <GridSplitter Grid.Column="1" Background="Transparent" ResizeBehavior="PreviousAndNext" HorizontalAlignment="Stretch" />
+
+                        <DockPanel Grid.Column="2">
+                            <Label DockPanel.Dock="Top" Padding="0,5">Board:</Label>
+                            <Button DockPanel.Dock="Bottom" Content="Use p_icture..." HorizontalAlignment="Right" Margin="0,5,0,0" Click="OnUsePicture" />
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="5" />
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="5" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Width="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}">
+                                        <Line Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" X2="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}" VerticalAlignment="Center" />
+                                        <Path Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Data="M6,0 L0,6 L6,12" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                        <Path Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Data="M0,0 L6,6 L0,12" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                    </Grid>
+                                    <TextBox HorizontalAlignment="Center" Padding="5,0" g:SelectAll.OnGotFocus="True">
+                                        <TextBox.Text>
+                                            <Binding Path="HardwareWidth" Mode="TwoWay" Converter="{StaticResource MillimeterConverter}">
+                                                <Binding.ValidationRules>
+                                                    <g:LengthValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <Grid Grid.Row="2" Grid.Column="2" Height="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}">
+                                        <Line Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Y2="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}" HorizontalAlignment="Center" />
+                                        <Path Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Data="M0,6 L6,0 L12,6" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                                        <Path Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" Data="M0,0 L6,6 L12,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+
+                                    </Grid>
+                                    <TextBox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Padding="5,0" g:SelectAll.OnGotFocus="True">
+                                        <TextBox.Text>
+                                            <Binding Path="HardwareHeight" Mode="TwoWay" Converter="{StaticResource MillimeterConverter}">
+                                                <Binding.ValidationRules>
+                                                    <g:LengthValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <Rectangle Grid.Row="2" RadiusX="0.35cm" RadiusY="0.35cm" Fill="#404040" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}" Height="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}" Focusable="False" SnapsToDevicePixels="True" />
+                                    <Image Grid.Row="2" Source="{Binding HardwareImage}" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}" Height="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}" SnapsToDevicePixels="True" />
+
+                                    <ItemsControl Grid.Row="2" ItemsSource="{Binding ProvidedSockets}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <Canvas ClipToBounds="False" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding HardwareWidth, Converter={StaticResource MillimeterConverter}}" Height="{Binding HardwareHeight, Converter={StaticResource MillimeterConverter}}" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style>
+                                                <Setter Property="Canvas.Top" Value="{Binding Top, Converter={StaticResource MillimeterConverter}}" />
+                                                <Setter Property="Canvas.Left" Value="{Binding Left, Converter={StaticResource MillimeterConverter}}" />
+                                            </Style>
+                                        </ItemsControl.ItemContainerStyle>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Canvas>
+                                                    <Path Stroke="#FF8400" StrokeThickness="1.92" Data="M17.008,17.008 L17.008,0 L0,0 L0,45.354 L17.008,45.354 L17.008,28.384" Canvas.Left="-8.504" Canvas.Top="-22.677" RenderTransformOrigin="0.5,0.5" Fill="Transparent" Focusable="True" g:DragSocket.Target="{Binding}">
+                                                        <Path.RenderTransform>
+                                                            <TransformGroup>
+                                                                <RotateTransform Angle="{Binding Orientation}" />
+                                                                <ScaleTransform ScaleY="-1" />
+                                                            </TransformGroup>
+                                                        </Path.RenderTransform>
+                                                    </Path>
+                                                </Canvas>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </ScrollViewer>
+                        </DockPanel>
+
+                    </Grid>
+                </TabItem>
+
+                <!-- == == == == == == == == == == == == == == == == == == == == == == == == == == == Power == == == == == == == == == == == == == == == == == == == == == == == -->
+
+                <TabItem Header="_Power">
+
+                    <DockPanel>
+                        <CheckBox DockPanel.Dock="Top" Content="Specify consumption _data for use by the designer:" IsChecked="{Binding SpecifyPower}" Margin="0,0,0,5" />
+
+                        <Border DockPanel.Dock="Bottom" Background="LightGoldenrodYellow" BorderBrush="Silver" BorderThickness="1" Margin="0,5,0,0" Padding="5,2">
+                            <TextBlock TextWrapping="Wrap">Do not partially fill this in - either fill it all in or leave it out totally.<LineBreak/>Use the special value Infinity, e.g. if the maximum current is unknown (such as for a motor).</TextBlock>
+                        </Border>
+
+                        <DataGrid IsEnabled="{Binding SpecifyPower}"  ItemsSource="{Binding Power}" AutoGenerateColumns="False" HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" CanUserAddRows="True" SelectionUnit="CellOrRowHeader" SelectionMode="Extended">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Voltage (Volts)">
+                                    <DataGridTextColumn.Binding>
+                                        <Binding Path="Voltage" Mode="TwoWay" Converter="{StaticResource InvariantConverter}">
+                                            <Binding.ValidationRules>
+                                                <g:InvariantNonZeroValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Typical (Amps)">
+                                    <DataGridTextColumn.Binding>
+                                        <Binding Path="TypicalCurrent" Mode="TwoWay" Converter="{StaticResource InvariantConverter}">
+                                            <Binding.ValidationRules>
+                                                <g:InvariantNonNegativeValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Maximum (Amps)">
+                                    <DataGridTextColumn.Binding>
+                                        <Binding Path="MaximumCurrent" Mode="TwoWay" Converter="{StaticResource InvariantConverter}">
+                                            <Binding.ValidationRules>
+                                                <g:InvariantNonNegativeValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+
+                </TabItem>
+
+            </TabControl>
+        </Border>
+    </DockPanel>
+</Window>

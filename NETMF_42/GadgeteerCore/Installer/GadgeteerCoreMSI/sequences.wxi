@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+Sequences.wxi
+
+Defines changes to the sequences
+
+-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <InstallExecuteSequence>
+
+    <!--In case this is a newer version then remove the existing product-->
+    <RemoveExistingProducts Before="InstallInitialize"/>
+
+    <!--In case you're installing an older version tell the user and die-->
+    <Custom Action="NoDowngrade" After="FindRelatedProducts">NEWERVERSIONINSTALLED</Custom>
+
+    <!--Display an error if overwriting the same version-->
+    <Custom Action="SameVersionError" After="FindRelatedProducts">SAMEVERSIONINSTALLED</Custom>
+
+  </InstallExecuteSequence>
+
+  <InstallUISequence>
+    <!--
+      In case you're installing an older version tell the user and die
+      
+      This needs to be in the InstallUISeq also because that is evaluated before the 
+      InstallExecuteSequence and the UI will come up 
+      -->
+    <Custom Action="NoDowngrade" After="FindRelatedProducts">NEWERVERSIONINSTALLED</Custom>
+
+    <!--Display an error if overwriting the same version-->
+    <Custom Action="SameVersionError" After="FindRelatedProducts">SAMEVERSIONINSTALLED</Custom>
+
+    <!--Display an error if .NET MF is not installed-->
+    <!--NB this must NOT run on uninstall since it might cause the uninstaller to bomb out, hence the condition &Feature>2
+    See http://strangelights.com/blog/archive/2004/07/07/160.aspx and http://msdn.microsoft.com/en-us/library/Aa368012 -->
+    <Custom Action="NetMFNotInstalledError" After="AppSearch">&amp;Feature&gt;2 AND NOT NETMF_INSTALLED</Custom>
+  </InstallUISequence>
+  
+</Include>

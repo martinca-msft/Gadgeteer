@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization xmlns="http://schemas.microsoft.com/wix/2006/localization" Culture="en-us">
+  
+	<String Id="FeatureT">.NET Gadgeteer</String>
+  <String Id="FeatureD">The complete .NET Gadgeteer package.</String>
+
+  <String Id="FeatureT_MF">.NET Micro Framework support</String>
+  <String Id="FeatureD_MF">Installs the support for specific .NET Micro Framework versions.</String>
+
+  <String Id="FeatureT_MF41">.NET Micro Framework 4.1</String>
+  <String Id="FeatureD_MF41">Installs the support for v4.1.</String>
+
+  <String Id="FeatureT_MF42">.NET Micro Framework 4.2</String>
+  <String Id="FeatureD_MF42">Installs the support for v4.2.</String>
+
+  <String Id="FeatureT_MF43">.NET Micro Framework 4.3</String>
+  <String Id="FeatureD_MF43">Installs the support for v4.3.</String>
+
+  <String Id="FeatureT_VS">Visual Studio integration</String>
+  <String Id="FeatureD_VS">Installs the visual designer, project templates and documentation files into Visual Studio.</String>
+
+  <String Id="FeatureT_VS10">Visual Studio 2010</String>
+  <String Id="FeatureD_VS10">Microsoft Visual Studio 2010 support (including express versions).</String>
+
+  <String Id="FeatureT_VSE10_CS">Visual C# 2010 Express</String>
+  <String Id="FeatureD_VSE10_CS">Microsoft Visual C# 2010 Express support.</String>
+
+  <String Id="FeatureT_VSE10_VB">Visual Basic 2010 Express</String>
+  <String Id="FeatureD_VSE10_VB">Microsoft Visual Basic 2010 Express support.</String>
+
+  <String Id="FeatureT_VS11">Visual Studio 2012</String>
+  <String Id="FeatureD_VS11">Microsoft Visual Studio 2012 support (including express versions).</String>
+
+  <String Id="FeatureT_VSE11">Visual Studio Express 2012 for Windows Desktop</String>
+  <String Id="FeatureD_VSE11">Microsoft Visual Studio Express 2012 for Windows Desktop support.</String>
+
+  <String Id="FeatureT_VS12">Visual Studio 2013</String>
+  <String Id="FeatureD_VS12">Microsoft Visual Studio 2013 support (including express versions).</String>
+
+  <String Id="FeatureT_VSE12">Visual Studio Express 2013 for Windows Desktop</String>
+  <String Id="FeatureD_VSE12">Microsoft Visual Studio Express 2013 for Windows Desktop support.</String>
+
+  <String Id="FeatureT_VS14">Visual Studio 2015</String>
+  <String Id="FeatureD_VS14">Microsoft Visual Studio 2015 support (including community edition).</String>
+
+</WixLocalization>

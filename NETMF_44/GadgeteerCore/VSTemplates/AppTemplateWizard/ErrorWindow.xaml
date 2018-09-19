@@ -1,0 +1,327 @@
+﻿<Window x:Class="Microsoft.Gadgeteer.AppTemplateWizard.ErrorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:app="clr-namespace:Microsoft.Gadgeteer.AppTemplateWizard"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}" app:Dwm.ClientAreaRootElement="{Binding ElementName=ClientAreaRoot}" Hyperlink.RequestNavigate="OnRequestNavigate"
+        WindowStyle="ToolWindow" ShowInTaskbar="False" Width="700" Name="Window" SizeToContent="Height" Background="Transparent">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Microsoft.Gadgeteer.AppTemplateWizard;component/Gadgeteer.xaml" />
+                <ResourceDictionary Source="/Microsoft.Gadgeteer.AppTemplateWizard;component/App.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="DownloadMicroFramework42"> <!-- Last one supporting Visual Studio 2010 -->
+                <Border Margin="50,0,0,0">
+                    <DockPanel>
+                        <Image DockPanel.Dock="Left" Width="48" Height="48" Source="{StaticResource DownloadImage}" SnapsToDevicePixels="True" />
+                        <StackPanel Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Medium">Download .NET Micro Framework 4.2 QFE2 from CodePlex</TextBlock>
+                            <TextBlock><Hyperlink NavigateUri="http://netmf.codeplex.com/releases/view/91594">http://netmf.codeplex.com/releases/view/91594</Hyperlink></TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="DownloadMicroFrameworkLatest">
+                <Border Margin="50,0,0,0">
+                    <DockPanel>
+                        <Image DockPanel.Dock="Left" Width="48" Height="48" Source="{StaticResource DownloadImage}" SnapsToDevicePixels="True" />
+                        <StackPanel Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Medium">Download the latest .NET Micro Framework from GitHub</TextBlock>
+                            <TextBlock><Hyperlink NavigateUri="http://netmf.github.io/">http://netmf.github.io/</Hyperlink></TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="CheckVisualStudioUnknown">
+                <Border Margin="50,0,0,0">
+                    <DockPanel>
+                        <Image DockPanel.Dock="Left" Width="48" Height="48" Source="{StaticResource DownloadImage}" SnapsToDevicePixels="True" />
+                        <StackPanel Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Medium">Check if the latest .NET Micro Framework supports this version of Visual Studio</TextBlock>
+                            <TextBlock><Hyperlink NavigateUri="http://netmf.github.io/">http://netmf.github.io/</Hyperlink></TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ReinstallMicroFramework">
+                <Border Margin="50,0,0,0">
+                    <DockPanel>
+                        <Image DockPanel.Dock="Left" Width="48" Height="48" Source="{StaticResource SettingsImage}" SnapsToDevicePixels="True" />
+                        <StackPanel Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Medium">Uninstall .NET Micro Framework and install it again</TextBlock>
+                            <TextBlock>(the repair option does not solve this issue)</TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="MakeItYourself">
+                <Border Margin="50,0,0,0">
+                    <DockPanel>
+                        <Image DockPanel.Dock="Left" Width="48" Height="48" Source="{StaticResource EditImage}" SnapsToDevicePixels="True" />
+                        <StackPanel Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Medium">Get the latest .NET Micro Framework Porting Kit and contribute!</TextBlock>
+                            <TextBlock><Hyperlink NavigateUri="http://netmf.github.io/">http://netmf.github.io/</Hyperlink></TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="UseVisualStudio11">
+                <Border Margin="50,0,0,0">
+                    <DockPanel>
+                        <Image DockPanel.Dock="Left" Width="48" Height="48" Source="{StaticResource VisualStudio11Image}" SnapsToDevicePixels="True" />
+                        <StackPanel Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Medium">Use Visual Studio 2012</TextBlock>
+                            <TextBlock>The latest .NET Micro Framework SDK supports Visual Studio 2012.</TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="UseVisualStudio12">
+                <Border Margin="50,0,0,0">
+                    <DockPanel>
+                        <Image DockPanel.Dock="Left" Width="48" Height="48" Source="{StaticResource VisualStudio11Image}" SnapsToDevicePixels="True" />
+                        <StackPanel Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Medium">Use Visual Studio 2013</TextBlock>
+                            <TextBlock>The latest .NET Micro Framework SDK supports Visual Studio 2013.</TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="UseVisualStudio14">
+                <Border Margin="50,0,0,0">
+                    <DockPanel>
+                        <Image DockPanel.Dock="Left" Width="48" Height="48" Source="{StaticResource VisualStudio11Image}" SnapsToDevicePixels="True" />
+                        <StackPanel Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Medium">Use Visual Studio 2015</TextBlock>
+                            <TextBlock>The latest .NET Micro Framework SDK supports Visual Studio 2015.</TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning10">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFramework42}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning10Having11">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFramework42}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" Margin="0,0,0,10" />
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio11}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning10Having12">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFramework42}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" Margin="0,0,0,10" />
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio12}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning10Having14">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFramework42}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" Margin="0,0,0,10" />
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio14}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning11">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning11Having12">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" Margin="0,0,0,10" />
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio12}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning11Having14">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" Margin="0,0,0,10" />
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio14}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning12">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning12Having14">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" Margin="0,0,0,10" />
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio14}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunning14">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotInstalledRunningUnknown">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Gadgeteer requires the .NET Micro Framework to be installed.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource CheckVisualStudioUnknown}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning10">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2010.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFramework42}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning10Having11">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2010.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFramework42}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio11}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning10Having12">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2010.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFramework42}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio12}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning10Having14">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2010.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFramework42}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio14}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning11">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2012.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning11Having12">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2012.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio12}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning11Having14">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2012.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio14}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning12">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2013.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning12Having14">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2013.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource UseVisualStudio14}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunning14">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support Visual Studio 2015.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource DownloadMicroFrameworkLatest}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentRunningUnknown">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The installed .NET Micro Framework does not support this version of Visual Studio.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource CheckVisualStudioUnknown}" />
+                    <TextBlock Margin="50,15" Width="48" HorizontalAlignment="Left" TextAlignment="Center">or</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource MakeItYourself}" Margin="0,0,0,10" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorNotPresentInEdition">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,15">The .NET Micro Framework is not installed in this edition of Visual Studio.</TextBlock>
+                    <ContentPresenter ContentTemplate="{StaticResource ReinstallMicroFramework}" />
+                </StackPanel>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Name="HeaderPanel">
+            <DockPanel Margin="5">
+                <Image DockPanel.Dock="Left" Source="{StaticResource GadgeteerMarkImage}" Width="21" Height="21" Margin="5" VerticalAlignment="Center" />
+                <TextBlock Text=".NET Gadgeteer Application Wizard" Style="{StaticResource Caption}" VerticalAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="White" ShadowDepth="0" BlurRadius="10" />
+                    </TextBlock.Effect>
+                </TextBlock>
+            </DockPanel>
+        </Border>
+        <DockPanel Name="ClientAreaRoot">
+            <Border DockPanel.Dock="Bottom" Style="{StaticResource ButtonPanel}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5,10">
+                    <Button IsCancel="True"  Content="_Close" Click="OnCancel" />
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource ContentPanel}" Padding="20">
+                <ContentPresenter Name="StatePresenter" ContentTemplate="{StaticResource ErrorNotPresentRunning12}" />
+            </Border>
+        </DockPanel>
+    </DockPanel>
+</Window>

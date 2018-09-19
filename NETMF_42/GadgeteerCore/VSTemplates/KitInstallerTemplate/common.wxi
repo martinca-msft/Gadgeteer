@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Include>
+
+  <!-- These are guids used in the msi.wxs file.  If you need more GUIDs (e.g. if you add another install component), use Menu->Tools->Create GUID. -->
+  <?define guid_msi_upgrade_code =  "$guid3$" ?>
+  <?define guid_msi_gsg = "$guid4$" ?>
+  <?define guid_msi_vsixmanifest_vs = "$guid5$" ?>
+  <?define guid_msi_templates_vs = "$guid6$" ?>
+  <?define guid_msi_vsixmanifest_vce = "$guid7$" ?>
+  <?define guid_msi_templates_vce = "$guid8$" ?>
+
+</Include>

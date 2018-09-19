@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!-- This file includes global constants for the module installer.  Module manufacturers should change the below to customise this 
+  template to their module. -->
+  
+  <!-- Change this whenever building a new installer.  The fourth number is ignored, so change one of the top three.
+  Otherwise, users will not be able to upgrade properly; Windows Installer will exit with an error instead of upgrading. -->
+  <!-- Also change the version numbers in Properties/AssemblyInfo.cs -->
+  <?define ModuleSoftwareVersion = "1.0.0.0" ?>
+
+  <!-- SafeModuleName should match the module name printed on the module PCB, without any spaces/punctuation. -->
+  <?define SafeModuleName = "$safeprojectname$" ?>
+
+  <!-- SafeManufacturer should match the manufacturer name printed on the module PCB, without any spaces/punctuation. -->
+  <?define SafeManufacturer = "$manufacturer$" ?>
+
+  <!-- FullManfacturer can have spaces, e.g. Microsoft Research.  This shows up as the manufacturer name in add/remove programs. -->
+  <?define FullManufacturer = "$registeredorganization$" ?>
+
+  <!-- No need to change anything below this line. -->
+  <?define OutputFileName = "GTM.$(var.SafeManufacturer).$(var.SafeModuleName)"?>
+  
+  <?define RegistryKeyNetMF41 = "SOFTWARE\Microsoft\.NETMicroFramework\v4.1\AssemblyFoldersEx\$(var.OutputFileName)"?>
+  <?define RegistryKeyVSAddin = "SOFTWARE\Microsoft\.NETGadgeteer\v2\HardwareDefinitionFolders\$(var.OutputFileName)" ?>
+  
+  <?define guid_msm_comp_files_id = "$guid3$" ?>
+  <?define guid_msm_comp_files_be_id = "$guid4$" ?>
+  <?define guid_msm_comp_files_le_id = "$guid5$" ?>
+  <?define guid_msm_comp_resources_id = "$guid6$" ?>
+  <?define guid_msm_comp_registry_id = "$guid7$" ?>
+  
+  <?define guid_msi_upgrade_code =  "$guid8$" ?>
+
+  <?define guid_msm_package_id = "$guid9$" ?>
+  <?define guid_msm_comp_gadgeteerhardware_id = "$guid10$"?>
+    
+</Include>

@@ -1,0 +1,120 @@
+Some of the files listed below are required to build a Gadgeteer designer extension for Visual Studio.
+These files are not included here and must be obtained separately as part of the Visual Studio Modeling Sdk
+or similar Microsoft distribution.  You will only need the files for the version of Visual Studio that you
+are targetting.
+
+
+ Directory of [basedir]\Gadgeteer\NETMF_44\GadgeteerCore\VisualStudio\Designer\ModelingCache
+
+09/17/2017  01:34 PM    <DIR>          .
+09/17/2017  01:34 PM    <DIR>          ..
+09/17/2017  01:34 PM    <DIR>          10.0
+09/17/2017  01:34 PM    <DIR>          11.0
+09/17/2017  01:34 PM    <DIR>          12.0
+09/17/2017  01:34 PM    <DIR>          14.0
+03/16/2017  01:33 PM           716,688 Microsoft.VisualStudio.Modeling.Sdk.10.0.dll
+03/16/2017  01:33 PM         1,250,703 Microsoft.VisualStudio.Modeling.Sdk.10.0.xml
+03/16/2017  01:33 PM           776,760 Microsoft.VisualStudio.Modeling.Sdk.11.0.dll
+03/16/2017  01:33 PM           712,398 microsoft.visualstudio.modeling.sdk.11.0.xml
+03/16/2017  01:33 PM           778,456 Microsoft.VisualStudio.Modeling.Sdk.12.0.dll
+03/16/2017  01:33 PM         1,252,273 microsoft.visualstudio.modeling.sdk.12.0.xml
+03/16/2017  01:33 PM           632,616 Microsoft.VisualStudio.Modeling.Sdk.14.0.dll
+03/16/2017  01:33 PM         1,256,383 Microsoft.VisualStudio.Modeling.Sdk.14.0.xml
+03/16/2017  01:33 PM           895,904 Microsoft.VisualStudio.Modeling.Sdk.Diagrams.10.0.dll
+03/16/2017  01:33 PM         2,164,061 Microsoft.VisualStudio.Modeling.Sdk.Diagrams.10.0.xml
+03/16/2017  01:33 PM           955,000 Microsoft.VisualStudio.Modeling.Sdk.Diagrams.11.0.dll
+03/16/2017  01:33 PM         1,297,020 microsoft.visualstudio.modeling.sdk.diagrams.11.0.xml
+03/16/2017  01:33 PM           956,152 Microsoft.VisualStudio.Modeling.Sdk.Diagrams.12.0.dll
+03/16/2017  01:33 PM         2,173,235 microsoft.visualstudio.modeling.sdk.diagrams.12.0.xml
+03/16/2017  01:33 PM           924,496 Microsoft.VisualStudio.Modeling.Sdk.Diagrams.14.0.dll
+03/16/2017  01:33 PM         2,173,999 Microsoft.VisualStudio.Modeling.Sdk.Diagrams.14.0.xml
+03/16/2017  01:33 PM         2,723,760 Microsoft.VisualStudio.Modeling.Sdk.DslDefinition.10.0.dll
+03/16/2017  01:33 PM         5,220,310 Microsoft.VisualStudio.Modeling.Sdk.DslDefinition.10.0.xml
+03/16/2017  01:33 PM         2,735,752 Microsoft.VisualStudio.Modeling.Sdk.DslDefinition.11.0.dll
+03/16/2017  01:33 PM         1,005,440 microsoft.visualstudio.modeling.sdk.dsldefinition.11.0.xml
+03/16/2017  01:33 PM         2,735,888 Microsoft.VisualStudio.Modeling.Sdk.DslDefinition.12.0.dll
+03/16/2017  01:33 PM         1,005,440 microsoft.visualstudio.modeling.sdk.dsldefinition.12.0.xml
+03/16/2017  01:33 PM         2,675,048 Microsoft.VisualStudio.Modeling.Sdk.DslDefinition.14.0.dll
+03/16/2017  01:33 PM         5,231,654 Microsoft.VisualStudio.Modeling.Sdk.DslDefinition.14.0.xml
+03/16/2017  01:33 PM           438,688 Microsoft.VisualStudio.Modeling.Sdk.Shell.10.0.dll
+03/16/2017  01:33 PM           536,722 Microsoft.VisualStudio.Modeling.Sdk.Shell.10.0.xml
+03/16/2017  01:33 PM           429,160 Microsoft.VisualStudio.Modeling.Sdk.Shell.11.0.dll
+03/16/2017  01:33 PM           306,848 microsoft.visualstudio.modeling.sdk.shell.11.0.xml
+03/16/2017  01:33 PM           465,136 Microsoft.VisualStudio.Modeling.Sdk.Shell.12.0.dll
+03/16/2017  01:33 PM           541,463 microsoft.visualstudio.modeling.sdk.shell.12.0.xml
+03/16/2017  01:33 PM           467,264 Microsoft.VisualStudio.Modeling.Sdk.Shell.14.0.dll
+03/16/2017  01:33 PM           545,289 Microsoft.VisualStudio.Modeling.Sdk.Shell.14.0.xml
+03/16/2017  01:33 PM           995,712 Microsoft.VisualStudio.Shell.10.0.dll
+03/16/2017  01:33 PM           715,084 Microsoft.VisualStudio.Shell.10.0.xml
+03/16/2017  01:33 PM         1,988,680 Microsoft.VisualStudio.Shell.11.0.dll
+03/16/2017  01:33 PM         2,258,328 Microsoft.VisualStudio.Shell.11.0.xml
+03/16/2017  01:33 PM         2,070,704 Microsoft.VisualStudio.Shell.12.0.dll
+03/16/2017  01:33 PM         2,073,864 Microsoft.VisualStudio.Shell.14.0.dll
+03/16/2017  01:33 PM         2,647,005 Microsoft.VisualStudio.Shell.14.0.xml
+03/16/2017  01:33 PM           125,328 Microsoft.VisualStudio.TextTemplating.10.0.dll
+03/16/2017  01:33 PM           104,115 Microsoft.VisualStudio.TextTemplating.10.0.xml
+03/16/2017  01:33 PM           143,456 Microsoft.VisualStudio.TextTemplating.11.0.dll
+03/16/2017  01:33 PM            42,100 Microsoft.VisualStudio.TextTemplating.11.0.xml
+03/16/2017  01:33 PM           141,016 Microsoft.VisualStudio.TextTemplating.12.0.dll
+03/16/2017  01:33 PM           115,004 Microsoft.VisualStudio.TextTemplating.12.0.xml
+03/16/2017  01:33 PM           169,776 Microsoft.VisualStudio.TextTemplating.14.0.dll
+03/16/2017  01:33 PM           115,004 Microsoft.VisualStudio.TextTemplating.14.0.xml
+03/16/2017  01:33 PM            17,328 Microsoft.VisualStudio.TextTemplating.Interfaces.10.0.dll
+03/16/2017  01:33 PM            12,524 Microsoft.VisualStudio.TextTemplating.Interfaces.10.0.xml
+03/16/2017  01:33 PM            28,296 Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.dll
+03/16/2017  01:33 PM            11,251 Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.xml
+03/16/2017  01:33 PM            22,792 Microsoft.VisualStudio.TextTemplating.Interfaces.12.0.dll
+03/16/2017  01:33 PM               178 Microsoft.VisualStudio.TextTemplating.Interfaces.12.0.xml
+03/16/2017  01:33 PM            22,880 Microsoft.VisualStudio.TextTemplating.Interfaces.14.0.dll
+03/16/2017  01:33 PM               178 Microsoft.VisualStudio.TextTemplating.Interfaces.14.0.xml
+03/16/2017  01:33 PM            34,728 Microsoft.VisualStudio.TextTemplating.Modeling.10.0.dll
+03/16/2017  01:33 PM             6,110 Microsoft.VisualStudio.TextTemplating.Modeling.10.0.xml
+03/16/2017  01:33 PM            45,696 Microsoft.VisualStudio.TextTemplating.Modeling.11.0.dll
+03/16/2017  01:33 PM            10,525 microsoft.visualstudio.texttemplating.modeling.11.0.xml
+03/16/2017  01:33 PM            45,824 Microsoft.VisualStudio.TextTemplating.Modeling.12.0.dll
+03/16/2017  01:33 PM            44,888 Microsoft.VisualStudio.TextTemplating.Modeling.14.0.dll
+03/16/2017  01:33 PM           117,152 Microsoft.VisualStudio.TextTemplating.VSHost.10.0.dll
+03/16/2017  01:33 PM            89,707 Microsoft.VisualStudio.TextTemplating.VSHost.10.0.xml
+03/16/2017  01:33 PM           149,120 Microsoft.VisualStudio.TextTemplating.VSHost.11.0.dll
+03/16/2017  01:33 PM            22,859 Microsoft.VisualStudio.TextTemplating.VSHost.11.0.xml
+03/16/2017  01:33 PM           151,800 Microsoft.VisualStudio.TextTemplating.VSHost.12.0.dll
+03/16/2017  01:33 PM           119,674 Microsoft.VisualStudio.TextTemplating.VSHost.12.0.xml
+03/16/2017  01:33 PM           185,168 Microsoft.VisualStudio.TextTemplating.VSHost.14.0.dll
+03/16/2017  01:33 PM           119,674 Microsoft.VisualStudio.TextTemplating.VSHost.14.0.xml
+              69 File(s)     60,943,534 bytes
+
+ Directory of [basedir]\Gadgeteer\NETMF_44\GadgeteerCore\VisualStudio\Designer\ModelingCache\10.0
+
+09/17/2017  01:34 PM    <DIR>          .
+09/17/2017  01:34 PM    <DIR>          ..
+03/16/2017  01:33 PM           525,192 Microsoft.VisualStudio.Shell.Design.dll
+03/16/2017  01:33 PM           225,415 Microsoft.VisualStudio.Shell.Design.xml
+               2 File(s)        750,607 bytes
+
+ Directory of [basedir]\Gadgeteer\NETMF_44\GadgeteerCore\VisualStudio\Designer\ModelingCache\11.0
+
+09/17/2017  01:34 PM    <DIR>          .
+09/17/2017  01:34 PM    <DIR>          ..
+03/16/2017  01:33 PM           479,800 Microsoft.VisualStudio.Shell.Design.dll
+03/16/2017  01:33 PM           224,911 Microsoft.VisualStudio.Shell.Design.xml
+               2 File(s)        704,711 bytes
+
+ Directory of [basedir]\Gadgeteer\NETMF_44\GadgeteerCore\VisualStudio\Designer\ModelingCache\12.0
+
+09/17/2017  01:34 PM    <DIR>          .
+09/17/2017  01:34 PM    <DIR>          ..
+03/16/2017  01:33 PM           481,976 Microsoft.VisualStudio.Shell.Design.dll
+03/16/2017  01:33 PM           224,911 Microsoft.VisualStudio.Shell.Design.xml
+               2 File(s)        706,887 bytes
+
+ Directory of [basedir]\Gadgeteer\NETMF_44\GadgeteerCore\VisualStudio\Designer\ModelingCache\14.0
+
+09/17/2017  01:34 PM    <DIR>          .
+09/17/2017  01:34 PM    <DIR>          ..
+03/16/2017  01:33 PM           465,680 Microsoft.VisualStudio.Shell.Design.dll
+03/16/2017  01:33 PM           244,088 Microsoft.VisualStudio.Shell.Design.xml
+               2 File(s)        709,768 bytes
+
+     Total Files Listed:
+              77 File(s)     63,815,507 bytes
+              14 Dir(s)  1,315,296,063,488 bytes free

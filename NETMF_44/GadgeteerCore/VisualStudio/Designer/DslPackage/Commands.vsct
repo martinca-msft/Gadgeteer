@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- -->
+  <!-- This file contains custom command definitions. -->
+  <!-- -->
+  <!-- NOTE: Each time commands are added or changed, the "version" parameter to the -->
+  <!-- ProvideMenuResource attribute in Shell\Package.tt should be incremented. -->
+  <!-- This causes Visual Studio to re-merge the menu definitions for the package. -->
+  <!-- Otherwise, changes won't take effect until the next time devenv /setup is run. -->
+  <!-- -->
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+  <!--<Extern href="msobtnid.h" xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" />-->
+  <Extern href="virtkeys.h" />
+  <Extern href="DSLToolsCmdID.h" />
+  <Include href="GeneratedCode\GeneratedVsct.vsct" />
+  <Commands package="guidPkg">
+    <Groups>
+      <Group guid="guidCustomMenuCmdSet" id="grpidMyMenuGroup" priority="0x0100">
+        <!-- These symbols are defined in GeneratedVSCT.vsct -->
+        <Parent guid="guidCmdSet" id="menuidContext" />
+      </Group>
+    </Groups>
+    <Buttons>
+      <Button guid="guidCustomMenuCmdSet" id="cmdidConnectAll" priority="0x0100" type="Button">
+        <Parent guid="guidCustomMenuCmdSet" id="grpidMyMenuGroup" />
+        <!-- If you do not want to place the command in your own Group, 
+           use Parent guid="guidCmdSet" id="grpidContextMain".
+           These symbols are defined in GeneratedVSCT.vsct -->
+        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Connect all modules</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidCustomMenuCmdSet" id="cmdidDelete" priority="0x0102" type="Button">
+				<Parent guid="guidCustomMenuCmdSet" id="grpidMyMenuGroup" />
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Disconnect</ButtonText>
+				</Strings>
+			</Button>
+			<Button guid="guidCustomMenuCmdSet" id="cmdidHelp" priority="0x0104" type="Button">
+				<Parent guid="guidCustomMenuCmdSet" id="grpidMyMenuGroup" />
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Help</ButtonText>
+				</Strings>
+			</Button>
+      <Button guid="guidCustomMenuCmdSet" id="cmdidPowerEstimate" priority="0x0103" type="Button">
+        <Parent guid="guidCustomMenuCmdSet" id="grpidMyMenuGroup" />
+        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Power estimate</ButtonText>
+        </Strings>
+      </Button>
+			<Button guid="guidCustomMenuCmdSet" id="cmdidGoToCode" priority="0x0101" type="Button">
+        <Parent guid="guidCustomMenuCmdSet" id="grpidMyMenuGroup" />        
+        <Strings>
+          <ButtonText>Go to code</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>   
+  </Commands>
+  <VisibilityConstraints>
+    <!-- Ensures the command is only loaded for this DSL -->
+		<VisibilityItem guid="guidCustomMenuCmdSet" id="cmdidConnectAll" context="guidEditor" />
+    <VisibilityItem guid="guidCustomMenuCmdSet" id="cmdidDelete" context="guidEditor" />
+    <VisibilityItem guid="guidCustomMenuCmdSet" id="cmdidPowerEstimate" context="guidEditor" />
+  </VisibilityConstraints>
+	<KeyBindings>
+		<KeyBinding guid="guidCustomMenuCmdSet" id="cmdidHelp" key1="VK_F1" editor="guidEditor" />
+	</KeyBindings>
+	<Symbols>
+    <!-- Substitute a unique GUID for the placeholder: -->
+    <GuidSymbol name="guidCustomMenuCmdSet" value="{A2736037-EF55-4996-AFD3-CE80BD7DE26F}">
+      <IDSymbol name="grpidMyMenuGroup" value="0x01001" />
+      <IDSymbol name="cmdidConnectAll" value="0x801" />
+      <IDSymbol name="cmdidGoToCode" value="0x802" />
+			<IDSymbol name="cmdidDelete" value="0x803" />
+			<IDSymbol name="cmdidHelp" value="0x804" />
+      <IDSymbol name="cmdidPowerEstimate" value="0x805" />
+		</GuidSymbol>    
+  </Symbols>
+
+</CommandTable>

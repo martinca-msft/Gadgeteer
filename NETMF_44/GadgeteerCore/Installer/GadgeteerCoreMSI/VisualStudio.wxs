@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- This file is included by the GadgeteerBuilderTemplates, GadgeteerCore and VSDesigner MSI projects.  -->
+
+  <!-- == == == == == == == == == == == == Visual Studio 2015 paths == == == == == == == == == == == == == -->
+
+  <Fragment>
+    <!-- Used to put anything under the VS 2015 folder. -->
+    <Property Id="VS14_ROOT" Secure="yes">
+      <RegistrySearch Id="Search_VS14_ROOT" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" Name="14.0" Type="raw" Win64="no" />
+    </Property>
+
+    <!-- Used to determine if VS 2015 Community edition or higher is installed. -->
+    <Property Id="VS14_ENV" Secure="yes">
+      <RegistrySearch Id="Search_VS14_ENV" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\14.0\Setup\VS" Name="EnvironmentPath" Type="raw" Win64="no" />
+    </Property>
+  </Fragment>
+
+  <!-- == == == == == == == == == == == == Visual Studio 2013 paths == == == == == == == == == == == == == -->
+
+  <Fragment>
+    <!-- Used to put anything under the VS 2013 folder, cannot be different for express. -->
+    <Property Id="VS12_ROOT" Secure="yes">
+      <RegistrySearch Id="Search_VS12_ROOT" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" Name="12.0" Type="raw" Win64="no" />
+    </Property>
+
+    <!-- Used to determine if VS 2013 Professional edition or higher is installed. -->
+    <Property Id="VS12_ENV" Secure="yes">
+      <RegistrySearch Id="Search_VS12_ENV" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\12.0\Setup\VS" Name="EnvironmentPath" Type="raw" Win64="no" />
+    </Property>
+
+    <!-- Used to determine if Visual Studio Express 2013 for Windows Desktop is installed. -->
+    <Property Id="VSE12_ENV" Secure="yes">
+      <RegistrySearch Id="Search_VSE12_ENV" Root="HKLM" Key="SOFTWARE\Microsoft\WDExpress\12.0\Setup\VS" Name="EnvironmentPath" Type="raw" Win64="no" />
+    </Property>
+  </Fragment>
+
+  <!-- == == == == == == == == == == == == Visual Studio 2012 paths == == == == == == == == == == == == == -->
+
+  <Fragment>
+    <!-- Used to put anything under the VS 2012 folder, cannot be different for express. -->
+    <Property Id="VS11_ROOT" Secure="yes">
+      <RegistrySearch Id="Search_VS11_ROOT" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" Name="11.0" Type="raw" Win64="no" />
+    </Property>
+    
+    <!-- Used to determine if VS 2012 Professional edition or higher is installed. -->
+    <Property Id="VS11_ENV" Secure="yes">
+      <RegistrySearch Id="Search_VS11_ENV" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\11.0\Setup\VS" Name="EnvironmentPath" Type="raw" Win64="no" />
+    </Property>
+
+    <!-- Visual Studio Express 2012 for Windows Desktop stores its paths in registry. -->
+    <!-- The component GUID of WDExpress.exe is 55C6B9D6-A824-4AFC-8D08-20E581B6F42C. -->
+
+    <!-- Used to determine if Visual Studio Express 2012 for Windows Desktop is installed. -->
+    <Property Id="VSE11_ENV" Secure="yes">
+      <RegistrySearch Id="Search_VSE11_ENV" Root="HKLM" Key="SOFTWARE\Microsoft\WDExpress\11.0\Setup\VS" Name="EnvironmentPath" Type="raw" Win64="no" />
+    </Property>
+  </Fragment>
+
+  <!-- == == == == == == == == == == == == Visual Studio 2010 paths == == == == == == == == == == == == == -->
+
+  <Fragment>
+    <!-- Used to put anything under the Visual Studio 2010 folder, cannot be different for the express versions. -->
+    <Property Id="VS10_ROOT" Secure="yes">
+      <RegistrySearch Id="Search_VS10_ROOT" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" Name="10.0" Type="raw" Win64="no" />
+    </Property>
+
+    <!-- Used to determine if Visual Studio 2010 Standard edition or higher is installed. -->
+    <Property Id="VS10_ENV" Secure="yes">
+      <RegistrySearch Id="Search_VS10_ENV" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\10.0\Setup\VS" Name="EnvironmentPath" Type="raw" Win64="no" />
+    </Property>
+
+    <!-- Used to determine if Visual C# Express 2010 is installed. -->
+    <Property Id="VSE10_CS_ENV" Secure="yes">
+      <ComponentSearch Id="Search_VSE10_CS_ENV" Guid="{A4945167-D8A4-4B10-9B78-99C2CDC243EC}" Type="file">
+        <FileSearch Id="Search_VSE10_CS_ENV_EXE" Name="VCSExpress.exe" />
+      </ComponentSearch>
+    </Property>
+
+    <!-- Used to determine if Visual Basic Express 2010 is installed. -->
+    <Property Id="VSE10_VB_ENV" Secure="yes">
+      <ComponentSearch Id="Search_VSE10_VB_ENV" Guid="{3EDEF607-9E3A-4A64-BFE1-104979CF2899}" Type="file">
+        <FileSearch Id="Search_VSE10_VB_ENV_EXE" Name="VBExpress.exe" />
+      </ComponentSearch>
+    </Property>
+  </Fragment>
+
+  <!-- == == == == == == == == == == == == Visual Studio Registration == == == == == == == == == == == == -->
+
+  <!-- Visual Studio registration must be called when using MSI instead of VSIX. -->
+  <!-- http://msdn.microsoft.com/en-us/library/vstudio/bb166419.aspx -->
+  <!-- This takes quite a time so the progress text should be updated. -->
+  <!-- Just use the following snippets to do the registration -->
+  <!--
+  <PropertyRef Id="RequiresVS14Registration" />
+  <UI>
+    <ProgressText Action="VS14Registration"   >!(loc.ProgressText_VSRegistration)</ProgressText>
+    <ProgressText Action="VS14Unregistration" >!(loc.ProgressText_VSRegistration)</ProgressText>
+  </UI>
+
+  <PropertyRef Id="RequiresVS12Registration" />
+  <UI>
+    <ProgressText Action="VS12Registration"   >!(loc.ProgressText_VSRegistration)</ProgressText>
+    <ProgressText Action="VS12Unregistration" >!(loc.ProgressText_VSRegistration)</ProgressText>
+    <ProgressText Action="VSE12Registration"  >!(loc.ProgressText_VSRegistration)</ProgressText>
+    <ProgressText Action="VSE12Unregistration">!(loc.ProgressText_VSRegistration)</ProgressText>
+  </UI>
+
+  <PropertyRef Id="RequiresVS11Registration" />
+  <UI>
+    <ProgressText Action="VS11Registration"   >!(loc.ProgressText_VSRegistration)</ProgressText>
+    <ProgressText Action="VS11Unregistration" >!(loc.ProgressText_VSRegistration)</ProgressText>
+    <ProgressText Action="VSE11Registration"  >!(loc.ProgressText_VSRegistration)</ProgressText>
+    <ProgressText Action="VSE11Unregistration">!(loc.ProgressText_VSRegistration)</ProgressText>
+  </UI>
+  -->
+
+  <Fragment>
+    <Property Id="RequiresVS14Registration" Value="True" />
+
+    <!-- Visual Studio 2015 -->
+
+    <CustomAction Id="VS14Registration"    Property="VS14_ENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />
+    <CustomAction Id="VS14Unregistration"  Property="VS14_ENV" ExeCommand="/setup" Execute="deferred" Return="asyncNoWait" Impersonate="no" />
+    <PropertyRef Id="VS14_ENV"/>
+
+    <InstallExecuteSequence>
+      <Custom Action="VS14Registration"    Before="InstallFinalize" Overridable="yes">VS14_ENV AND NOT REMOVE="ALL"</Custom>
+      <Custom Action="VS14Unregistration"  Before="InstallFinalize" Overridable="yes">VS14_ENV AND REMOVE="ALL"</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+
+  <Fragment>
+    <Property Id="RequiresVS12Registration" Value="True" />
+
+    <!-- Visual Studio 2013 -->
+
+    <CustomAction Id="VS12Registration"    Property="VS12_ENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />
+    <CustomAction Id="VS12Unregistration"  Property="VS12_ENV" ExeCommand="/setup" Execute="deferred" Return="asyncNoWait" Impersonate="no" />
+    <PropertyRef Id="VS12_ENV"/>
+
+    <InstallExecuteSequence>
+      <Custom Action="VS12Registration"    Before="InstallFinalize" Overridable="yes">VS12_ENV AND NOT REMOVE="ALL"</Custom>
+      <Custom Action="VS12Unregistration"  Before="InstallFinalize" Overridable="yes">VS12_ENV AND REMOVE="ALL"</Custom>
+    </InstallExecuteSequence>
+
+    <!-- Visual Studio Express 2013 for Windows Desktop -->
+
+    <CustomAction Id="VSE12Registration"   Property="VSE12_ENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />
+    <CustomAction Id="VSE12Unregistration" Property="VSE12_ENV" ExeCommand="/setup" Execute="deferred" Return="asyncNoWait" Impersonate="no" />
+    <PropertyRef Id="VSE12_ENV" />
+
+    <InstallExecuteSequence>
+      <Custom Action="VSE12Registration"   Before="InstallFinalize" Overridable="yes">VSE12_ENV AND NOT REMOVE="ALL"</Custom>
+      <Custom Action="VSE12Unregistration" Before="InstallFinalize" Overridable="yes">VSE12_ENV AND REMOVE="ALL"</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+
+  <Fragment>
+    <Property Id="RequiresVS11Registration" Value="True" />
+
+    <!-- Visual Studio 2012 -->
+
+    <CustomAction Id="VS11Registration"    Property="VS11_ENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />
+    <CustomAction Id="VS11Unregistration"  Property="VS11_ENV" ExeCommand="/setup" Execute="deferred" Return="asyncNoWait" Impersonate="no" />
+    <PropertyRef Id="VS11_ENV"/>
+
+    <InstallExecuteSequence>
+      <Custom Action="VS11Registration"    Before="InstallFinalize" Overridable="yes">VS11_ENV AND NOT REMOVE="ALL"</Custom>
+      <Custom Action="VS11Unregistration"  Before="InstallFinalize" Overridable="yes">VS11_ENV AND REMOVE="ALL"</Custom>
+    </InstallExecuteSequence>
+
+    <!-- Visual Studio Express 2012 for Windows Desktop -->
+
+    <CustomAction Id="VSE11Registration"   Property="VSE11_ENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />
+    <CustomAction Id="VSE11Unregistration" Property="VSE11_ENV" ExeCommand="/setup" Execute="deferred" Return="asyncNoWait" Impersonate="no" />
+    <PropertyRef Id="VSE11_ENV" />
+
+    <InstallExecuteSequence>
+      <Custom Action="VSE11Registration"   Before="InstallFinalize" Overridable="yes">VSE11_ENV AND NOT REMOVE="ALL"</Custom>
+      <Custom Action="VSE11Unregistration" Before="InstallFinalize" Overridable="yes">VSE11_ENV AND REMOVE="ALL"</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+
+</Wix>

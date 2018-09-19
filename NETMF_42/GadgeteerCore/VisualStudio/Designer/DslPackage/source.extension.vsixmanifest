@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+  <Identifier Id="e627fec7-215a-4eed-a85e-440df3eb5f5f">
+    <Name>GadgeteerDSL</Name>
+    <Author>Microsoft</Author>
+    <Version>2.42.601.0</Version>
+    <Description>Description for Microsoft.Gadgeteer.Designer.GadgeteerDSL</Description>
+    <Locale>1033</Locale>
+    <InstalledByMsi>true</InstalledByMsi>
+    <MoreInfoUrl></MoreInfoUrl>
+    <GettingStartedGuide></GettingStartedGuide>
+    <Icon></Icon>
+    <PreviewImage></PreviewImage>
+    <SupportedProducts>
+      <VisualStudio Version="10.0">
+        <Edition>Ultimate</Edition>
+        <Edition>Premium</Edition>
+        <Edition>Pro</Edition>
+        <Edition>Standard</Edition>
+        <Edition>VCSExpress</Edition>
+        <Edition>VBExpress</Edition>
+      </VisualStudio>
+    </SupportedProducts>
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+  </Identifier>
+  <References/>
+  <Content>
+    <!--<VsPackage>|DslPackage;CodeGeneration.pkgdef|</VsPackage>-->
+    <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
+    <MefComponent>|Dsl|</MefComponent>
+    <MefComponent>|%CurrentProject%|</MefComponent>
+    <ItemTemplate>ItemTemplates</ItemTemplate>
+  </Content>
+</Vsix>

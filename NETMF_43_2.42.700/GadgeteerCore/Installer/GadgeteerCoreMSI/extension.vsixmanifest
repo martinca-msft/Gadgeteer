@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+  <Identifier Id="CoreTemplates.Microsoft.BF93C8CE-B474-45D3-A6B3-1FFFE1EA1817">
+    <Name>Microsoft .NET Gadgeteer Core Templates</Name>
+    <Author>Microsoft</Author>
+    <Version>2.42.0.0</Version>
+    <Description xml:space="preserve">Microsoft .NET Gadgeteer Core Templates</Description>
+    <Locale>1033</Locale>
+    <Icon></Icon>
+    <InstalledByMsi>true</InstalledByMsi>
+    <SupportedProducts>
+      <VisualStudio Version="10.0">
+        <Edition>Ultimate</Edition>
+        <Edition>Premium</Edition>
+        <Edition>Pro</Edition>
+        <Edition>VCSExpress</Edition>
+        <Edition>VBExpress</Edition>
+      </VisualStudio>
+      <VisualStudio Version="11.0">
+        <Edition>Pro</Edition>
+        <Edition>VSWinDesktopExpress</Edition>
+      </VisualStudio>
+    </SupportedProducts>
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" />
+  </Identifier>
+  <References />
+  <Content>
+    <ProjectTemplate>ProjectTemplates</ProjectTemplate>
+  </Content>
+</Vsix>
+
+<!-- There is a new schema for 2012 at http://msdn.microsoft.com/en-us/library/vstudio/hh696828.aspx. -->
+<!-- Might be worth migrating when 2010 support is dropped or separated. -->

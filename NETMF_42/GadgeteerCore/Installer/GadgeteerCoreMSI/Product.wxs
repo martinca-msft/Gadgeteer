@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include version.wxi?>
+  
+  <Product Id="*"
+           Name="!(loc.GadgeteerCoreName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="!(loc.Manufacturer)" UpgradeCode="672DF6EC-E3A2-4226-B1A3-399879A08A90">
+    <Package InstallerVersion="300" Compressed="yes" Platform="x86" InstallPrivileges="elevated"/>
+
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Property Id="SAMEVERSIONINSTALLED" Secure="yes"/>
+    <Upgrade Id="{672DF6EC-E3A2-4226-B1A3-399879A08A90}">
+      <UpgradeVersion Maximum="$(var.ProductVersion)"
+                      Property="PREVIOUSVERSIONSINSTALLED"
+                      IncludeMinimum="yes"
+                      IncludeMaximum="no"
+                      OnlyDetect="no"/>
+
+      <UpgradeVersion Minimum="$(var.ProductVersion)"
+                      Property="NEWERVERSIONINSTALLED"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"/>
+
+      <UpgradeVersion Minimum="$(var.ProductVersion)"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.ProductVersion)"
+                      IncludeMaximum="yes"
+                      Property="SAMEVERSIONINSTALLED"
+                      OnlyDetect="yes"/>
+
+    </Upgrade>
+
+    <!--Install for all users-->
+    <Property Id="ALLUSERS" Value="2"/>
+
+    <!--ARP stuff (Add/Remove Programs)-->
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+    
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+    <!-- VS paths -->
+    <!-- used to put anything under the VS folder -->
+    <PropertyRef Id="VS2010_ROOT_FOLDER" />
+    <!-- used to determine if VS 2010 Standard edition or higher is installed -->
+    <PropertyRef Id="VS2010DEVENV" />
+    <!-- used to determine if VC# Express 2010 is installed -->
+    <PropertyRef Id="VCSHARP2010EXPRESS_IDE" />
+    <!-- used to determine if VB Express 2010 is installed -->
+    <PropertyRef Id="VB2010EXPRESS_IDE" />
+
+    <!--Customactions-->
+    <CustomAction Id='NoDowngrade' Error='!(loc.NewerVersionFound)' />
+    <CustomAction Id='SameVersionError' Error='!(loc.SameVersionInstalled)'/>
+
+    <!--checks for the readme component in .net mf - THIS IS NOT WORKING RIGHT NOW AND NEEDS TO BE UPDATED TO 4.2 -->
+    <Property Id="NETMF_INSTALLED">
+      <ComponentSearch Id="id_NetMFInstalledComponentSearch" Guid="107DF12F-D512-49B7-BE2D-93A3264DF93C" Type="file"/>
+    </Property>
+    <CustomAction Id="NetMFNotInstalledError" Error="!(loc.NetMFNotInstalled)" />
+    <!-- 
+    <Property Id="VS_100_DEVENV">
+      <RegistrySearch Id="VS_100_DevEnv_Path" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\10.0\" Name="InstallDir" Type="directory" />
+    </Property>
+-->
+    
+    <!--Get in the sequences-->
+    <?include sequences.wxi?>
+
+    <!--Components-->
+    <?include components.wxi?>
+
+    <Feature Id="Feature" Title="GadgeteerInstaller" Level="1">
+
+      <MergeRef Id="DesignerMM"/>
+      <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
+      <ComponentGroupRef Id="Product.Generated" />
+
+      <!-- NETMF 4.2-->
+      <ComponentRef Id="GadgeteerCore42Files"/>
+      <ComponentRef Id="GadgeteerCore42BEFiles"/>
+      <ComponentRef Id="GadgeteerCore42LEFiles"/>
+
+      <ComponentRef Id="GadgeteerCore42WebClientFiles"/>
+      <ComponentRef Id="GadgeteerCore42WebClientBEFiles"/>
+      <ComponentRef Id="GadgeteerCore42WebClientLEFiles"/>
+
+      <ComponentRef Id="GadgeteerCore42WebServerFiles"/>
+      <ComponentRef Id="GadgeteerCore42WebServerBEFiles"/>
+      <ComponentRef Id="GadgeteerCore42WebServerLEFiles"/>
+
+      <ComponentRef Id="GadgeteerCore42SerialFiles"/>
+      <ComponentRef Id="GadgeteerCore42SerialBEFiles"/>
+      <ComponentRef Id="GadgeteerCore42SerialLEFiles"/>
+
+      <ComponentRef Id="GadgeteerCore42SPIFiles"/>
+      <ComponentRef Id="GadgeteerCore42SPIBEFiles"/>
+      <ComponentRef Id="GadgeteerCore42SPILEFiles"/>
+
+      <ComponentRef Id="GadgeteerCore42DaisyLinkFiles"/>
+      <ComponentRef Id="GadgeteerCore42DaisyLinkBEFiles"/>
+      <ComponentRef Id="GadgeteerCore42DaisyLinkLEFiles"/>
+
+      <!-- NETMF 4.1-->
+      <ComponentRef Id="GadgeteerCoreFiles"/>
+      <ComponentRef Id="GadgeteerCoreBEFiles"/>
+      <ComponentRef Id="GadgeteerCoreLEFiles"/>
+
+      <ComponentRef Id="GadgeteerCoreWebClientFiles"/>
+      <ComponentRef Id="GadgeteerCoreWebClientBEFiles"/>
+      <ComponentRef Id="GadgeteerCoreWebClientLEFiles"/>
+
+      <ComponentRef Id="GadgeteerCoreWebServerFiles"/>
+      <ComponentRef Id="GadgeteerCoreWebServerBEFiles"/>
+      <ComponentRef Id="GadgeteerCoreWebServerLEFiles"/>
+
+
+      <!--
+      <ComponentRef Id="MSRCloudFiles"/>
+      <ComponentRef Id="MSRCloudBEFiles"/>
+      <ComponentRef Id="MSRCloudLEFiles"/>
+-->
+      
+      <!--
+      <ComponentRef Id="MSRHawaiiLibFiles"/>
+      <ComponentRef Id="MSRHawaiiLibBEFiles"/>
+      <ComponentRef Id="MSRHawaiiLibLEFiles"/>
+      -->
+      
+      <ComponentRef Id="ReleaseNotesFiles"/>
+
+      <ComponentRef Id="VS2010_Schema"/>
+      <!--
+      <ComponentRef Id="CHMFile"/>
+-->
+
+      <ComponentRef Id="VS2010_Extension.vsixManifest"/>
+      <ComponentRef Id="VS2010_Templates_CS"/>
+      <ComponentRef Id="VS2010_Templates_VB"/>
+
+      <ComponentRef Id="VCE_Extension.vsixManifest"/>
+      <ComponentRef Id="VCE_Templates"/>
+
+      <ComponentRef Id="VB_Extension.vsixManifest"/>
+      <ComponentRef Id="VB_Templates"/>
+      
+      <!--
+      <ComponentRef Id="VS2010_GTMAdornment"/>
+      <ComponentRef Id="VCE_GTMAdornment"/>
+        -->
+      <ComponentRef Id="RegistryKeys"/>
+    </Feature>
+
+
+    <!--Include all UI stuff-->
+    <Property Id="UI_INSTALLDIR" Value="INSTALLDIR"/>
+    <Property Id="DISP_GETTING_STARTED" Value="1"/>
+    <Property Id="DISP_RELEASE_NOTES" Value="1"/>
+    <?include ui\Binaries.wxi?>
+    <?include ui\CommonDialogs.wxi?>
+    <?include ui\CustomActions.wxi?>
+    <?include ui\Errors.wxi?>
+    <?include ui\InstallSequences.wxi?>
+    <?include ui\TextStyles.wxi?>
+  </Product>
+</Wix>

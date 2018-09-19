@@ -1,0 +1,23 @@
+﻿[$RootKey$\Generators]
+[$RootKey$\Generators\{FAE04EC1-301F-11d3-BF4B-00C04F79EFBC}]
+[$RootKey$\Generators\{FAE04EC1-301F-11d3-BF4B-00C04F79EFBC}\GadgeteerFileCodeGenerator] 
+@="Custom tool that generates C# files for Gadgeteer models (.gadgeteer files)"
+"CLSID"="{C9EC42CC-D634-4665-8123-889F7F468D14}"
+"GeneratesDesignTimeSource"=dword:00000001 
+[$RootKey$\CLSID]
+[$RootKey$\CLSID\{C9EC42CC-D634-4665-8123-889F7F468D14}] 
+@="Custom tool that generates C# files for Gadgeteer models (.gadgeteer files)"
+"Class"=" Microsoft.Gadgeteer.Designer.CodeGenerationCustomTool" 
+"InprocServer32"="$WinDir$\SYSTEM32\MSCOREE.DLL"
+"ThreadingModel"="Both"
+"CodeBase"="$PackageFolder$\Microsoft.Gadgeteer.Designer.DslPackage.dll"
+[$RootKey$\Generators\{FAE04EC1-301F-11d3-BF4B-00C04F79EFBC}\.gadgeteer]
+@=" GadgeteerFileCodeGenerator "
+
+[$RootKey$\Generators\{164B10B9-B200-11D0-8C61-00A0C91E29D5}]
+[$RootKey$\Generators\{164B10B9-B200-11D0-8C61-00A0C91E29D5}\GadgeteerFileCodeGenerator] 
+@="Custom tool that generates VB files for Gadgeteer models (.gadgeteer files)"
+"CLSID"="{C9EC42CC-D634-4665-8123-889F7F468D14}"
+"GeneratesDesignTimeSource"=dword:00000001 
+[$RootKey$\Generators\{164B10B9-B200-11D0-8C61-00A0C91E29D5}\.gadgeteer]
+@=" GadgeteerFileCodeGenerator "

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>.NET Gadgeteer Mainboard (NETMF 4.3 subcomponent)</Name>
+    <Description>Template for a Microsoft .NET Gadgeteer mainboard.  This template should only be used as a sub-template of the Mainboard template, and never directly.</Description>
+    <Icon>G.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <SortOrder>5002</SortOrder>
+    <TemplateID>937880F0-E56A-4553-A5B2-F6BF89E9C20D</TemplateID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MyDevice</DefaultName>
+    <ProvideDefaultName>false</ProvideDefaultName>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
+      <ProjectItem TargetFileName="Properties\AssemblyInfo.cs" ReplaceParameters="true">AssemblyInfo.cs</ProjectItem>
+      <ProjectItem TargetFileName="$HardwareFileSystemName$_43.cs" ReplaceParameters="true" OpenInEditor="true">Mainboard43.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.Gadgeteer.HardwareTemplateWizard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly><!-- 48786b727e5f0c07 --> 
+    <FullClassName>Microsoft.Gadgeteer.HardwareTemplateWizard.Wizard</FullClassName>
+  </WizardExtension>
+  <WizardData Name="HardwareType">Mainboard</WizardData>
+</VSTemplate>
+

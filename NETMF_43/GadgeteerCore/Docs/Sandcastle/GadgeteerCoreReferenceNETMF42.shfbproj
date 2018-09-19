@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <!-- The configuration and platform will be used to determine which
+         assemblies to include from solution and project documentation
+         sources -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7eaba158-4065-4bc0-9791-7c2c92dcfa1c}</ProjectGuid>
+    <SHFBSchemaVersion>1.9.3.0</SHFBSchemaVersion>
+    <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual
+         Studio adds them anyway -->
+    <AssemblyName>Documentation</AssemblyName>
+    <RootNamespace>Documentation</RootNamespace>
+    <Name>Documentation</Name>
+    <!-- SHFB properties -->
+    <OutputPath>.\GadgeteerCore_NETMF42_Aug24_2012\</OutputPath>
+    <HtmlHelpName>.NET Gadgeteer Core Reference for NETMF 4.2</HtmlHelpName>
+    <Language>en-US</Language>
+    <DocumentationSources>
+      <DocumentationSource sourceFile="..\..\Libraries\Core\DaisyLink42\bin\Release\be\Gadgeteer.DaisyLink.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\DaisyLink42\bin\Release\Gadgeteer.DaisyLink.XML" />
+      <DocumentationSource sourceFile="..\..\Gadgeteer42\bin\Release\Gadgeteer.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\Serial42\bin\Release\Gadgeteer.Serial.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\Serial42\bin\Release\Gadgeteer.Serial.xml" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\SPI42\bin\Release\Gadgeteer.SPI.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\SPI42\bin\Release\Gadgeteer.SPI.xml" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\WebClient42\bin\Release\Gadgeteer.WebClient.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\WebClient42\bin\Release\Gadgeteer.WebClient.xml" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\WebServer42\bin\Release\Gadgeteer.WebServer.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\WebServer42\bin\Release\Gadgeteer.WebServer.xml" />
+      <DocumentationSource sourceFile="..\..\Gadgeteer42\bin\Release\Gadgeteer.xml" />
+    </DocumentationSources>
+    <HelpTitle>.NET Gadgeteer Core Reference for NETMF 4.2</HelpTitle>
+    <WebsiteSdkLinkType>None</WebsiteSdkLinkType>
+    <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
+    <SyntaxFilters>CSharp, VisualBasic</SyntaxFilters>
+    <FeedbackEMailAddress>Gadgeteer%40microsoft.com</FeedbackEMailAddress>
+    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter, AutoDocumentDispose</MissingTags>
+  </PropertyGroup>
+  <!-- There are no properties for these groups.  AnyCPU needs to appear in
+       order for Visual Studio to perform the build.  The others are optional
+       common platform types that may appear. -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Win32' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Graphics">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\Microsoft.SPOT.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Hardware">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\Microsoft.SPOT.Hardware.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Hardware.PWM">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\Microsoft.SPOT.Hardware.PWM.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Hardware.SerialPort">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\Microsoft.SPOT.Hardware.SerialPort.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.IO">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\Microsoft.SPOT.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Native">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\Microsoft.SPOT.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Net">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\Microsoft.SPOT.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.TinyCore">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\Microsoft.SPOT.TinyCore.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Http">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\System.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.2\Assemblies\be\System.IO.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <!-- Import the SHFB build targets -->
+  <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
+</Project>

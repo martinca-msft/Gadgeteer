@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.GadgeteerDefinitions" Collapsed="true">
+    <Position X="3" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ModuleDefinitions" />
+      <Property Name="MainboardDefinitions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.GadgeteerPart" Collapsed="true">
+    <Position X="3.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QACAAAAAAABAAAABAAAgAAQAAAAQABAAAQAAAAAgBAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ProvidedSockets" />
+      <Property Name="Assemblies" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.ModuleDefinition" Collapsed="true">
+    <Position X="4.75" Y="6.25" Width="1.5" />
+    <AssociationLine Name="Sockets" Type="Microsoft.Gadgeteer.Designer.Definitions.SocketUse" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="6.562" />
+        <Point X="6.25" Y="6.217" />
+        <Point X="6.359" Y="6.217" />
+        <Point X="6.359" Y="3.191" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAgAAAAAAAAAAAgAAAQAAAAAAAAAgAAQCA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Sockets" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.MainboardDefinition" Collapsed="true">
+    <Position X="1.75" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.SocketBase" Collapsed="true">
+    <Position X="3.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.ProvidedSocket" Collapsed="true">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAEAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="SharedPinMaps" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.SocketUse" Collapsed="true">
+    <Position X="5.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgABAAAAAAAAAAAEBAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Types" />
+      <Property Name="Pins" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.Pin" Collapsed="true">
+    <Position X="3.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.SharedPinMap" Collapsed="true">
+    <Position X="0.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.SocketType" Collapsed="true">
+    <Position X="3.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.CompositeType" Collapsed="true">
+    <Position X="2.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Types" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.SingleSocketType" Collapsed="true">
+    <Position X="5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.Gadgeteer.Designer.Definitions.Assembly" Collapsed="true">
+    <Position X="1.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>modulesxml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

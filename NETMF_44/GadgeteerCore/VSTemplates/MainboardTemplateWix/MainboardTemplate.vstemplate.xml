@@ -1,0 +1,44 @@
+﻿<VSTemplate Version="2.0.0" Type="ProjectGroup"
+    xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>.NET Gadgeteer Mainboard</Name>
+    <Description xml:space="preserve">Template for a new Microsoft .NET Gadgeteer mainboard. This template automatically builds an installer for the mainboard.
+    
+REQUIRED: WiX Toolset. Available at http://wixtoolset.org/.
+
+REQUIRED: Any NETMF version you want to support must be installed.</Description>
+    <Icon>G.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <SortOrder>5002</SortOrder>
+    <TemplateID>8F7EB2A9-E536-47E7-8121-9681B02CD3CB</TemplateID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MyDevice</DefaultName>
+    <ProvideDefaultName>false</ProvideDefaultName>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectCollection>
+      <ProjectTemplateLink ProjectName="$HardwareFileSystemName$_41">
+        NETMF41\MainboardTemplate41.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="$HardwareFileSystemName$_42">
+        NETMF42\MainboardTemplate42.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="$HardwareFileSystemName$_43">
+        NETMF43\MainboardTemplate43.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="$HardwareFileSystemName$_44">
+        NETMF44\MainboardTemplate44.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="$HardwareFileSystemName$">
+        WiX\MainboardTemplateWix.vstemplate
+      </ProjectTemplateLink>
+    </ProjectCollection>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.Gadgeteer.HardwareTemplateWizard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly><!-- 48786b727e5f0c07 --> 
+    <FullClassName>Microsoft.Gadgeteer.HardwareTemplateWizard.Wizard</FullClassName>
+  </WizardExtension>
+  <WizardData Name="HardwareType">Mainboard</WizardData>
+</VSTemplate>

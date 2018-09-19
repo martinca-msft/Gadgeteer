@@ -1,0 +1,34 @@
+﻿<VSTemplate Version="2.0.0" Type="ProjectGroup"
+    xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>.NET Gadgeteer Module</Name>
+    <Description>Template for a new Microsoft .NET Gadgeteer module. This template supports either or both of NETMF 4.1 and NETMF 4.2. This template automatically builds an installer for the module.</Description>
+    <Icon>G.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <SortOrder>5002</SortOrder>
+    <TemplateID>57B80B95-84AB-4623-BE89-7F6F5803D7FB</TemplateID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MyDevice</DefaultName>
+    <ProvideDefaultName>false</ProvideDefaultName>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectCollection>
+      <ProjectTemplateLink ProjectName="$HardwareFileSystemName$_41">
+        NETMF41\ModuleTemplate41.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="$HardwareFileSystemName$_42">
+        NETMF42\ModuleTemplate42.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="$HardwareFileSystemName$">
+        WiX\ModuleTemplateWix.vstemplate
+      </ProjectTemplateLink>
+    </ProjectCollection>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.Gadgeteer.HardwareTemplateWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly>
+    <FullClassName>Microsoft.Gadgeteer.HardwareTemplateWizard.GTHardwareWizard</FullClassName>
+  </WizardExtension>
+  <WizardData Name="HardwareType">Module</WizardData>
+</VSTemplate>

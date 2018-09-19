@@ -1,0 +1,378 @@
+﻿Last updated: 2013-02-15 [MF 4.3/G 4.3/WiX 3.7/VS 11]
+
+Contents of this file:
+  • Upgrading to newer .NET Micro Framework version
+  • Upgrading to newer Visual Studio version
+  • Upgrading to newer WiX version
+
+Quick tips:
+  • Comment/uncomment XML line using Ctrl+E,C or Ctrl+K,C resp. Ctrl+E,U or Ctrl+K,U like in standard code.
+  • To write in multiple lines at once, use Alt+mouse or Alt+Shift+arrow keys to make a selection and type as usual.
+
+╔═════════════════════════════════════════════════╗
+║ Upgrading to newer .NET Micro Framework version ╟──────────────────────────────────────────────────────────────────────────────────────────────────
+╚═════════════════════════════════════════════════╝
+
+    GadgeteerCoreInstaller
+  ╰━━━━━━━━━━━━━━━━━━━━━━━━╯
+
+    I. NETMF×× projects
+    -------------------
+      
+      1.  Copy the latest $/Gadgeteer/NETMF_××/GadgeteerCore/Gadgeteer×× to the same folder and rename it to Gadgeteer×× using the new version.
+
+      2.  Copy the latest of each folders in $/Gadgeteer/NETMF_××/GadgeteerCore/Libraries/Core/ to the same folder and rename them using the new version.
+
+      3.  Open the GadgeteerCoreInstaller solution.
+
+      4.  Add a new Solution Folder and name it NETMF×× using the new version.
+
+      5.  Add all the new projects from steps 1. and 2. as Existing projects to the new Solution Folder created in step 4.
+      
+      6.  Rename them to ×× and add to source control (drag them to Source Control Explorer), including the Gadgeter××.
+
+      7.  Unload all the new projects (context menu).
+
+      8.  Edit all the new ××.csproj (context menu) and for each do the following (keep files open):
+
+          - Generate new Project/PropertyGroup/ProjectGuid.
+          - Change the Project/PropertyGroup/TargetFrameworkVersion to the new version.
+
+      9.  Copy the new ProjectGuid of Gadgeteer×× project, and for all of the other opened projects, do the following:
+
+          - Paste the ProjectGuid as Project/ItemGroup/ProjectReference/Project.
+          - Update the ProjectReference Include attribute and Name element to the new version.
+          
+     10.  Reload all the new projects (context menu), confirming closing and saving.
+
+     11.  In the GadgeteerCoreMSI project, add references to each and all of the projects in the new Solution Folder created in step 4.
+
+     12.  Fore each of the projects, update version number in Propertes\AssemblyInfo.cs (3 places).
+
+
+    II. GadgeteerCoreMSI
+    --------------------
+
+       1. MicroFramework.wxi
+
+          a. Duplicate and update the latest MF××_INSTALLED property.
+          b. Duplicate and update the latest MF_INSTALLED SetProperty action.
+          c. Duplicate and update the latest MF××_INSTALLING SetProperty action.
+
+       2. Components.wxi
+
+          a. Under TARGETDIR/ProgramFiles/INSTALLDIR/PRODUCTDIR/Assemblies, duplicate the latest Gadgeteer Core ×.× version section.
+
+             - For all the duplicated components, generate a new Guid.
+             - Update the Directory, Component and File Ids and Directory Names and FileSources to the new version.
+             - Update the duplicated XML comments.
+
+          d. Under TARGETDIR/RegistryKeys, duplicate the latest MFAssemblyGAC element.
+
+             - Update the registry's Id, Key and Value to the new version.
+
+       3. loc\Features.××-××.wxl
+
+          a. Add FeatureT_MF×× and FeatureD_MF×× strings.
+
+       4. Product.wxs
+
+          a. Duplicate the latest .NET Micro Framework ×.× section under Wix/Product/Features.
+
+             - Update feature's Id, Title and Description.
+             - Update condition.
+             - Update component references' Id.
+
+       5. Version.wxi
+
+          a. Consider increasing the build number.
+
+       6. extension.vsixmanifest
+
+          a. Update the Vsix/Identifier/Version number.
+
+
+    III. Solution Items
+    -------------------
+
+       1. Readme.txt
+
+          a. Update PREREQUISITES .NET Micro Framework version requirement and download link.
+          b. On major change update the DIRECTORY LAYOUT OF THE REPOSITORY and END USER PC LOCATIONS sections references to ×X.
+
+       2. ReleaseNotes.txt
+
+          a. Update the version number and date.
+          b. Add the new .NET Micro Framework version to the Supported Platforms section.
+          c. Note the change in the Change Logs section.
+
+
+    GadgeteerBuilderTemplates
+  ╰━━━━━━━━━━━━━━━━━━━━━━━━╯
+
+    I. HardwareTemplateWizard
+    -------------------------
+
+       1. WizardWindow.xaml
+
+          a. Add NETMF×× CheckBox in the XAML.
+          b. Add SupportsNETMF×× property in the codebehind.
+
+       2. Interop\Wizard.xaml
+
+          a. Duplicate the latest $Netmf××XmlPrefix$ and $Netmf××XmlSuffix$ entries and update them to the latest version.
+          b. Duplicate the latest $WizardGuid××$, $WizardGuid××be$ and $WizardGuid××le$ and update them to the latest version.
+
+
+    II. Template projects
+    ----------------------
+      
+        1.  Copy the latest $/Gadgeteer/NETMF_××/GadgeteerCore/VSTemplates/MainboardTemplate×× and ModuleTemplate×× to the same folder and rename it using the new version.
+ 
+        2.  Open the GadgeteerBuilderTemplates solution.
+ 
+        3.  Rename the new projects from step 1. using the new version and add them as Existing projects.
+
+        4.  Rename the files to the latest version:
+            
+            - Mainboard××.cs and Module××.cs
+            - MainboardTemplate××.vstemplate and ModuleTemplate××.vstemplate
+      
+        5.  Update the MainboardTemplate××.vstemplate AND ModuleTemplate××.vstemplate:
+
+            - VSTemplate/TemplateData/Name
+            - VSTemplate/TemplateData/TemplateID (generate new one)
+            - VSTemplate/TemplateContent/Project/ProjectItem
+
+        6.  Update the ProjectTemplate.csproj in BOTH projects:
+
+            - Project/ProjectGroup/TargetFrameworkVersion
+            - Project/ItemGroup/Compile 
+
+        6.  Add BOTH projects to source control (drag them to Source Control Explorer).
+
+
+    III. MainboardTemplateWix and ModuleTemplateWix
+    ----------------------------------------------
+
+         1. common.wxi
+       
+            a. Duplicate the latest NETMF44Supported line and update.
+            b. Duplicate the latest $WizardGuid××*$ lines and update.
+       
+         2. GadgeteerHardware.xml
+       
+            a. Duplicate the latest MFVersion= line and update, including comments above.
+            b. Duplicate the latest CustomAssembly line (commented) and update.
+       
+            Then in ModuleTemplateWix:
+            c. Duplicate the latest bus assemblies line (commented) and update.
+            d. Duplicate the latest networking assemblies line (commented) and update.
+            e. Duplicate the latest ExtraLibrariesRequired line (commented, two places) and update.
+       
+            And in MainboardTemplateWix:
+            c. Duplicate the latest LibrariesProvided line (two places, one commented, second not) and update.
+       
+         3. Unload the projects (context menu), edit them (context menu) and update the PostBuildEvent.
+       
+         4. ModuleTemplate.vstemplate.xml AND Mainboard.Template.vstemplate.xml:
+       
+            a. VSTemplate/TemplateData/Description
+            b. VSTemplate/TemplateContent/ProjectCollection/ProjectTemplateLink (attribute and value)
+       
+         5. msm.wxs
+       
+            a. TARGETDIR/ProgramFiles/.../INSTALLDIR, duplicate the latest NETMF ×.× section and update it.
+            b. Duplicate and update the latest registry entry in Wix/Module/Directory/Component at the bottom.
+       
+         6. ProjectTemplate.csproj
+       
+            a. Project/ItemGroup/ProjectReference
+       
+         7. ReadMe.txt
+       
+            a. SYSTEM REQUIREMENT
+            b. MAINBOARD/MODULE TEMPLATE DETAILS
+            c. NOTES ON VISUAL STUDIO BEHAVIOR
+
+
+    IV. KitInstallerTemplate
+    ------------------------
+
+        1. ReadMe.txt
+        
+           a. BUILDING THE KIT
+           b. MANAGING VERSION NUMBERS
+ 
+
+╔══════════════════════════════════════════╗
+║ Upgrading to newer Visual Studio version ╟─────────────────────────────────────────────────────────────────────────────────────────────────────────
+╚══════════════════════════════════════════╝
+
+Please refer to the Visual Studio build numbers instead of the product name, so that it can be supported before the name finalizes.
+
+    VSDesigner
+  ╰━━━━━━━━━━━━╯
+
+    I. Out of solution steps
+    ------------------------
+
+        Add new Modeling SDK assemblies to $/Gadgeteer/NETMF_43/GadgeteerCore/VisualStudio/Designer/ModelingCache.
+
+        You can get them at [VS]\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0 except MS.VS.TT.Modeling 
+        which is in [VS]\Common7\IDE\PublicAssemblies. Do not forget the MS.VS.Shell.Design in its own subdirectory.
+
+    II. InstallerModule
+    -------------------
+
+      1. MergeModule.wxs
+
+         a. Duplicate the latest AssemblySrcXX definition.
+
+            - Update the variable name and path in both the active definition and the commented one.
+
+         b. Add VSxx_ROOT property reference to Wix/Module.
+
+         c. Duplicate the latest Visual Studio xxxx section under Wix/Module/Directory[Id=TARGETDIR].
+
+            - For all the duplicated components, generate a new Guid.
+            - Update the Directory, Component and File Ids and Conditions to the new version.
+            - Update the VSxx_Ext_Msft_GdgtrDSL_Version FileSource to the new definition.
+            - Update the duplicated XML comments.
+
+         d. To test the updated designer, the Include/Directory/Merge[SourceFile] in GadgeteerCoreMsi/Components.wxi
+            below needs to be switched to the unsigned version.
+
+      2. DslPackage.csproj
+
+         a. Duplicate the latest ItemGroup conditioned by $(VisualStudioVersion).
+
+            - Update the condition and all references to new version.
+
+
+    GadgeteerCoreInstaller
+  ╰━━━━━━━━━━━━━━━━━━━━━━━━╯
+
+    I. GadgeteerCoreMSI
+    -------------------
+
+       1. VisualStudio.wxs
+
+          a. Duplicate the latest Visual Studio ×××× path section.
+
+             - Update the properties' Id.
+             - Update the registry searches' Ids, Keys and Names appropriately.
+          
+          b. If still required, add ProgressText with updated Action attribute to the XML comment sample referencing
+             the RequiresVSRegistration property.
+
+          c. If still required, duplicate the latest Visual Studio ×××× section under RequiresVSRegistration property.
+
+             - Update custom actions's Id and Property values.
+             - Update property reference's Id.
+             - Update the Action values under InstallExecuteSequence as well as the inner conditions.
+
+       2. Components.wxi
+
+          a. Duplicate the latest TARGETDIR/VS××_ROOT element.
+
+             - For all the duplicated components, generate a new Guid.
+             - Update the Directory, Component and File Ids to the new version.
+             - Update the duplicated XML comments.
+
+       3. MicroFramework.wxi
+
+          a. If still required, add the new VS××_MF_INSTALLED property to check whether .NET Micro Framework was installed
+             for this Visual Studio version.
+
+       4. loc\Features.××-××.wxl
+
+          a. Add FeatureT_VS×× and FeatureD_VS×× strings (and for other editions if applicable).
+
+       5. Product.wxs
+
+          a. If still required, add the Wix/Product/UI/ProgressText for registration and unregistration actions in the new version
+             under the Visual Studio integration section.
+          b. Add VS××_ENV property reference above the Components.wxi include under the Custom actions section.
+          c. Duplicate the latest Visual Studio section under Wix/Product/Feature[Id=VS_Support].
+
+             - Update feature's Id, Title and Description.
+             - Update condition.
+             - Add or remove component references to reflect the .NET Micro Framework versions supported in this version of Visual Studio.
+             - Update component references' Id.
+
+       6. Extension.vsixmanifest
+
+          a. Under Vsix/Identifier/SupportedProducts, add an element supporting the new Visual Studio version and editions.
+             VSIX 1.0 schema is available at http://msdn.microsoft.com/en-us/library/dd393701.aspx.
+             VSIX 2.0 schema is available at http://msdn.microsoft.com/en-us/library/vstudio/hh696828.aspx.
+
+       7. Version.wxi
+
+          a. Consider increasing the build number.
+
+
+    II. Solution Items
+    ------------------
+
+       1. Readme.txt
+
+          a. Update PREREQUISITES Visual Studio version requirements and download links.
+
+       2. ReleaseNotes.txt
+
+          a. Update the version number and date.
+          b. Add the new Visual Studio version to the Supported Platforms section.
+          c. Note the change in the Change Logs section.
+
+
+    GadgeteerBuilderTemplates
+  ╰━━━━━━━━━━━━━━━━━━━━━━━━━━━╯
+
+    I. BuilderTemplateInstaller
+    ---------------------------
+
+       1. Product.wxs
+
+          a. Duplicate the latest Visual Studio section.
+
+             - Update the Ids.
+             - Update the Custom Action.
+             - Update the comments.
+
+         b. Duplicate the latest Visual Studio directory under Wix/Product/Directory[Id=TARGETDIR].
+
+            - For all the duplicated components, generate a new Guid.
+            - Update the Directory, Component and File Ids and Conditions to the new version.
+            - Update the XML comments.
+
+         c. Duplicate the latest Visual Studio component references under Wix/Product/Feature[Id=main].
+
+            - Update the IDs.
+
+       2. Extension.vsixmanifest
+
+          a. Under Vsix/Identifier/SupportedProducts, add an element supporting the new Visual Studio version and editions.
+             VSIX 1.0 schema is available at http://msdn.microsoft.com/en-us/library/dd393701.aspx.
+             VSIX 2.0 schema is available at http://msdn.microsoft.com/en-us/library/vstudio/hh696828.aspx.
+
+    II. ModuleTemplateWix and MainboardTemplateWix
+    ----------------------------------------------
+
+        1. ReadMe.txt
+
+           a. Update the required Visual Studio versions.
+
+╔════════════════════════════════╗
+║ Upgrading to newer WiX version ╟───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+╚════════════════════════════════╝
+
+    GadgeteerCoreInstaller
+  ╰━━━━━━━━━━━━━━━━━━━━━━━━╯
+
+    I. Solution Items
+    -----------------
+
+       1. Readme.txt
+
+          a. Update used WiX version and download link in the PREREQUISITES section.

@@ -1,0 +1,60 @@
+﻿<#@ Dsl processor="DslDirectiveProcessor" requires="fileName='..\Dsl\DslDefinition.dsl'" #>
+<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" hostspecific="true" language="C#" #>
+<#@ output extension=".vsixmanifest" #>
+<#@ import namespace="System.IO" #>
+<#
+/***************************************************************************
+    Rather than following the normal DSL practice of including most of the
+    template from a common include file, this template is deliberately inlined 
+    in the DslPackage project to make it easier to customise. 
+    
+    If you wish to edit the vsix manifest with its designer, then simply copy 
+    the current content of the generated manifest, delete this template from
+    the project, and add back the copied source.extension.vsixmanifest. Note
+    that if you do this you will lose automatic tracking of certain properties
+    of the DSL such as the name, description and version, and will have to 
+    edit these in your custom manifest as well should you wish to change them.
+***************************************************************************/
+
+  // The name of the Dsl Project - Must be updated if the project is renamed.
+  string dslProjectName = "Dsl";
+
+  string localeId = "1033";
+
+  string versionFileName = this.Host.ResolvePath(@"..\..\version.txt");
+  string version = File.ReadAllText(versionFileName).Trim();
+#>
+<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+  <Identifier Id="<#= this.Dsl.PackageGuid #>">
+    <Name><#= this.Dsl.DisplayName #></Name>
+    <Author><#= this.Dsl.CompanyName #></Author>
+    <Version><#= version #></Version>
+    <Description><#= this.Dsl.Description #></Description>
+    <Locale><#= localeId #></Locale>
+    <InstalledByMsi>true</InstalledByMsi>
+    <MoreInfoUrl></MoreInfoUrl>
+    <GettingStartedGuide></GettingStartedGuide>
+    <Icon></Icon>
+    <PreviewImage></PreviewImage>
+    <SupportedProducts>
+      <VisualStudio Version="10.0">
+        <Edition>Ultimate</Edition>
+        <Edition>Premium</Edition>
+        <Edition>Pro</Edition>
+        <Edition>Standard</Edition>
+        <Edition>VCSExpress</Edition>
+        <Edition>VBExpress</Edition>
+      </VisualStudio>
+    </SupportedProducts>
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+  </Identifier>
+  <References/>
+  <Content>
+    <!--<VsPackage>|DslPackage;CodeGeneration.pkgdef|</VsPackage>-->
+    <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
+    <MefComponent>|<#= dslProjectName #>|</MefComponent>
+    <MefComponent>|%CurrentProject%|</MefComponent>
+    <ItemTemplate>ItemTemplates</ItemTemplate>
+  </Content>
+</Vsix>

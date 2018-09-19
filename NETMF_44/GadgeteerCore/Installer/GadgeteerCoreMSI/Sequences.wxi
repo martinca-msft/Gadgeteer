@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <InstallExecuteSequence>
+
+    <!-- In case this is a newer version then remove the existing product. -->
+    <RemoveExistingProducts Before="InstallInitialize"/>
+
+    <!-- In case you're installing an older version tell the user and die. -->
+    <Custom Action="NoDowngrade" After="FindRelatedProducts">NEWERVERSIONINSTALLED</Custom>
+
+    <!-- Display an error if overwriting the same version. -->
+    <Custom Action="SameVersionError" After="FindRelatedProducts">SAMEVERSIONINSTALLED</Custom>
+
+  </InstallExecuteSequence>
+
+  <InstallUISequence>
+
+    <!-- This needs to be in the InstallUISequence also because that is evaluated -->
+    <!-- before the InstallExecuteSequence and the UI would come up. -->
+    
+    <!-- In case you're installing an older version tell the user and die. -->      
+    <Custom Action="NoDowngrade" After="FindRelatedProducts">NEWERVERSIONINSTALLED</Custom>
+
+    <!-- Display an error if overwriting the same version. -->
+    <Custom Action="SameVersionError" After="FindRelatedProducts">SAMEVERSIONINSTALLED</Custom>
+
+    <!-- Display an error if .NET MF is not installed -->
+    <!--
+    <Custom Action="NETMFNotInstalledError" Before="ValidateProductID">NOT Installed AND NOT MF_INSTALLED</Custom>
+    -->
+  </InstallUISequence>
+  
+</Include>

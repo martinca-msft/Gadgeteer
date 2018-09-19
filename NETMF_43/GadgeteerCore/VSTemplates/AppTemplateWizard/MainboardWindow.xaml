@@ -1,0 +1,94 @@
+﻿<Window x:Class="Microsoft.Gadgeteer.AppTemplateWizard.MainboardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:app="clr-namespace:Microsoft.Gadgeteer.AppTemplateWizard"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"  app:Dwm.ClientAreaRootElement="{Binding ElementName=ClientAreaRoot}"
+        WindowStyle="ToolWindow" ShowInTaskbar="False" Height="600" Width="700" Loaded="OnLoad" Name="Window" Background="Transparent">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Microsoft.Gadgeteer.AppTemplateWizard;component/Gadgeteer.xaml" />
+                <ResourceDictionary Source="/Microsoft.Gadgeteer.AppTemplateWizard;component/App.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="BoardSelectorDoubleClicker" TargetType="ListViewItem">
+                <EventSetter Event="MouseDoubleClick" Handler="OnBoardDoubleClick" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Name="HeaderPanel">
+            <DockPanel Margin="5">
+                <Image DockPanel.Dock="Left" Source="{StaticResource GadgeteerMarkImage}" Width="21" Height="21" Margin="5" VerticalAlignment="Center" />
+                <TextBlock Text=".NET Gadgeteer Application Wizard" Style="{StaticResource Caption}" VerticalAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="White" ShadowDepth="0" BlurRadius="10" />
+                    </TextBlock.Effect>
+                </TextBlock>
+            </DockPanel>
+        </Border>
+        <DockPanel Name="ClientAreaRoot">
+            <Border DockPanel.Dock="Bottom" Style="{StaticResource ButtonPanel}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5,10">
+                    <Button IsDefault="True" Content="_Create" IsEnabled="{Binding IsWizardValid}" Click="OnCreate" />
+                    <Button IsCancel="True"  Content="C_ancel" Click="OnCancel" />
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource ContentPanel}" Padding="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Choose a _mainboard:" Target="{Binding ElementName=BoardSelector}" />
+
+                    <ListView Grid.Row="1" Grid.ColumnSpan="2" Name="BoardSelector" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="OnBoardSelectionChanged" SelectedItem="{Binding SelectedMainboard, Mode=TwoWay}" PreviewMouseWheel="OnBoardWheel" ItemContainerStyle="{StaticResource BoardSelectorDoubleClicker}">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Margin="5,10">
+                                    <TextBlock DockPanel.Dock="Bottom" Text="{Binding Name}" TextAlignment="Center" />
+                                    <Image Width="{Binding MainboardImageSize, ElementName=Window}" Height="{Binding MainboardImageSize, ElementName=Window}" Stretch="Uniform" StretchDirection="DownOnly" Source="{Binding ImagePath}" RenderOptions.BitmapScalingMode="HighQuality" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+                        <ProgressBar Name="BoardProgress" Grid.Row="2" Margin="0,5,0,0" MinHeight="15" Visibility="Collapsed" />
+
+                        <DockPanel Name="VersionPanel" Margin="0,5,0,0" Visibility="Collapsed">
+                            <ComboBox Name="VersionSelector" DockPanel.Dock="Right" ItemsSource="{Binding SelectedMainboard.SupportedVersions}" SelectedItem="{Binding SelectedVersion, Mode=TwoWay}" SelectionChanged="OnVersionSelectionChanged" VerticalAlignment="Center" />
+                            <Label Content="Choose from .NET Micro Framework _versions supported by this mainboard:" Target="{Binding ElementName=VersionSelector}" />
+                        </DockPanel>
+
+                        <Border Margin="0,5,0,0">
+                            <Border.Style>
+                                <Style TargetType="Border">    <!--BasedOn="{StaticResource InfoPanel}"-->
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding InlineMessage}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <DockPanel>
+                                <Image DockPanel.Dock="Left" VerticalAlignment="Top" Margin="3" Source="{Binding InlineMessage.SeverityImage}" Stretch="None" />
+                                <ContentPresenter VerticalAlignment="Center" Margin="2,0,0,0" Content="{Binding InlineMessage.Message}" />
+                            </DockPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DockPanel>
+    </DockPanel>
+</Window>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization xmlns="http://schemas.microsoft.com/wix/2006/localization" Culture="en-us">
+
+  <String Overridable="yes" Id="ModulesDirectoryName">Modules</String>
+  <String Overridable="yes" Id="MainboardsDirectoryName">Mainboards</String>
+  <String Overridable="yes" Id="GadgeteerDirectoryName">Microsoft .NET Gadgeteer</String>
+  <String Overridable="yes" Id="ModulesForGadgeteer">module for Microsoft .NET Gadgeteer</String>
+  <String Overridable="yes" Id="MainboardsForGadgeteer">mainboard for Microsoft .NET Gadgeteer</String>
+  <String Overridable="yes" Id="NewerVersionFoundPrefix">A newer version of</String>
+  <String Overridable="yes" Id="NewerVersionFoundSuffix">is already installed. Setup will now exit.</String>
+  <String Overridable="yes" Id="SameVersionInstalledPrefix">Version number was not updated correctly. Please manually uninstall</String>
+  <String Overridable="yes" Id="SameVersionInstalledSuffix">and run the installer again.</String>
+  <String Overridable="yes" Id="GadgeteerCoreIsNotInstalled">Microsoft .NET Gadgeteer Core is not installed. Please install this first (e.g. from http://gadgeteer.codeplex.com/ ).</String>
+
+</WixLocalization>

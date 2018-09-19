@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+
+  <Binary Id='MyCA' SourceFile='ui\CA\CustomAction.dll'/>
+  
+  <CustomAction Id="ShellExec" BinaryKey="MyCA" DllEntry="ShellExec" Execute="immediate" Return="ignore" Impersonate="yes" />
+
+  <CustomAction Id="ValidatePath" BinaryKey="MyCA" DllEntry="ValidatePath" Execute="immediate" Return="ignore" Impersonate="yes"/>
+
+</Include>

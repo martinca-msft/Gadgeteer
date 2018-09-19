@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+vs.wxi
+
+All things to do with vs
+
+-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <!-- used to put anything under the VS folder -->
+  <PropertyRef Id="VS2010_ROOT_FOLDER" />
+  
+  <!-- used to determine if VS 2010 Standard edition or higher is installed -->
+  <PropertyRef Id="VS2010DEVENV" />
+  
+  <!-- used to determine if VC# Express 2010 is installed -->
+  <PropertyRef Id="VCSHARP2010EXPRESS_IDE" />
+
+  <!-- used to determine if VB Express 2010 is installed -->
+  <PropertyRef Id="VB2010EXPRESS_IDE" />
+
+</Include>

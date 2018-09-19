@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{72C83785-1870-499E-B733-19E0ABD8FC8E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ModuleTemplateWix</RootNamespace>
+    <AssemblyName>ModuleTemplateWix</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+    <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CreateVsixContainer>false</CreateVsixContainer>
+    <DeployExtension>false</DeployExtension>
+    <DeployVSTemplates>false</DeployVSTemplates>
+    <CopyVsixManifestToOutput>false</CopyVsixManifestToOutput>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.CoreUtility">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="en-us.wxl" />
+    <None Include="G graphic.ico" />
+    <None Include="GadgeteerHardware.xml" />
+    <None Include="Image.jpg" />
+    <None Include="msi.wxs">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="msm.wxs">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ReadMe.txt" />
+    <None Include="common.wxi">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ProjectTemplate.csproj">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <VSTemplate Include="ModuleTemplateWix.vstemplate">
+      <OutputSubPath>Gadgeteer</OutputSubPath>
+      <SubType>Designer</SubType>
+    </VSTemplate>
+    <None Include="ModuleTemplate.vstemplate.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="G.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\VSSDK\Microsoft.VsSDK.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rmdir /s /q staging
+mkdir staging
+cd staging
+xcopy "$(ProjectDir)ModuleTemplate.vstemplate.xml" .\ /DY
+rename ModuleTemplate.vstemplate.xml ModuleTemplate.vstemplate
+xcopy "$(ProjectDir)G.ico" .\ /DY
+
+rem now unzip the ModuleTemplateWix template into the WiX directory 
+mkdir WiX
+powershell -c sleep 1; $app = (new-object -com shell.application); $dir = \"$(TargetDir)ProjectTemplates\CSharp\Gadgeteer\1033\ModuleTemplateWix.zip\"; $zip = $app.NameSpace($dir); $dest = $app.NameSpace((Get-Item .).FullName + \"\WiX\"); $dest.CopyHere($zip.items());
+
+rem now unzip the ModuleTemplate41 template into the NETMF41 directory
+mkdir NETMF41
+cd ..
+xcopy  $(ProjectDir)..\ModuleTemplate41\$(OutDir)ProjectTemplates\CSharp\Gadgeteer\1033\ModuleTemplate41.zip .\ /DY
+cd staging
+powershell -c $app = (new-object -com shell.application); $dir = \"$(TargetDir)ModuleTemplate41.zip\"; echo NETMF41SOURCE=$dir; $zip = $app.NameSpace($dir); $dest = $app.NameSpace((Get-Item .).FullName + \"\NETMF41\"); $dest.CopyHere($zip.items());
+del /Q ..\ModuleTemplate41.zip
+
+rem now unzip the ModuleTemplate42 template into the NETMF42 directory
+mkdir NETMF42
+cd ..
+xcopy  $(ProjectDir)..\ModuleTemplate42\$(OutDir)ProjectTemplates\CSharp\Gadgeteer\1033\ModuleTemplate42.zip .\ /DY
+cd staging
+powershell -c $app = (new-object -com shell.application); $dir = \"$(TargetDir)ModuleTemplate42.zip\"; echo NETMF42SOURCE=$dir; $zip = $app.NameSpace($dir); $dest = $app.NameSpace((Get-Item .).FullName + \"\NETMF42\"); $dest.CopyHere($zip.items());
+del /Q ..\ModuleTemplate42.zip
+
+rem now zipping up the template
+powershell -c $files = ls; echo files=$files; set-content \".\ModuleTemplate.zip\" (\"PK\" + [char]5 + [char]6 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0 +[char]0); $zip = (new-object -com shell.application).NameSpace((Get-Item .).FullName + \"\ModuleTemplate.zip\"); sleep 1; $files ^| foreach{$zip.CopyHere($_.FullName); sleep 1};
+
+cd ..
+move staging\ModuleTemplate.zip .\
+rmdir /s /q staging
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

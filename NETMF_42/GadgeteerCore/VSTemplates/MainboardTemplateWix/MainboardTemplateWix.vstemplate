@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>.NET Gadgeteer Mainboard (WiX subcomponent)</Name>
+    <Description>Template for a Microsoft .NET Gadgeteer mainboard.  This template should only be used as a sub-template of the Mainboard template, and never directly.</Description>
+    <Icon>G.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <SortOrder>5002</SortOrder>
+    <TemplateID>6FC673CE-4E61-4F47-92A1-B8277C3C4A60</TemplateID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MyDevice</DefaultName>
+    <ProvideDefaultName>false</ProvideDefaultName>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="Image.jpg">Image.jpg</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="G.ico">G graphic.ico</ProjectItem>
+      <ProjectItem ReplaceParameters="true">GadgeteerHardware.xml</ProjectItem>
+      <ProjectItem ReplaceParameters="false" OpenInEditor="true">ReadMe.txt</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="msm.wxs">msm.wxs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="en-us.wxl">en-us.wxl</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="common.wxi">common.wxi</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="msi.wxs">msi.wxs</ProjectItem>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.Gadgeteer.HardwareTemplateWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly>
+    <FullClassName>Microsoft.Gadgeteer.HardwareTemplateWizard.GTHardwareWizard</FullClassName>
+  </WizardExtension>
+  <WizardData Name="HardwareType">Mainboard</WizardData>
+</VSTemplate>
+
+
